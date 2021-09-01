@@ -119,7 +119,6 @@ namespace Game.UI
             {
                 id=characters[selected].id
             });
-            //UIUtils.DestroyChildren(content);
         }
         public int Count()
         {
@@ -133,8 +132,9 @@ namespace Game.UI
             if(content.childCount > 0)
             {
                 UIUtils.DestroyChildren(content);
+                charsToggleGroup.Clear();
             }
-            charsToggleGroup.list.Clear();
+            
         }
         protected override void OnDisable()
         {

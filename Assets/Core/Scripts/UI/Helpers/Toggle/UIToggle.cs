@@ -39,7 +39,9 @@ namespace Game.UI
         {
             this.isOn = isOn;
             if(selectedObj != null)
+            {
                 selectedObj.SetActive(isOn);
+            }
         }
         public void OnPointerClick(PointerEventData eventData)
         {

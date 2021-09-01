@@ -7,29 +7,38 @@ namespace Game.UI
         [SerializeField] int defaultIndex = -1;
         [SerializeField] List<UIToggle> m_list = new List<UIToggle>();
         [SerializeField] bool updateOnAwake = true;
+        public int currentIndex = -1;
         public List<UIToggle> list => m_list;
         public UIToggle current => currentIndex > -1 ? m_list[currentIndex] : null;
-        public int currentIndex = -1;
         public void UpdateTogglesList()
         {
-            //m_list.Clear();
+            Clear();
             if(transform.childCount > 0)
             {
+                //Debug.Log(m_list.Count);
                 for (int i = 0; i < transform.childCount; i++)
                 {
                     UIToggle child = transform.GetChild(i).GetComponent<UIToggle>();
                     if(child != null)
                     {
-                        Debug.Log(i);
+                        //Debug.Log(child);
                         m_list.Add(child);
                         child.index = i;
                     }
                 }
-                Debug.Log(m_list.Count);
-                if(m_list.Count > 0)
+                //Debug.Log(m_list.Count);
+                if(m_list.Count > 0 && defaultIndex > -1)
                 {
-                    m_list[0].Select();
+                    Debug.Log("Selected");
+                    Select(defaultIndex);
                 }
+            }
+        }
+        public void Clear()
+        {
+            if(m_list.Count > 0)
+            {
+                m_list.RemoveRange(0, m_list.Count);
             }
         }
         public void Select(int index)
@@ -59,10 +68,6 @@ namespace Game.UI
             if(updateOnAwake)
             {
                 UpdateTogglesList();
-            }
-            if(m_list.Count > 0 && defaultIndex > -1)
-            {
-                Select(defaultIndex);
             }
         }
     }
