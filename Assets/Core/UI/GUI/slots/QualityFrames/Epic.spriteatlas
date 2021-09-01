@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Epic
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: af29553d3c5d8154396f4d8b8a33b867, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 4f7a5a509d3107c4fb6eeec890c1edab, type: 3}
+  - {fileID: 21300000, guid: fb54edd192890fe4da6594adf3a160c1, type: 3}
+  - {fileID: 21300000, guid: 9b415752917d5f74794e5ef8fbbdddc6, type: 3}
+  - {fileID: 21300000, guid: 6db6e00310033fe469181b0c0f8f9431, type: 3}
+  - {fileID: 21300000, guid: a1948c146b97d144ab78a3bc300cd4c8, type: 3}
+  - {fileID: 21300000, guid: 4e73b147e6102584ea45bb517be32352, type: 3}
+  - {fileID: 21300000, guid: 9385eec9e3683754282d7d511697b21c, type: 3}
+  - {fileID: 21300000, guid: 9425a11b77b383d40b7d7666510f17ae, type: 3}
+  - {fileID: 21300000, guid: 0d27b81bde744ec499cc4433dc08f9fc, type: 3}
+  - {fileID: 21300000, guid: 87a2a18e28cd73d4bad1be8477169a64, type: 3}
+  - {fileID: 21300000, guid: e7492ffeeaa69884fb92477f5b92bb67, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - EpicFrame1
+  - EpicFrame7
+  - EpicFrame2
+  - EpicFrame4
+  - EpicFrame8
+  - EpicFrame5
+  - EpicBackground
+  - EpicFrame3
+  - EpicFrame9
+  - EpicFrame6
+  - EpicBackgroundWide
+  m_Tag: Epic
+  m_IsVariant: 0

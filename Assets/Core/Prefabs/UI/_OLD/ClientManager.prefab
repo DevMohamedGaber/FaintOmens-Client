@@ -1,0 +1,622 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1943145650464252780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943145650464252778}
+  - component: {fileID: 1427886414246230807}
+  - component: {fileID: 1943145650464252779}
+  m_Layer: 0
+  m_Name: ClientManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1943145650464252778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650464252780}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.315535, y: 22.44386, z: 507.87592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6924088242330451358}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1427886414246230807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650464252780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bed25ea40ea59e4eba997ee6b23ce5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GUIs:
+  - {fileID: 0}
+  - {fileID: 0}
+  gameSettings:
+    version: 0.1
+    startingVersion: 0.1
+    currentLang: 1
+    token: 
+    remember: 0
+    username: 
+    password: 
+    fps: 30
+  pages:
+    pets: {fileID: 0}
+    mounts: {fileID: 0}
+    arena: {fileID: 0}
+    trade: {fileID: 0}
+  assets:
+    tiers:
+    - {fileID: 21300000, guid: 24eb8d89defa91f44829c552f999dab3, type: 3}
+    - {fileID: 21300000, guid: cf197b07bb911c147b915cb309c8d247, type: 3}
+    - {fileID: 21300000, guid: f514568cd6018f04b96df9d0bdd69ec6, type: 3}
+    - {fileID: 21300000, guid: 77e53a0a337ca224fb55f65d576247c8, type: 3}
+    - {fileID: 21300000, guid: 822746f4bebcca84ab2b77f18a742d5c, type: 3}
+    - {fileID: 21300000, guid: 1eb1adcb242c1e643a19b8004dec8455, type: 3}
+    - {fileID: 21300000, guid: 6653f7b7221f6174da5fe2cf244697c1, type: 3}
+    - {fileID: 21300000, guid: 473bc3700354c5c4a828e9a44c147abc, type: 3}
+    - {fileID: 21300000, guid: 04c3a0ae5f81cba49bb108809b81f040, type: 3}
+    stars:
+    - {fileID: 21300000, guid: 3b5bfc25c7f243c46bc27fe8311d718b, type: 3}
+    - {fileID: 21300000, guid: 734bb1e9dede3be48ba1028076e3ef8e, type: 3}
+    tierColor:
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 0.8509804, g: 1, b: 0, a: 1}
+    - {r: 1, g: 0.9019608, b: 0, a: 1}
+    - {r: 1, g: 0.76862746, b: 0, a: 1}
+    - {r: 1, g: 0.43137255, b: 0, a: 1}
+    - {r: 1, g: 0.21568628, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0.29803923, b: 1, a: 1}
+    - {r: 1, g: 0, b: 0.8156863, a: 1}
+    avatars:
+    - {fileID: 21300000, guid: 1a7db35e697b8f64ca20f12ec4b9817b, type: 3}
+    gender:
+    - {fileID: 21300000, guid: a973981b0d0061b47af8d44fa34bf5fd, type: 3}
+    - {fileID: 21300000, guid: f146f30c15129c84381328212aa164a7, type: 3}
+    itemSlotPrefab: {fileID: 6678235350655944788, guid: a58e90f36bc9d134b8c5fb27a0b43c26,
+      type: 3}
+    socketSlot:
+    - {fileID: 21300000, guid: 459d1f3d27f224345a4619782d8e8433, type: 3}
+    - {fileID: 21300000, guid: 791c445bd8f64db4d8d258fb1a355e54, type: 3}
+  inScene:
+    expBar: {fileID: 0}
+    counter: {fileID: 0}
+    levelUpNotice: {fileID: 0}
+    arenaNotify: {fileID: 0}
+    arenaMatchResult: {fileID: 0}
+    changableInterface: {fileID: 0}
+    respawn: {fileID: 0}
+    tooltip: {fileID: 0}
+  lobby:
+    current: {fileID: 0}
+    login: {fileID: 0}
+    create: {fileID: 0}
+    select: {fileID: 0}
+  currenOpenWindow: {fileID: 0}
+  miniLoading: {fileID: 0}
+  gameManager: {fileID: 0}
+  inGame: {fileID: 0}
+  controllers: {fileID: 0}
+  RankingWindow: {fileID: 0}
+  playerPreviewWindow: {fileID: 0}
+  miniMap: {fileID: 0}
+  guildWindow: {fileID: 0}
+  notifiyIconsList: {fileID: 0}
+  guildRecallMsg: {fileID: 0}
+  miniChat: {fileID: 0}
+  chat: {fileID: 0}
+  success: {fileID: 0}
+  failure: {fileID: 0}
+  signUp7days: {fileID: 0}
+  wardrobe: {fileID: 0}
+  achievementNotice: {fileID: 0}
+  chooseLangPage: {fileID: 0}
+  gameUpdater: {fileID: 0}
+--- !u!114 &1943145650464252779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650464252780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8bbb5f38a1c4064289ab4c525e0f3e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player:
+    maxLevel: 100
+    expMax:
+      multiplier: 1000
+      baseValue: 1.8
+    indicator: {fileID: 120922, guid: 95fc72c38103b4c928f9e12db60c9f8e, type: 3}
+    arrowPrefab: {fileID: 1105027219032114538, guid: a48d839c33b7f6b4cab8e76733579877,
+      type: 3}
+    respawnTime: 20
+    maxInventorySize: 252
+    equipmentCount: 8
+    accessoriesCount: 8
+  wardrobe:
+    max: 10
+    cost: 
+    blessingId: 123
+  ui:
+    defaultItem: {fileID: 0}
+  pet:
+    lvlCap: 100
+    expMax:
+      multiplier: 1000
+      baseValue: 1.2
+    starsCap: 10
+    pointPerLvl: 5
+    potentialToAP: 10
+    potentialMax: 100
+    trainItemId: 7003
+    UpgradeItemId: 7004
+    starsUpItemId: 7005
+    upgradeReqCount: 0100000002000000040000000800000010000000200000004000000080000000
+    starUpReqCount: 020000000400000006000000080000000a0000000c0000000e0000001000000012000000
+    feeds:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  mount:
+    lvlCap: 100
+    expMax:
+      multiplier: 500
+      baseValue: 1.2
+    starsCap: 10
+    pointPerLvl: 5
+    upgradeItemId: 8003
+    upgradeReqCount: 0100000002000000040000000800000010000000200000004400000080000000
+    starsUpItemId: 8004
+    starUpReqCount: 
+    feeds:
+    - {fileID: 11400000, guid: 7111815a1bacb6047aa435b97095639b, type: 2}
+    - {fileID: 11400000, guid: 03580587e518e1243aa76c68944cd4a0, type: 2}
+    - {fileID: 11400000, guid: 92eaa10263fbc124da7b8a65d446e6e1, type: 2}
+  arena:
+    minLvl: 1
+    cancelTime: 30
+    matchDurationInMins: 10
+    pointsOnWin: 20
+    pointsOnLoss: 15
+  item:
+    maxPlus: 36
+    plusUpCount: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f0000002000000021000000220000002300000024000000
+    plusCostGrowth:
+      multiplier: 1000
+      baseValue: 1.3
+    plusUpCost: 
+    plusUpSuccessRateReductionPerPlus: 2.7
+    plusUpSuccessRate: []
+    equipmentQualityExpMax: f401b004a00f401f983aa861889080bbe8fd
+    unlockSocketItemId: 0
+  eventMaps:
+  - {fileID: 4654507617601802718, guid: 42187ee7e23fbb24497d06230916e5ec, type: 3}
+  avatars:
+  - {fileID: 21300000, guid: 1a7db35e697b8f64ca20f12ec4b9817b, type: 3}
+  avatarFrames:
+  - {fileID: -756125255433124058, guid: 93c5c2928926d7b4781150b728e1cd5a, type: 3}
+  currencyIcons:
+  - {fileID: 21300000, guid: 2ab838b847ef21042a8783e31490d4cd, type: 3}
+  - {fileID: 21300000, guid: 408530fbdeea841a2ae8573fca94bb8f, type: 3}
+  - {fileID: 21300000, guid: fde33769e4b3a49908ca10c59d430af8, type: 3}
+  dailySignRewards:
+  - days: 2
+    rewards: []
+  - days: 7
+    rewards: []
+  - days: 14
+    rewards: []
+  - days: 20
+    rewards: []
+  - days: 27
+    rewards: []
+  SignUp7DaysEventsRewards: []
+  Recharge7DaysEventsRewards: []
+  cities:
+  - name: MainCity
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: 794857749434708845, guid: fc68b0969bae83149944e2b3e35415f1, type: 3}
+  - name: Desert
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: 5240672766425291721, guid: 218cb890dc56d9e4a84013af6dbfab09,
+      type: 3}
+  - name: Forest
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: 3356573819732200514, guid: 0907bd5ea61d62d4d82f4bcf74d1dd99,
+      type: 3}
+  - name: Boundary
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: 6309070298298028753, guid: af8a2fd43e480e4419112f63af8daa54,
+      type: 3}
+  - name: Rocky Montains
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: -3003748517460483293, guid: 4ffd1f35cb0fdcb45911a957aa93869f,
+      type: 3}
+  - name: Snow
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: 6694353868051346720, guid: 733cfbfc8fce33a4ab41884b44610687,
+      type: 3}
+  - name: Lava
+    minLvl: 1
+    status: 0
+    teleportNPCs: []
+    prefab: {fileID: 5822308156235469243, guid: 2445cc545c5d61141b49df329b3f620e,
+      type: 3}
+  inventoryShopItems: []
+  ItemMallContent:
+  - category: Armor
+    items: []
+    bound: 0
+  - category: Shoulders
+    items: []
+    bound: 0
+  socketIcons:
+  - {fileID: 21300000, guid: 459d1f3d27f224345a4619782d8e8433, type: 3}
+  - {fileID: 21300000, guid: 75f8e13aa67d42e4fb9b9cd4a34e0621, type: 3}
+  classTypeIcons:
+  - {fileID: 21300000, guid: 2d5d0cbe960b81644926cb03d8291947, type: 3}
+  - {fileID: 21300000, guid: f69f5cfc929509746846ca4517a8c0da, type: 3}
+  lockImage: {fileID: 21300000, guid: bcda32dd137e11040bb3d5caf2b596ff, type: 3}
+  starsImages:
+  - {fileID: 21300000, guid: 3b5bfc25c7f243c46bc27fe8311d718b, type: 3}
+  - {fileID: 21300000, guid: 734bb1e9dede3be48ba1028076e3ef8e, type: 3}
+  currentLoadedMap: {fileID: 0}
+  maxDailyQuests: 20
+  BasicFreeRespawn: 3
+  ReviveHereCost: 30
+  dailyQuestsLimitPerDay: 5
+  chatMaxMsgSize: 70
+  removeGemCost: 2000
+  itemUpgradeCost:
+    multiplier: 5000
+    baseValue: 2
+  maxFriendsCount: 100
+  playerClassPromotionCount: 4
+  partyMemberColor: {r: 0, g: 0, b: 0, a: 0}
+  guildMemberColor: {r: 0, g: 0, b: 0, a: 0}
+  charactersPerAccount: 4
+  basicBody:
+  - {fileID: 7104284986342292094, guid: 8c5a1912a04aeb0449d7825f85b2d37f, type: 3}
+  - {fileID: 7104284986342292094, guid: 8c5a1912a04aeb0449d7825f85b2d37f, type: 3}
+  wardropUpgradeItem: 123
+  wardropUpgradeStones:
+    multiplier: 1
+    baseValue: 1.5
+  wardropUpgradeGold:
+    multiplier: 5000
+    baseValue: 3
+  mounts:
+  - {fileID: 8051326601789314087, guid: 130bb155abb8c8b4b97667de831a82ad, type: 3}
+  mountExpMax:
+    multiplier: 50
+    baseValue: 1.1
+  mountMaxLevel: 100
+  mountFirstFeedItem: 7500
+  mountFeedItemsExp: f401000000000000e803000000000000b80b0000000000008813000000000000
+  BoundToUnboundRatio: 2
+  attackToMoveRangeRatio: 0.8
+  AP_Vitality: 100
+  AP_Strength_ATK: 10
+  AP_Strength_DEF: 5
+  AP_Intelligence_ATK: 10
+  AP_Intelligence_DEF: 5
+  AP_Intelligence_MANA: 10
+  AP_Endurance: 15
+  teamMaxCapacity: 4
+  teamMemberBonus: 0.1
+  teamInviteWaitSeconds: 3
+  guildExpMax:
+    multiplier: 1000
+    baseValue: 2
+--- !u!1 &1943145650753827474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943145650753827473}
+  - component: {fileID: 1943145650753827486}
+  - component: {fileID: 1943145650753827487}
+  - component: {fileID: 1943145650753827472}
+  - component: {fileID: 1943145650753827485}
+  m_Layer: 0
+  m_Name: PreviewPlatform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1943145650753827473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650753827474}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1000, y: 1000, z: 1000}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6924088242330451358}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1943145650753827486
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650753827474}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1943145650753827487
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650753827474}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!64 &1943145650753827472
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650753827474}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1943145650753827485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145650753827474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &1943145651728240669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943145651728240668}
+  - component: {fileID: 1943145651728240667}
+  m_Layer: 0
+  m_Name: Preview Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1943145651728240668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145651728240669}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 1000, y: 1000.9, z: 1063.63}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6924088242330451358}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!20 &1943145651728240667
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145651728240669}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.01
+  far clip plane: 150
+  field of view: 60
+  orthographic: 1
+  orthographic size: 1.3
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 36608
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: 09fd792c08ef83c4fb3be6c5ceda3999, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 0
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!1 &1943145652282208411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943145652282208410}
+  m_Layer: 0
+  m_Name: Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1943145652282208410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943145652282208411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1000, y: 1000, z: 1000}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6924088242330451358}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4213161625966219241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6924088242330451358}
+  - component: {fileID: 4213161625966219240}
+  m_Layer: 0
+  m_Name: PreviewManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6924088242330451358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213161625966219241}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1000, y: 1000, z: 1000}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1943145652282208410}
+  - {fileID: 1943145650753827473}
+  - {fileID: 1943145651728240668}
+  m_Father: {fileID: 1943145650464252778}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4213161625966219240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213161625966219241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 195d1d116de6f93418aefa614251f5d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModel: {fileID: 593379112381227993, guid: 65f125adffda69444a1d692c4288a0ec,
+    type: 3}
+  holder: {fileID: 1943145652282208410}
+  cam: {fileID: 1943145651728240669}
+  go: {fileID: 0}

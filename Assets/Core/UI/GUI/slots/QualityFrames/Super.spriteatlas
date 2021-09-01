@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Super
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: d01b1bd6184a2f64fb74da95f50acdbb, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ab086790d5a624b4d8df998b5664ee21, type: 3}
+  - {fileID: 21300000, guid: c8bf0e420943bf24cb65050ec83835ac, type: 3}
+  - {fileID: 21300000, guid: f307afe2e6d2c434994dc1bae7ea8723, type: 3}
+  - {fileID: 21300000, guid: d31aa926af5e0e246899fd63e6555927, type: 3}
+  - {fileID: 21300000, guid: c9ddc73a6badb3a479b42ecf760d67ff, type: 3}
+  - {fileID: 21300000, guid: 779ee67adc57b1343ac417e50a743d8b, type: 3}
+  - {fileID: 21300000, guid: db0feeaa82a6d92468c483bb1cb87c43, type: 3}
+  - {fileID: 21300000, guid: 9e01c82beeb7b424b8fa4e8815d7c8f5, type: 3}
+  - {fileID: 21300000, guid: 97e676cc124c8004ab8cc257db299274, type: 3}
+  - {fileID: 21300000, guid: 7a40934e47332bb469cb9cb4c20eec8b, type: 3}
+  - {fileID: 21300000, guid: 8fa8721fa28080943819433691c29982, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - SuperFrame4
+  - SuperBackground
+  - SuperFrame5
+  - SuperFrame6
+  - SuperFrame1
+  - SuperFrame7
+  - SuperFrame2
+  - SuperFrame9
+  - SuperFrame3
+  - SuperBackgroundWide
+  - SuperFrame8
+  m_Tag: Super
+  m_IsVariant: 0

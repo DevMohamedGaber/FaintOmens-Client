@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Legendary
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 3b7c672f8972acb4a9282bafcdd4971e, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: df33da82e77262f40949c90a935507ad, type: 3}
+  - {fileID: 21300000, guid: abf28b431edc21f4cb61d71745302467, type: 3}
+  - {fileID: 21300000, guid: fc38cc9432f28c94e8ffd775ffdc2f3d, type: 3}
+  - {fileID: 21300000, guid: 8a7cb7f4d3effb34f9809eba5d6accdc, type: 3}
+  - {fileID: 21300000, guid: c587af752b7dcba4892039671c2a58a3, type: 3}
+  - {fileID: 21300000, guid: 0fe2d3b535a8b0f40bf5d1a334974c63, type: 3}
+  - {fileID: 21300000, guid: 86c71ab542c604044b354beefe3f4f7a, type: 3}
+  - {fileID: 21300000, guid: cdad7a1a3a7fa434486d0d0b8fc85d01, type: 3}
+  - {fileID: 21300000, guid: 338b48fd25490174b92a1d63dc2d6955, type: 3}
+  - {fileID: 21300000, guid: fc9d9d1f131bb484992fd370e1c9cc9b, type: 3}
+  - {fileID: 21300000, guid: 01a4e3ff5490e7542808e1fcc476c853, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - LegendaryBackgroundWide
+  - LegendaryFrame6
+  - LegendaryFrame3
+  - LegendaryFrame5
+  - LegendaryBackground
+  - LegendaryFrame9
+  - LegendaryFrame1
+  - LegendaryFrame8
+  - LegendaryFrame7
+  - LegendaryFrame2
+  - LegendaryFrame4
+  m_Tag: Legendary
+  m_IsVariant: 0

@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Currency
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 256
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: ec2c9728d4bf50b4093a81e6adbfc429, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0bec8b301f4c0774aacfc7ee8b9da838, type: 3}
+  - {fileID: 21300000, guid: b6d6655193d701a4e89d411a9c8717f0, type: 3}
+  - {fileID: 21300000, guid: 36a38a62d043b314c81d4b89af5d4deb, type: 3}
+  - {fileID: 21300000, guid: 030c76d27a1b67d40ac9aa7ef7fb7432, type: 3}
+  - {fileID: 21300000, guid: b7d0f0f29e58a084586db4994cd5e12d, type: 3}
+  - {fileID: 21300000, guid: cfdd4313a0fe4ff42ac3109e0dcafa10, type: 3}
+  - {fileID: 21300000, guid: b127bf541b48d5d439385766df91df25, type: 3}
+  - {fileID: 21300000, guid: eb991716fa3dc00479b37203d1d2d59c, type: 3}
+  - {fileID: 21300000, guid: 61821976aa456084390b831e83356c6f, type: 3}
+  - {fileID: 21300000, guid: 006662c820c2ec841a6c0e66bded5542, type: 3}
+  - {fileID: 21300000, guid: 12260529bd9789e49aa5a2c5c267d554, type: 3}
+  - {fileID: 21300000, guid: ed9d6cdcfba465b4d9495ab08fcd3bd9, type: 3}
+  - {fileID: 21300000, guid: 32bae75eed0e0b24785c8b10967f63c6, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - zhuanshi_04.png
+  - icon_diamond_lock.png
+  - icon_diamond.png
+  - zhuanshi_02.png
+  - zhuanshi_06.png
+  - zhuanshi_08.png
+  - zhuanshi_07.png
+  - zhuanshi_05.png
+  - zhuanshi_01.png
+  - mingzhongfuwen1.png
+  - lxc.png
+  - icon_gold.png
+  - zhuanshi_03.png
+  m_Tag: Currency
+  m_IsVariant: 0
