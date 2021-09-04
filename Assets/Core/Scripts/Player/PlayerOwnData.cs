@@ -64,7 +64,7 @@ namespace Game
     #region Social
         [Header("Social")]
         [SyncVar] public Marriage marriage;
-        [SyncVar] public Team team;
+        [SyncVar(hook="OnTeamChanged")] public Team team;
         public SyncListFriend friends = new SyncListFriend();
     #endregion
     #region Arena
@@ -106,9 +106,17 @@ namespace Game
             pets.Callback += OnPetsChanged;
             mounts.Callback += OnMountsChanged;
             tradeInvitations.Callback += OnTradeInvitationsChanged;
+            quests.Callback += OnQuestsChanged;
         }
     #region on lists changed
-        void OnInventoryChanged(SyncListItemSlot.Operation operation, int index, ItemSlot oldItem, ItemSlot newItem) {
+        void OnQuestsChanged(SyncListQuest.Operation op, int index, Quest oldQuest, Quest newQuest)
+        {
+            if(UIManager.data.currenOpenWindow == null)
+            {
+                UIManager.data.inScene.sideBox.Refresh();
+            }
+        }
+        void OnInventoryChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldItem, ItemSlot newItem) {
             RefreshCurrentWindow();
         }
         void OnMailBoxChanged(SyncListMail.Operation op, int index, Mail oldMail, Mail newMail) {
@@ -132,20 +140,27 @@ namespace Game
         }
     #endregion
     #region on variables changed
-        void OnGoldChanged(uint oldGold, uint newGold) {
+        void OnGoldChanged(uint oldGold, uint newGold)
+        {
             OnCurrencyChangedUpdateWindow();
         }
-        void OnDiamondsChanged(uint oldGold, uint newGold) {
+        void OnDiamondsChanged(uint oldGold, uint newGold)
+        {
             OnCurrencyChangedUpdateWindow();
         }
-        void OnBDiamondsChanged(uint oldGold, uint newGold) {
+        void OnBDiamondsChanged(uint oldGold, uint newGold)
+        {
             OnCurrencyChangedUpdateWindow();
         }
-        void OnPetExpShareChanged(bool oldShare, bool newShare) {
+        void OnPetExpShareChanged(bool oldShare, bool newShare)
+        {
             if(oldShare != newShare && UIManager.data.pages.pets.IsVisible())
+            {
                 UIManager.data.pages.pets.UpdateExpShare();
+            }
         }
-        void OnExperienceChanged(uint oldExp, uint newExp) {
+        void OnExperienceChanged(uint oldExp, uint newExp)
+        {
             UIManager.data.inScene.expBar.UpdateData();
         }
         void OnInventorySizeChanged(byte oldSize, byte newSize)
@@ -158,7 +173,8 @@ namespace Game
                 }
             }
         }
-        void OnOccupationChanged(PlayerOccupation oldOcc, PlayerOccupation newOcc) {
+        void OnOccupationChanged(PlayerOccupation oldOcc, PlayerOccupation newOcc)
+        {
             // update UI
             UIManager.data.inScene.changableInterface.UpdateView(oldOcc, newOcc);
             // pages
@@ -177,6 +193,13 @@ namespace Game
             else
             {
                 UIManager.data.inScene.counter.StopCounter();
+            }
+        }
+        void OnTeamChanged(Team oldTeam, Team newTeam)
+        {
+            if(UIManager.data.currenOpenWindow == null)
+            {
+                UIManager.data.inScene.sideBox.Refresh();
             }
         }
     #endregion

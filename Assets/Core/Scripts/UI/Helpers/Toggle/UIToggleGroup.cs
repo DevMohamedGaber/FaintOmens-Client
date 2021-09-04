@@ -15,21 +15,17 @@ namespace Game.UI
             Clear();
             if(transform.childCount > 0)
             {
-                //Debug.Log(m_list.Count);
                 for (int i = 0; i < transform.childCount; i++)
                 {
                     UIToggle child = transform.GetChild(i).GetComponent<UIToggle>();
                     if(child != null)
                     {
-                        //Debug.Log(child);
                         m_list.Add(child);
                         child.index = i;
                     }
                 }
-                //Debug.Log(m_list.Count);
                 if(m_list.Count > 0 && defaultIndex > -1)
                 {
-                    Debug.Log("Selected");
                     Select(defaultIndex);
                 }
             }

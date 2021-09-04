@@ -36,10 +36,12 @@ namespace Game.UI
                     go.GetComponent<UICharacterSelection_SelectButton>().Set(characters[i], i);
                 }
                 charsToggleGroup.UpdateTogglesList();
+                OnSelect(0);
                 if(charsData.Length < networkManager.characterLimit)
                 {
                     FillWithCreateButtons();
                 }
+                gameObject.SetActive(true);
             }
             else
             {
@@ -47,11 +49,6 @@ namespace Game.UI
                 UIManager.data.lobby.create.Show();
                 return;
             }
-            if(charsData != null && characters.Length > 0)
-            {
-                OnSelect(0);
-            }
-            gameObject.SetActive(true);
         }
         void FillWithCreateButtons()
         {

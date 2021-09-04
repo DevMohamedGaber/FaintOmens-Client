@@ -8,11 +8,11 @@ namespace Game.UI
 {
     public class UILogin : UILobbyWindow
     {
-        public NetworkAuthenticatorMMO auth;
-        public TMP_InputField accText;
-        public TMP_InputField passwordText;
-        public TMP_Text errorText;
-        public GameObject loading;
+        [SerializeField] NetworkAuthenticatorMMO auth;
+        [SerializeField] TMP_InputField accText;
+        [SerializeField] TMP_InputField passwordText;
+        [SerializeField] TMP_Text errorText;
+        //public GameObject loading;
         [SerializeField] bool useNetwork;
         public void OnLogin()
         {
@@ -27,12 +27,12 @@ namespace Game.UI
         }
         public void OnLoginSuccess()
         {
-            loading.SetActive(false);
+            //loading.SetActive(false);
         }
         public override void OnError(NetworkError error)
         {
             errorText.text = LanguageManger.GetWord(Convert.ToInt32((byte)error), LanguageDictionaryCategories.NetworkError);
-            loading.SetActive(false);
+            //loading.SetActive(false);
         }
         public void OnAccChanged(string acc)
         {
