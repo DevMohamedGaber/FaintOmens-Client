@@ -8,6 +8,8 @@ namespace Game
         public static void AlreadyFriends() => list.Add("You are already friends", "انت متصادقون بالفعل");
         public static void DontHaveEnoughGold() => list.Add("You don't have enough gold", "ليس لديك ذهب كاف");
         public static void DontHaveEnoughDiamonds() => list.Add("You don't have enough diamonds", "ليس لديك الماس كاف");
+        public static void DontHaveEnoughBDiamonds() => list.Add("You don't have enough bound diamonds", "ليس لديك الماس مجاني كاف");
         public static void InvalidName() => list.Add("Invalid Name", "الاسم غير متوافق");
+        public static void SelectItemFirst() => list.Add("Select an item first", "اختر ايتم اولا");
     }
 }

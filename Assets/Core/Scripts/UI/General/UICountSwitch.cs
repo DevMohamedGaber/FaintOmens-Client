@@ -14,51 +14,83 @@ namespace Game.UI
         [SerializeField] uint m_count = 1;
         public uint count => m_count;
         public int index = -1;
-        public void OnIncrease() {
+        public void OnIncrease()
+        {
             if(m_count > 1)
+            {
                 m_count--;
+            }
             UpdateInfo();
         }
-        public void OnDecrease() {
+        public void OnDecrease()
+        {
             if(m_count < max)
+            {
                 m_count++;
+            }
             UpdateInfo();
         }
-        public void OnMin() {
+        public void OnMin()
+        {
             if(min > 0)
+            {
                 m_count = min;
+            }
             UpdateInfo();
         }
-        public void OnMax() {
+        public void OnMax()
+        {
             if(max > 0)
+            {
                 m_count = max;
+            }
             UpdateInfo();
         }
-        public void OnInputEditEnd(string textValue) {
+        public void OnInputEditEnd(string textValue)
+        {
             uint v = Convert.ToUInt32(textValue);
-            if(v < 1) {
+            if(v < 1)
+            {
                 m_count = min > 0 ? min : 1;
             } 
-            else if(max > 0) {
+            else if(max > 0)
+            {
                 m_count = v > max ? max : v;
             } 
-            else {
+            else
+            {
                 m_count = v;
             }
         }
-        public void Limits(uint setMin, uint setMax) {
-            min = m_count = setMin;
-            max = setMax;
+        public void Limits(uint min, uint max)
+        {
+            this.min = m_count = min;
+            this.max = max;
             UpdateInfo();
         }
-        void UpdateInfo() {
+        public bool IsValid()
+        {
+            return m_count >= min && m_count <= max;
+        }
+        public void Show(int index = -1)
+        {
+            this.index = index;
+            gameObject.SetActive(true);
+        }
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+        void UpdateInfo()
+        {
             input.text = m_count.ToString();
             prevButton.SetActive(m_count > min);
             minButton.SetActive(m_count > min);
             nextButton.SetActive(m_count < max);
             maxButton.SetActive(m_count < max);
         }
-        void OnDisable() {
+        void OnDisable()
+        {
             index = -1;
             input.text = "1";
         }

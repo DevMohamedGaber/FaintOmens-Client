@@ -90,6 +90,7 @@ namespace Game
             public Color[] tierColor;
             public Sprite[] avatars;
             public Sprite[] gender;
+            public Sprite[] currency;
             public GameObject itemSlotPrefab;
             public Sprite[] socketSlot; // 0 => locked; 1 => empty
             public Sprite defaultItem;
@@ -103,6 +104,7 @@ namespace Game
             public UIChangableInterface changableInterface;
             public UIRespawn respawn;
             public UIToolTip tooltip;
+            public UISideBox sideBox;
         }
         [Serializable] public struct UIManager_Lobby {
             public UILobbyWindow current;

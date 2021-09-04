@@ -43,10 +43,14 @@ namespace Game.UI
                 !Input.GetMouseButton(2))
                 EventSystem.current.SetSelectedGameObject(null);
         }
-        public static void DestroyChildren(Transform parent) {
-            if(parent.childCount > 0) {
+        public static void DestroyChildren(Transform parent)
+        {
+            if(parent.childCount > 0)
+            {
                 for(int i = 0; i < parent.childCount; i++)
+                {
                     GameObject.Destroy(parent.GetChild(i).gameObject);
+                }
             }
         }
         public static List<T> BalancePrefabs<T>(GameObject prefab, int amount, Transform parent) {
