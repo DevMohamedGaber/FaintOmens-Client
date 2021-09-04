@@ -10,24 +10,30 @@ namespace Game.UI
         [SerializeField] GameObject noItems;
         [SerializeField] protected UICountSwitch counter;
         protected ScriptableShop currentShop;
+        protected float discount;
         public override void Refresh()
         {
             if(currentShop != null)
             {
-                int itemsCount = currentShop.items.Length;
-                noItems.SetActive(itemsCount == 0);
-                UIUtils.DestroyChildren(content);
-                items = new UIShopItem[itemsCount];
-                if(itemsCount > 0)
+                if(noItems != null)
                 {
-                    for (int i = 0; i < itemsCount; i++)
-                    {
-                        UIShopItem item = Instantiate(prefab, content, false).transform.GetComponent<UIShopItem>();
-                        item.Set(currentShop.items[i]);
-                        item.button.onClick = () => OnSelect(i);
-                    }
+                    noItems.SetActive(currentShop.items.Length == 0);
+                }
+                if(currentShop.discountable)
+                {
+                    player.CmdCheckShopDiscount(currentShop.name);
+                }
+                else
+                {
+                    RefreshContent();
                 }
             }
+        }
+        public virtual void OnSelect(int index)
+        {
+            uint maxCount = currentShop.MaxAvailable(index);
+            counter.Limits(Math.Min(1, maxCount), maxCount);
+            counter.Show(index);
         }
         public virtual void OnConfirm()
         {
@@ -44,7 +50,12 @@ namespace Game.UI
             if(!currentShop.HasCost(counter.index, counter.count))
                 return;
         }
-        public void Show(int shopId)
+        public virtual void SetDiscount(float discount)
+        {
+            this.discount = discount;
+            RefreshContent();
+        }
+        public virtual void Show(int shopId)
         {
             if(ScriptableShop.dict.TryGetValue(shopId, out ScriptableShop shopData))
             {
@@ -57,12 +68,19 @@ namespace Game.UI
                 Notify.list.Add("Shop not found", "لم نجد هذا المتجر");
             }
         }
-        void OnSelect(int index)
+        protected void RefreshContent()
         {
-            currenItem = index;
-            uint maxCount = currentShop.MaxAvailable(index);
-            counter.Limits(Math.Min(1, maxCount), maxCount);
-            counter.Show(index);
+            int itemsCount = currentShop.items.Length;
+            UIUtils.BalancePrefabs(prefab, itemsCount, content);
+            if(itemsCount > 0)
+            {
+                for (int i = 0; i < itemsCount; i++)
+                {
+                    UIShopItem item = content.GetChild(i).GetComponent<UIShopItem>();
+                    item.Set(currentShop.items[i], discount);
+                    item.button.onClick = () => OnSelect(i);
+                }
+            }
         }
     }
 }

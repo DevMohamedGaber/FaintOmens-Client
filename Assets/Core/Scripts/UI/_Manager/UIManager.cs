@@ -91,6 +91,7 @@ namespace Game
             public Sprite[] avatars;
             public Sprite[] gender;
             public Sprite[] currency;
+            public Sprite[] discountArrows;
             public GameObject itemSlotPrefab;
             public Sprite[] socketSlot; // 0 => locked; 1 => empty
             public Sprite defaultItem;

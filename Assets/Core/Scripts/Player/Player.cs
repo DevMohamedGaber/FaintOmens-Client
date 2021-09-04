@@ -1528,6 +1528,9 @@ namespace Game
             else Notify.list.Add("You're not trading");
         }
     #endregion
+    #region Shops
+        [Command] public void CmdCheckShopDiscount(int shopId) {}
+    #endregion
     #region General
         [TargetRpc] public void TargetNotify(string msg) => Notify.list.Add(msg);
         [TargetRpc] public void TargetNotifySuccess(NotifySuccessType type) {

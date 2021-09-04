@@ -8,6 +8,7 @@ namespace Game
     public class ScriptableShop : ScriptableObjectNonAlloc
     {
         public ShopItem[] items;
+        public bool discountable;
         Player player => Player.localPlayer;
 
         public bool HasCost(int itemIndex, uint count)
@@ -42,21 +43,22 @@ namespace Game
             if(itemIndex < 0 || itemIndex >= items.Length)
             {
                 Notify.SelectItemFirst();
-                return false;
+                return 0;
             }
             ShopItem item = items[itemIndex];
-            if(currency == ShopCurrency.Gold)
+            if(item.currency == ShopCurrency.Gold)
             {
-                return Math.Min((uint)Math.Floor(player.own.gold / item.cost), item.maxPerCheckout) ;
+                return Math.Min((uint)Math.Floor((double)(player.own.gold / item.cost)), item.maxPerCheckout) ;
             }
-            else if(currency == ShopCurrency.Diamonds)
+            else if(item.currency == ShopCurrency.Diamonds)
             {
-                return Math.Min((uint)Math.Floor(player.own.diamonds / item.cost), item.maxPerCheckout);
+                return Math.Min((uint)Math.Floor((double)(player.own.diamonds / item.cost)), item.maxPerCheckout);
             }
-            else if(currency == ShopCurrency.BDiamonds)
+            else if(item.currency == ShopCurrency.BDiamonds)
             {
-                return Math.Min((uint)Math.Floor(player.own.b_diamonds / item.cost), item.maxPerCheckout);
+                return Math.Min((uint)Math.Floor((double)(player.own.b_diamonds / item.cost)), item.maxPerCheckout);
             }
+            return 0;
         }
         static Dictionary<int, ScriptableShop> cache;
         public static Dictionary<int, ScriptableShop> dict
