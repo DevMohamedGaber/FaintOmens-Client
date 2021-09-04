@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 namespace Game
 {
-    public class MountBody : MonoBehaviour {
+    public class MountBody : MonoBehaviour
+    {
         [SerializeField] Animator animator;
         [SerializeField] NavMeshAgent agent;
         [SerializeField] Transform seatPosition;
@@ -12,19 +13,24 @@ namespace Game
         public void Moving(bool isMoving)
         {
             animator.SetBool("MOVING", isMoving);
+            if(owner != null && isMoving)
+            {
+                agent.Warp(owner.position);
+                transform.rotation = owner.rotation;
+            }
         }
         public void Set(Transform ownerTransform, float speed)
         {
             agent.speed = speed;
             owner = ownerTransform;
         }
-        void Update()
+        /*void Update()
         {
             if(owner != null)
             {
                 agent.Warp(owner.position);
                 transform.rotation = owner.rotation;
             }
-        }
+        }*/
     }
 }

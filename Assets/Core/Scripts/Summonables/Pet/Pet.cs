@@ -15,7 +15,7 @@ namespace Game
         [SerializeField] RTLTextMeshPro3D nameTxt;
         [SerializeField] SpriteRenderer tierImage;
         [SyncVar] GameObject _owner;
-        public Player owner => _owner != null  ? _owner.GetComponent<Player>() : null;
+        public Player owner => _owner != null ? _owner.GetComponent<Player>() : null;
         [SyncVar(hook="OnStateChanged")] public EntityState state = EntityState.Idle;
         [SyncVar] public byte level;
         [SyncVar, SerializeField] Tier tier;
