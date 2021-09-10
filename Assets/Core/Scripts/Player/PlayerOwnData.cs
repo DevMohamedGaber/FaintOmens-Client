@@ -161,7 +161,7 @@ namespace Game
         }
         void OnExperienceChanged(uint oldExp, uint newExp)
         {
-            UIManager.data.inScene.expBar.UpdateData();
+            UIManager.data.inScene.expBar.Refresh();
         }
         void OnInventorySizeChanged(byte oldSize, byte newSize)
         {

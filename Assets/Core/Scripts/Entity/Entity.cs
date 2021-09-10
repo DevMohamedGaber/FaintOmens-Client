@@ -314,7 +314,7 @@ namespace Game
         protected virtual void Awake() {}
         protected virtual void Start() {}
         public virtual void OnAggro(Entity entity) {}
-        public virtual void OnTargetChanged(GameObject oldTarget, GameObject newTarget) {}
+        protected virtual void OnTargetChanged(GameObject oldTarget, GameObject newTarget) {}
         protected virtual void OnLevelChanged(byte oldLevel, byte newLevel) {}
         protected virtual void OnHealthChanged(int oldHp, int newHp) {}
         protected virtual void OnManaChanged(int oldMp, int newMp) {}

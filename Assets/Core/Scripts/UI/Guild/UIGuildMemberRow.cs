@@ -13,7 +13,7 @@ namespace Game.UI
         [SerializeField] TMP_Text contribution;
         [SerializeField] TMP_Text br;
         [SerializeField] RTLTextMeshPro status;
-        [SerializeField] UIBasicButton btn;
+        [SerializeField] BasicButton btn;
         public void Set(GuildMember member, UnityEngine.Events.UnityAction onClick) {
             Name.text = member.Name;
             className.text = member.classInfo.Name;

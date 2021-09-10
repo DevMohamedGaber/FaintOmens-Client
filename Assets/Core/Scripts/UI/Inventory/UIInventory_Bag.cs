@@ -16,7 +16,7 @@ namespace Game.UI
                     slots[i].Assign(slot: player.own.inventory[i], id: i);
                     slots[i].onClick.SetListener((itemSlot) => {
                         if(itemSlot.IsAssigned() && itemSlot.amount > 0) {
-                            UIManager.data.inScene.tooltip.Show(itemSlot.data, UIToolTipFrom.Inventory, itemSlot.ID);
+                            UIManager.data.inScene.tooltip.Show(itemSlot.data, ToolTipFrom.Inventory, itemSlot.ID);
                             /*if(itemSlot.data.data is UsableItem &&
                                 ((UsableItem)itemSlot.data.data).CanUse()) {
                                     player.CmdUseInventoryItem(itemSlot.ID);

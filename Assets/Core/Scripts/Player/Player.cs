@@ -458,7 +458,7 @@ namespace Game
             // tribe flag
             tribeOverlay.sprite = ScriptableTribe.dict[tribeId].flag;
             CmdSetCurrentLanguage(UIManager.data.gameSettings.currentLang);
-            UIManager.data.inScene.expBar.UpdateData();
+            UIManager.data.inScene.expBar.Refresh();
         }
         int NextSkill() {
             for (int i = 1; i < skills.Count; i++) {
@@ -518,15 +518,18 @@ namespace Game
         }
         public override void ResetMovement() => agent.ResetMovement();
         [Client]
-        async Task LoadMap() {
+        async Task LoadMap()
+        {
             if(Storage.data.currentLoadedMap != null)
+            {
                 Destroy(Storage.data.currentLoadedMap);
+            }
             Storage.data.currentLoadedMap = Instantiate(city.prefab);
             Camera minimapCam = Storage.data.currentLoadedMap.GetComponentInChildren<Camera>();
             if(minimapCam != null)
             {
                 minimapCam.GetComponent<CopyPosition>().target = transform;
-                UIManager.data.miniMap.OnMapChanged(minimapCam);
+                UIManager.data.inScene.miniMap.OnMapChanged(minimapCam);
             }
         }
         [Client] public void JoystickHandling(Vector2 newMovement) {
@@ -640,34 +643,48 @@ namespace Game
             }
             else Notify.list.Add("This skill require a target", "هذه المهارة تتطلب هدف");
         }
-        [Client] void SelectionHandling() {
-            if (Input.GetMouseButtonDown(0) && !Utils.IsCursorOverUserInterface() && Input.touchCount <= 1) {
+        [Client] void SelectionHandling()
+        {
+            if (Input.GetMouseButtonDown(0) && !Utils.IsCursorOverUserInterface() && Input.touchCount <= 1)
+            {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 bool cast = localPlayerClickThrough ? Utils.RaycastWithout(ray, out hit, gameObject) : Physics.Raycast(ray, out hit);
                 
-                if(cast) {
+                if(cast)
+                {
                     useSkillWhenCloser = -1;
                     Entity entity = hit.transform.GetComponent<Entity>();
-                    if(entity) {
+                    if(entity)
+                    {
                         SetIndicatorViaParent(hit.transform);
                         CmdSetTarget(entity.netIdentity);
 
-                        if (entity == target && entity != this && entity != activePet) {
-                            if (CanAttack(entity) && skills.Count > 0) {
+                        if (entity == target && entity != this && entity != activePet)
+                        {
+                            if (CanAttack(entity) && skills.Count > 0)
+                            {
                                 TryUseSkill(0);
                             }
-                            else if (entity is Npc && entity.health > 0) {
+                            else if (entity is Npc && entity.health > 0)
+                            {
                                 if(Utils.ClosestDistance(this, entity) <= interactionRange) 
                                 {
                                     //UINpcDialogue.singleton.Show();
                                 }
-                                else Navigate(entity.collider.ClosestPoint(transform.position), interactionRange);
+                                else
+                                {
+                                    Navigate(entity.collider.ClosestPoint(transform.position), interactionRange);
+                                }
                             }
-                            else Navigate(entity.collider.ClosestPoint(transform.position), interactionRange);
+                            else
+                            {
+                                Navigate(entity.collider.ClosestPoint(transform.position), interactionRange);
+                            }
                         }
                     }
-                    else { // otherwise it's a movement target
+                    else
+                    { // otherwise it's a movement target
                         Loot loot = hit.transform.GetComponent<Loot>();
                         if(loot) {
                             UILoot.singleton.Show(loot);
@@ -685,48 +702,66 @@ namespace Game
                 }
             }
         }
-        [Client] void TargetNearest() {
+        [Client] void TargetNearest()
+        {
             if(Input.GetKeyDown(targetNearestKey))
+            {
                 FindNearestTarget();
+            }
         }
-        void FindNearestTarget() {
+        void FindNearestTarget()
+        {
             GameObject[] objects = GameObject.FindGameObjectsWithTag("Monster");
             List<Monster> monsters = objects.Select(go => go.GetComponent<Monster>()).Where(m => m.health > 0).ToList();
             List<Monster> sorted = monsters.OrderBy(m => Vector3.Distance(transform.position, m.transform.position)).ToList();
-            if (sorted.Count > 0) {
+            if (sorted.Count > 0)
+            {
                 SetIndicatorViaParent(sorted[0].transform);
                 CmdSetTarget(sorted[0].netIdentity);
             }
         }
-        [Client] public void onCastingStarted() {
+        [Client] public void onCastingStarted()
+        {
             // hide wing
             if(wingsHolder != null)
+            {
                 wingsHolder.gameObject.SetActive(false);
+            }
         }
-        [Client] public void onCastingFinished() {
-            if(animationEventEffects != null) {
+        [Client] public void onCastingFinished()
+        {
+            if(animationEventEffects != null)
+            {
                 animationEventEffects.DestroySelf();
             }
             // show wing
             if(wingsHolder != null)
+            {
                 wingsHolder.gameObject.SetActive(true);
+            }
         }
-        [Client] void OnSkillCastFinished(Skill skill) {
-            if(!isLocalPlayer) return;
+        [Client] void OnSkillCastFinished(Skill skill)
+        {
+            if(!isLocalPlayer)
+                return;
             // tried to click move somewhere?
-            if (pendingDestinationValid) {
+            if (pendingDestinationValid)
+            {
                 Navigate(pendingDestination, 0);
             }
             // tried to wasd move somewhere?
-            else if (pendingVelocityValid) {
+            else if (pendingVelocityValid)
+            {
                 agent.velocity = pendingVelocity;
             }
             // user pressed another skill button?
-            else if (pendingSkill != -1) {
+            else if (pendingSkill != -1)
+            {
                 TryUseSkill(pendingSkill, true);
             }
             // otherwise do follow up attack if no interruptions happened
-            else if (skill.followupDefaultAttack) {
+            else if (skill.followupDefaultAttack)
+            {
                 TryUseSkill(0, true);
             }
             // clear pending actions in any case
@@ -734,31 +769,38 @@ namespace Game
             pendingDestinationValid = false;
             pendingVelocityValid = false;
         }
-        protected override void UpdateClient() {
-            if (state == EntityState.Idle || state == EntityState.Moving) {
-                if (isLocalPlayer) {
+        protected override void UpdateClient()
+        {
+            if (state == EntityState.Idle || state == EntityState.Moving)
+            {
+                if (isLocalPlayer)
+                {
                     // simply accept input
                     SelectionHandling();
                     WASDHandling();
                     TargetNearest();
                     // cancel action if escape key was pressed
-                    if(Input.GetKeyDown(cancelActionKey)) {
+                    if(Input.GetKeyDown(cancelActionKey))
+                    {
                         agent.ResetPath(); // reset locally because we use rubberband movement
                         CmdCancelAction();
                     }
                     // trying to cast a skill on a monster that wasn't in range? then check if we walked into attack range by now
-                    if (useSkillWhenCloser != -1) {
+                    if (useSkillWhenCloser != -1)
+                    {
                         // can we still attack the target? maybe it was switched.
-                        if (CanAttack(target)) {
+                        if (CanAttack(target))
+                        {
                             float range = skills[useSkillWhenCloser].castRange * Storage.data.attackToMoveRangeRatio;
-                            if (Utils.ClosestDistance(this, target) <= range) {
+                            if (Utils.ClosestDistance(this, target) <= range)
+                            {
                                 // then stop moving and start attacking
                                 CmdUseSkill((sbyte)useSkillWhenCloser);
-
                                 // reset
                                 useSkillWhenCloser = -1;
                             }
-                            else {
+                            else
+                            {
                                 //Debug.Log("walking closer to target...");
                                 Navigate(Utils.ClosestPoint(target, transform.position), range);
                             }
@@ -768,10 +810,15 @@ namespace Game
                     }
                 }
             }
-            else if (state == EntityState.Casting) {
+            else if (state == EntityState.Casting)
+            {
                 // keep looking at the target for server & clients (only Y rotation)
-                if (target) LookAtY(target.transform.position);
-                if (isLocalPlayer) {
+                if (target)
+                {
+                    LookAtY(target.transform.position);
+                }
+                if (isLocalPlayer)
+                {
                     // simply accept input and reset any client sided movement
                     SelectionHandling();
                     WASDHandling(); // still call this to set pendingVelocity for after cast
@@ -779,23 +826,38 @@ namespace Game
                     ResetMovement();
 
                     // cancel action if escape key was pressed
-                    if (Input.GetKeyDown(cancelActionKey)) CmdCancelAction();
+                    if (Input.GetKeyDown(cancelActionKey))
+                    {
+                        CmdCancelAction();
+                    }
                 }
             }
-            else if (state == EntityState.Stunned) {
-                if (isLocalPlayer) {
+            else if (state == EntityState.Stunned)
+            {
+                if (isLocalPlayer)
+                {
                     // simply accept input and reset any client sided movement
                     SelectionHandling();
                     TargetNearest();
                     ResetMovement();
                     // cancel action if escape key was pressed
-                    if (Input.GetKeyDown(cancelActionKey)) CmdCancelAction();
+                    if (Input.GetKeyDown(cancelActionKey))
+                    {
+                        CmdCancelAction();
+                    }
                 }
             }
-            else if(state == EntityState.Dead) {}
-            else Debug.LogError("invalid state:" + state);
+            else if(state == EntityState.Dead)
+            {
+                ResetMovement();
+            }
+            else
+            {
+                Debug.LogError("invalid state:" + state);
+            }
         }
-        public override void OnStartClient() {
+        public override void OnStartClient() 
+        {
             base.OnStartClient();
             // 3d model
             equipment.Callback += OnEquipmentChanged;
@@ -803,47 +865,74 @@ namespace Game
             RefreshAllLocation();
             //overlays
             if(onPlayerInfoOverlay != null)
+            {
                 onPlayerInfoOverlay.enabled = true;
+            }
             if(nameText != null)
+            {
                 nameText.text = name;
+            }
             if(guildText != null && InGuild())
+            {
                 guildText.text = guild.name;
+            }
             if(tribeOverlay != null)
+            {
                 tribeOverlay.sprite = ScriptableTribe.dict[tribeId].flag;
+            }
             if(activeTitle > 0)
-                    UpdateTitle();
-            if(!isLocalPlayer && localPlayer != null) {
-                Debug.Log("Not LocalPlayer");
-                if(nameText != null) {
+            {
+                UpdateTitle();
+            }
+            if(!isLocalPlayer && localPlayer != null)
+            {
+                if(nameText != null)
+                {
                     if(InTeam() && localPlayer.InTeam() && own.team.Contains(id))
+                    {
                         nameText.color = Color.green;
+                    }
                     else if(localPlayer.tribeId != tribeId)
+                    {
                         nameText.color = Color.red;
+                    }
                 }
-                
                 if(guildText != null && InGuild() && localPlayer.InGuild() && localPlayer.guild.id == guild.id)
+                {
                     guildText.color = Storage.data.guildMemberColor;
-                
-                if(mount.canMount && mount.mounted) {
+                }
+                if(mount.canMount && mount.mounted)
+                {
                     mountObj = Instantiate(mount.prefab).GetComponent<MountBody>();
                     mountObj.Set(transform, speed);
                 }
             }
         }
-        public void SetIndicatorViaParent(Transform parent) {
-            if (!indicator) indicator = Instantiate(Storage.data.player.indicator);
+        public void SetIndicatorViaParent(Transform parent)
+        {
+            if (!indicator)
+            {
+                indicator = Instantiate(Storage.data.player.indicator);
+            }
             indicator.transform.SetParent(parent, true);
             indicator.transform.position = parent.position;
         }
-        public void SetIndicatorViaPosition(Vector3 position) {
-            if (!indicator) indicator = Instantiate(Storage.data.player.indicator);
+        public void SetIndicatorViaPosition(Vector3 position)
+        {
+            if (!indicator)
+            {
+                indicator = Instantiate(Storage.data.player.indicator);
+            }
             indicator.transform.parent = null;
             indicator.transform.position = position;
         }
         // clear indicator if there is one, and if it's not on a target
-        public void ClearIndicatorIfNoParent() {
+        public void ClearIndicatorIfNoParent()
+        {
             if (indicator != null && indicator.transform.parent == null)
+            {
                 Destroy(indicator);
+            }
         }
     #endregion //Client Commands
     #region BodyModels
@@ -890,26 +979,35 @@ namespace Game
             if(wardrobe[(int)ClothingCategory.Wings].isUsed)
                 RefreshWingsLocation();
         }
-        void RefreshMainWeaponLocation() {
+        void RefreshMainWeaponLocation()
+        {
             Transform mainHand = mainWeaponHolder;
             if(mainHand == null)
                 return;
             int index = (int)ClothingCategory.Weapon;
-            if(wardrobe[index].isUsed && showWardrop && ScriptableWardrobe.dict.TryGetValue(wardrobe[index].id, out ScriptableWardrobe weapon)) {
+            if(wardrobe[index].isUsed && showWardrop &&
+                ScriptableWardrobe.dict.TryGetValue(wardrobe[index].id, out ScriptableWardrobe weapon))
+            {
                 if(weapon.category != ClothingCategory.Weapon)
                     return;
-                if(mainHand.childCount > 0) 
+                if(mainHand.childCount > 0)
+                {
                     Destroy(mainHand.GetChild(0).gameObject);
-                Instantiate(weapon.modelPrefab[(int)classInfo.type], mainHand, false);
+                }
+                Instantiate(weapon.modelPrefab[(int)classInfo.type - 1], mainHand, false);
             }
-            else {// armor index => 7
+            else
+            {// armor index => 7
                 index = (int)EquipmentsCategory.Weapon;
                 if(equipment.Count < index || equipment[index].item.id == 0 || equipment[index].amount != 1) 
                     return;
                 EquipmentItem itemData = (EquipmentItem)equipment[index].item.data;
-                if(itemData != null && itemData.category == EquipmentsCategory.Weapon && itemData.modelPrefab[0] != null) {
-                    if(mainHand.childCount > 0) 
+                if(itemData != null && itemData.category == EquipmentsCategory.Weapon && itemData.modelPrefab[0] != null)
+                {
+                    if(mainHand.childCount > 0)
+                    {
                         Destroy(mainHand.GetChild(0).gameObject);
+                    }
                     Instantiate(itemData.modelPrefab[0], mainHand, false);
                 }
             }
@@ -1001,6 +1099,17 @@ namespace Game
         }
     #endregion
     #region Client Callbacks
+        protected override void OnTargetChanged(GameObject oldTarget, GameObject newTarget)
+        {
+            if(newTarget != null)
+            {
+                UIManager.data.inScene.selectedTargetInfo.Show();
+            }
+            else
+            {
+                UIManager.data.inScene.selectedTargetInfo.Hide();
+            }
+        }
         protected override void OnHealthChanged(int oldHp, int newHp)
         {
             UILocalPlayerInfo.singleton?.UpdateHealth();
@@ -1288,7 +1397,8 @@ namespace Game
     #endregion
     #region Teleportation
         public bool CanTeleportTo(int mapIndex) => mapIndex > -1 && mapIndex < Storage.data.cities.Count;
-        public async void OnCityChanged(byte oldCity, byte newCity) {
+        public async void OnCityChanged(byte oldCity, byte newCity)
+        {
             await Task.Run(() => LoadMap());
             CmdConfirmTeleport();
         }
@@ -1297,14 +1407,18 @@ namespace Game
         [Command] public void CmdNpcTeleport(int index) {}
         [Command] public void CmdWorldBossTeleport() {}
         [Command] public void CmdTeleportToQuestLocation(Vector3 questLocation) {}
-        [TargetRpc] public void TargetLoadEventMap(EventMaps eventType, Vector3 mapPos) {
+        [TargetRpc] public void TargetLoadEventMap(EventMaps eventType, Vector3 mapPos)
+        {
             if(Storage.data.currentLoadedMap != null)
+            {
                 Destroy(Storage.data.currentLoadedMap);
+            }
             Storage.data.currentLoadedMap = Instantiate(Storage.data.eventMaps[(int)eventType], mapPos, Quaternion.identity);
             Camera minimapCam = Storage.data.currentLoadedMap.GetComponentInChildren<Camera>();
-            if(minimapCam != null) {
+            if(minimapCam != null)
+            {
                 minimapCam.GetComponent<CopyPosition>().target = transform;
-                UIManager.data.miniMap.OnMapChanged(minimapCam);
+                UIManager.data.inScene.miniMap.OnMapChanged(minimapCam);
             }
             CmdConfirmTeleport();
         }
@@ -1504,25 +1618,29 @@ namespace Game
             UIManager.data.pages.trade.Show();
         } 
         [TargetRpc] public void TargetShowConfirmedTradeOffer(ItemSlot[] offeredItems, uint offeredGold, uint offeredDiamonds) {
-            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is UITrade trade) {
+            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is Trade trade)
+            {
                 trade.UpdateConfirmedOffer(offeredItems, offeredGold, offeredDiamonds);
             }
             else Notify.list.Add("You're not trading");
         }
         [TargetRpc] public void TargetAcceptTradeOffer() {
-            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is UITrade trade) {
+            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is Trade trade)
+            {
                 trade.OtherAccepted();
             }
             else Notify.list.Add("You're not trading");
         }
         [TargetRpc] public void TargetAcceptedMyTradeOffer() {
-            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is UITrade trade) {
+            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is Trade trade)
+            {
                 trade.MineAccepted();
             }
             else Notify.list.Add("You're not trading");
         }
         [TargetRpc] public void TargetCloseTrade() {
-            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is UITrade trade) {
+            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is Trade trade)
+            {
                 trade.Close();
             }
             else Notify.list.Add("You're not trading");

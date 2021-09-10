@@ -57,7 +57,7 @@ namespace Game.UI
                 for(int i = characters.Length; i < networkManager.characterLimit; i++)
                 {
                     Instantiate(createPrefab, content, false)
-                    .transform.GetComponent<UIBasicButton>().onClick = () =>
+                    .transform.GetComponent<BasicButton>().onClick = () =>
                     {
                         UIManager.data.lobby.create.Show();
                     };

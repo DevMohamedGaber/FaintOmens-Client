@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace Game.UI
 {
-    public class UIInteractiveButton : UIBasicButton
+    public class UIInteractiveButton : BasicButton
     {
         [SerializeField] Image image;
         [SerializeField] Sprite inactiveSprite;

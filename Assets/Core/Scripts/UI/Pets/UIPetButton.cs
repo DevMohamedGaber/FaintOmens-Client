@@ -13,7 +13,7 @@ namespace Game.UI
         public GameObject starsObj;
         public GameObject assigned;
         public GameObject selected;
-        public UIBasicButton button;
+        public BasicButton button;
         public ushort id;
         public void Set(ScriptablePet data) {
             id = (ushort)data.name;

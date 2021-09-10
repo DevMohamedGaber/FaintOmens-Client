@@ -2,11 +2,13 @@ using UnityEngine;
 //[ExecuteAlways]
 namespace Game.UI
 {
-    public class ApplyUISafeArea : MonoBehaviour {
+    public class ApplyUISafeArea : MonoBehaviour
+    {
         Rect lastSafeArea;
         RectTransform parentRectTransform;
 
-        private void Start() {
+        private void Start()
+        {
             parentRectTransform = this.GetComponentInParent<RectTransform>();
             ApplySafeArea();
         }
@@ -16,7 +18,8 @@ namespace Game.UI
             }
         }*/
 
-        private void ApplySafeArea() {
+        private void ApplySafeArea()
+        {
             Rect safeAreaRect = Screen.safeArea;
 
             float scaleRatio = parentRectTransform.rect.width / Screen.width;

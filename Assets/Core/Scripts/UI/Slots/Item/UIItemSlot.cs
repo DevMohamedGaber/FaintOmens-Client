@@ -12,7 +12,7 @@ namespace Game.UI
         [SerializeField] protected UIQualityController quality;
         [SerializeField] TMP_Text plusText;
         [SerializeField] protected GameObject bound;
-        [SerializeField] UIBasicButton unlockBtn;
+        [SerializeField] BasicButton unlockBtn;
         public OnClickEvent onClick = new OnClickEvent();
         public OnDoubleClickEvent onDoubleClick = new OnDoubleClickEvent();
         public Item data;

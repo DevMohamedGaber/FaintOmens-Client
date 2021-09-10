@@ -15,7 +15,7 @@ namespace Game.UI
         }
         public override void OnPointerClick(PointerEventData eventData) {
             if(IsAssigned() && amount > 0)
-                UIManager.data.inScene.tooltip.Show(data, UIToolTipFrom.Inventory, ID);
+                UIManager.data.inScene.tooltip.Show(data, ToolTipFrom.Inventory, ID);
                 //ToolTip.data.ShowItem(data, transform.position, true, ID);
             /*if(this.m_ItemInfo != null && this.m_ItemInfo.Value.amount > 0) {
                 ToolTip.data.onUse = () => {

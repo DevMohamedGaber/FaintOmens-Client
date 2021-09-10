@@ -13,9 +13,10 @@ namespace Game.UI
         [Header("Team")]
         [SerializeField] GameObject teamPanel;
         [SerializeField] GameObject noTeamObj;
+        [SerializeField] UISideBox_ActionMenu teamActionMenu;
         [SerializeField] GameObject teamMemberPrefab;
         [SerializeField] Transform teamMembersContent;
-        [SerializeField] UISideBox_TeamMember[] teamMembers;
+        UISideBox_TeamMember[] teamMembers;
         Player player => Player.localPlayer;
         public void Refresh()
         {
@@ -77,13 +78,31 @@ namespace Game.UI
                 panel.SetActive(true);
             }
         }
+        public void OnSelectTeamMember(TeamMember member)
+        {
+            if(!player.InTeam())
+            {
+                Notify.NotInTeam();
+                return;
+            }
+            teamActionMenu.Set(member);
+        }
         void RefreshQuests()
         {
 
         }
         void RefreshTeam()
         {
-            
+            int i;
+            Team team = player.own.team;
+            for (i = 0; i < team.members.Length; i++)
+            {
+                teamMembers[i].Set(team.members[i], team.members[i].id == team.leaderId);
+            }
+            for (i = i; i < teamMembers.Length; i++)
+            {
+                teamMembers[i].Hide();
+            }
         }
         void OnEnable()
         {
@@ -98,8 +117,8 @@ namespace Game.UI
                 teamMembers = new UISideBox_TeamMember[Storage.data.team.capacity];
                 for (int i = 0; i < Storage.data.team.capacity; i++)
                 {
-                    GameObject go = Instantiate(teamMemberPrefab, teamMembersContent, false);
-                    teamMembers[i] = teamMembersContent.GetChild(i).GetComponent<UISideBox_TeamMember>();
+                    UISideBox_TeamMember member = Instantiate(teamMemberPrefab, teamMembersContent, false).GetComponent<UISideBox_TeamMember>();
+                    teamMembers[i] = member;
                 }
             }
         }
