@@ -1,12 +1,32 @@
-using System;
-using System.Text;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RTLTMPro;
+using TMPro;
+using System;
 namespace Game.UI
 {
-    public class UITitles : MonoBehaviour {
-        [Header("General")]
+    public class Titles : Window
+    {
+        [Header("Category")]
+        [SerializeField] GameObject categoryPrefab;
+        [SerializeField] Transform categoryContent;
+
+        void OnSelectCategory(TitleCaregory caregory)
+        {
+
+        }
+        void Awake()
+        {
+            int[] tgArr = (int[]) Enum.GetValues(typeof(TitleCaregory));
+            UIUtils.BalancePrefabs(categoryPrefab, tgArr.Length, categoryContent);
+            for (int i = 0; i < tgArr.Length; i++)
+            {
+                Transform cBtn = categoryContent.GetChild(i);
+                cBtn.GetComponentInChildren<RTLTextMeshPro>().text = LanguageManger.GetWord(tgArr[i], LanguageDictionaryCategories.TitleCategory);
+                cBtn.GetComponent<BasicButton>().onClick = () => OnSelectCategory((TitleCaregory)tgArr[i]);
+            }
+        }
+        /*[Header("General")]
         [SerializeField, Range(0, 1)] float updateInterval = .3f;
         [SerializeField] UILanguageDefiner lang;
         [SerializeField] GameObject categoryPrefab;
@@ -57,7 +77,7 @@ namespace Game.UI
             /*if(title.atk.active > 0)
                 result.Append(LanguageManger.GetWord(player.classType == DamageType.Physical ? 8 : 9) + " +" + title.atk.active + ", ");
             if(title.def.active > 0)
-                result.Append(LanguageManger.GetWord(player.classType == DamageType.Physical ? 10 : 11) + " +" + title.def.active + ", ");*/
+                result.Append(LanguageManger.GetWord(player.classType == DamageType.Physical ? 10 : 11) + " +" + title.def.active + ", ");
             if(title.block.active > 0)
                 result.Append(LanguageManger.GetWord(15) + " +" + title.block.active.ToString("F0") + "%, ");
             if(title.antiBlock.active > 0)
@@ -80,7 +100,7 @@ namespace Game.UI
             /*if(title.atk.notActive > 0)
                 result.Append(LanguageManger.GetWord(player.classType == DamageType.Physical ? 8 : 9) + " +" + title.atk.notActive + ", ");
             if(title.def.notActive > 0)
-                result.Append(LanguageManger.GetWord(player.classType == DamageType.Physical ? 10 : 11) + " +" + title.def.notActive + ", ");*/
+                result.Append(LanguageManger.GetWord(player.classType == DamageType.Physical ? 10 : 11) + " +" + title.def.notActive + ", ");
             if(title.block.notActive > 0)
                 result.Append(LanguageManger.GetWord(15) + " +" + title.block.notActive.ToString("F0") + "%, ");
             if(title.antiBlock.notActive > 0)

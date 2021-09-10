@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class UIWindowBase : MonoBehaviour
+    public class Window : MonoBehaviour
     {
         protected Player player => Player.localPlayer;
         public bool isVisible => gameObject.activeSelf;

@@ -19,8 +19,8 @@ namespace Game
         public ml.InScene inScene;
         public ml.Lobby lobby;
         // Management
-        [HideInInspector] public UIWindowBase currenOpenWindow;
-        public Stack<UIWindowBase> history = new Stack<UIWindowBase>();
+        [HideInInspector] public Window currenOpenWindow;
+        public Stack<Window> history = new Stack<Window>();
 
         Player player => Player.localPlayer;
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 namespace Game.UI
 {
-    public class Shop : UIWindowBase
+    public class Shop : Window
     {
         [Header("Shop")]
         [SerializeField] Transform content;

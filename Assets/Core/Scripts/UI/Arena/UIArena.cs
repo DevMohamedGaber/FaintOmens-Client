@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 namespace Game.UI
 {
-    public class UIArena : UIWindowBase
+    public class UIArena : Window
     {
         [SerializeField] GameObject[] pages;
         int current = 0;

@@ -1,29 +1,55 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class UIWorkshop : UIWindowBase {
+    public class UIWorkshop : Window
+    {
         [SerializeField] UISubWindowBase[] pages;
         [SerializeField] TMPro.TMP_Text goldTxt;
         int currentPage = 0;
-        public override void Refresh() {
+        public override void Refresh()
+        {
             if(isVisible)
+            {
                 pages[currentPage].Refresh();
+            }
         }
-        public override void UpdateCurrency() {
+        public override void UpdateCurrency()
+        {
             goldTxt.text = player.own.gold.ToString();
         }
-        public void GoToPage(int index) {
-            for(int i = 0; i < pages.Length; i++) {
-                if(i == index) pages[i].Show();
-                else pages[i].Hide();
+        public void GoToPage(int index)
+        {
+            for(int i = 0; i < pages.Length; i++)
+            {
+                if(i == index)
+                {
+                    pages[i].Show();
+                }
+                else
+                {
+                    pages[i].Hide();
+                }
             }
             currentPage = index;
         }
-        public void Plus() => GoToPage(0);
-        public void Socket() => GoToPage(1);
-        public void Quality() => GoToPage(2);
-        public void Craft() => GoToPage(3);
-        protected override void OnEnable() {
+        public void Plus()
+        {
+            GoToPage(0);
+        }
+        public void Socket()
+        {
+            GoToPage(1);
+        }
+        public void Quality()
+        {
+            GoToPage(2);
+        }
+        public void Craft()
+        {
+            GoToPage(3);
+        }
+        protected override void OnEnable()
+        {
             base.OnEnable();
             GoToPage(0);
         }

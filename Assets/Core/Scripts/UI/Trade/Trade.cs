@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 namespace Game.UI
 {
-    public class Trade : UIWindowBase
+    public class Trade : Window
     {
         [SerializeField] Transform inventory;
         [SerializeField] UICountSwitch countSwitch;
