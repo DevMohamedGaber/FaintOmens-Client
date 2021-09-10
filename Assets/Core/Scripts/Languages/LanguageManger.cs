@@ -6,7 +6,7 @@ namespace Game
     public class LanguageManger
     {
         public static Languages defLang = Languages.En;
-        public static string[] langNames = new string[] {"العربية", "English"};
+        public static string[] langNames = new string[] { "العربية", "English" };
         public static bool isEn => UIManager.data.gameSettings.currentLang == Languages.En;
         public static Languages current => UIManager.data.gameSettings.currentLang;
         public static Dictionary<LanguageDictionaryCategories, Dictionary<int, string>> dictionary = new Dictionary<LanguageDictionaryCategories, Dictionary<int, string>>();
@@ -16,7 +16,7 @@ namespace Game
             //UIManager.data.miniLoading.Show(2);
             UIManager.data.OnChangeLanguage(lang);
             ScriptableLanguage resource = Resources.Load<ScriptableLanguage>("Languages/" + lang.ToString());
-            Declare();
+            //Declare();
             if(resource != null)
             {
                 resource.Fetch();
@@ -67,8 +67,17 @@ namespace Game
         {
             return isEn ? leftSymbol + text + rightSymbol : rightSymbol + text + leftSymbol;
         }
-        static void Declare()
+        /*static void Declare()
         {
+            LanguageDictionaryCategories[] categoryList = (LanguageDictionaryCategories[]) Enum.GetValues(typeof(LanguageDictionaryCategories));
+            if(categoryList.Length > 0)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    
+                }
+            }
+
             dictionary[LanguageDictionaryCategories.Word] = new Dictionary<int, string>();
             dictionary[LanguageDictionaryCategories.ItemName] = new Dictionary<int, string>();
             dictionary[LanguageDictionaryCategories.ItemDesc] = new Dictionary<int, string>();
@@ -83,6 +92,6 @@ namespace Game
             dictionary[LanguageDictionaryCategories.Wardrop] = new Dictionary<int, string>();
             dictionary[LanguageDictionaryCategories.AchievementName] = new Dictionary<int, string>();
             dictionary[LanguageDictionaryCategories.AchievementRequirement] = new Dictionary<int, string>();
-        }
+        }*/
     }
 }

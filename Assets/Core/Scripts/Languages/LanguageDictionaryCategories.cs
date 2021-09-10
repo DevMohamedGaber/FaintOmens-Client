@@ -5,6 +5,7 @@ namespace Game
     {
         Word,
         ItemName, ItemDesc, ItemTypes,
+        TitleName, TitleCategory,
         Monster,
         Pet, Mount,
         City,

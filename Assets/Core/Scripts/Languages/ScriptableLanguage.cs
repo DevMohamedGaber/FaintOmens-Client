@@ -6,9 +6,45 @@ namespace Game
     [CreateAssetMenu(menuName = "Custom/Language", order = 999)]
     public class ScriptableLanguage : ScriptableObject
     {
-        public LanguageDictionaryCodeNameDesc[] items;
+        [SerializeField] LanguageData[] data;
+        public void Fetch()
+        {
+            if(data.Length > 0)
+            {
+                foreach (LanguageData list in data)
+                {
+                    list.Load();
+                }
+            }
+        }
+
+        [Serializable]
+        public struct LanguageData
+        {
+            public LanguageDictionaryCategories category;
+            public WordCode[] content;
+            public void Load()
+            {
+                LanguageManger.dictionary[category] = new Dictionary<int, string>();
+                if(content.Length > 0)
+                {
+                    foreach (WordCode word in content)
+                    {
+                        LanguageManger.dictionary[category][word.code] = word.name;
+                    }
+                }
+            }
+            [Serializable]
+            public struct WordCode
+            {
+                public new string name;
+                public int code;
+            }
+        }
+        /*public LanguageDictionaryCodeNameDesc[] items;
         public LanguageDictionaryCodeWord[] words;
         public LanguageDictionaryCodeWord[] itemTypes;
+        public LanguageDictionaryCodeWord[] titleName;
         public LanguageDictionaryCodeWord[] monsters;
         public LanguageDictionaryCodeWord[] pets;
         public LanguageDictionaryCodeWord[] mounts;
@@ -67,6 +103,6 @@ namespace Game
             public new int code;
             public string Name;
             [TextArea(1, 30)] public string desc;
-        }
+        }*/
     }
 }
