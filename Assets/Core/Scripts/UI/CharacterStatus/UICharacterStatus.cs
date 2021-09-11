@@ -57,7 +57,7 @@ namespace Game.UI
             militaryRankBadge.sprite = ScriptableMilitaryRank.dict[player.own.militaryRank].icon;
             if(player.activeTitle > 0) {
                 titleImage.gameObject.SetActive(true);
-                titleImage.sprite = ScriptableTitle.dict[player.activeTitle].image[(int)LanguageManger.current];
+                titleImage.sprite = ScriptableTitle.dict[player.activeTitle].GetImage();
             }
             else titleImage.gameObject.SetActive(false);
             //attributes

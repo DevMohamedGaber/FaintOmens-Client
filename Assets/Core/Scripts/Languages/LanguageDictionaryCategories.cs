@@ -14,6 +14,7 @@ namespace Game
         MilitaryRank,
         Wardrop,
         AchievementName, AchievementRequirement,
-        NetworkError
+        NetworkError,
+        Source
     }
 }

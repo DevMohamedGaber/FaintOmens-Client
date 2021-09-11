@@ -9,11 +9,11 @@ namespace Game
     public class ScriptableTitle : ScriptableObjectNonAlloc
     {
         [Header("General")]
-        public TitleCaregory category;
-        public Sprite[] image = new Sprite[2];
+        [SerializeField] TitleCaregory category;
+        [SerializeField] ItemSource source;
+        [SerializeField] Sprite[] image = new Sprite[2];
         public float width = 200;
         public float height = 40;
-        public int bookId;
         [Header("Bonus")]
         public ActivationBonus hp;
         public ActivationBonus mp;
@@ -27,10 +27,36 @@ namespace Game
         public ActivationFloatBonus critDmg;
         public ActivationFloatBonus antiCrit;
         public ActivationFloatBonus antiStun;
-
+        public string GetName()
+        {
+            return LanguageManger.GetWord(name, LanguageDictionaryCategories.TitleName);
+        }
+        public string GetSource()
+        {
+            return LanguageManger.GetWord((int)source, LanguageDictionaryCategories.Source);
+        }
         public Sprite GetImage()
         {
             return image[(int)LanguageManger.current];
+        }
+        public static List<ScriptableTitle> GetByCategory(TitleCaregory targetCategory)
+        {
+            List<ScriptableTitle> result = new List<ScriptableTitle>();
+            if(dict.Count > 0)
+            {
+                for (int i = 0; i < dict.Count; i++)
+                {
+                    if(cache[i].category == targetCategory)
+                    {
+                        result.Add(cache[i]);
+                    }
+                }
+            }
+            return result;
+        }
+        public int CalculateBR(bool isActive = false)
+        {
+            return 0;
         }
         /*public bool isActivated() {
             for(int i = 0; i < Player.localPlayer.own.titles.Count; i++) {

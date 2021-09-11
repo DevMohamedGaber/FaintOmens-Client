@@ -1535,7 +1535,7 @@ namespace Game
             if(activeTitle == 0)
                 titleOverlay.sprite = null;
             else if(ScriptableTitle.dict.TryGetValue(activeTitle, out ScriptableTitle titleData)) {
-                titleOverlay.sprite = titleData.image[(int)LanguageManger.current];
+                titleOverlay.sprite = titleData.GetImage();
             }
         }
     }
