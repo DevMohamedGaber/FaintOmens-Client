@@ -6,12 +6,8 @@ using System;
 using System.Collections.Generic;
 namespace Game.UI
 {
-    public class Titles : Window
+    public class Titles : WindowWithBasicCurrencies
     {
-        [Header("Currency")]
-        [SerializeField] TMP_Text goldTxt;
-        [SerializeField] TMP_Text diamondsTxt;
-        [SerializeField] TMP_Text bDiamondsTxt;
         [Header("Category")]
         [SerializeField] GameObject categoryPrefab;
         [SerializeField] Transform categoryContent;
@@ -70,12 +66,6 @@ namespace Game.UI
             sourceTxt.text = "";
             locked.SetActive(false);
             stats.ClearAll();
-        }
-        public override void UpdateCurrency()
-        {
-            goldTxt.text = player.own.gold.ToString();
-            diamondsTxt.text = player.own.diamonds.ToString();
-            bDiamondsTxt.text = player.own.b_diamonds.ToString();
         }
         protected virtual void OnEnable()
         {

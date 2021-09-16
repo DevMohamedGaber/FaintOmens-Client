@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 namespace Game
@@ -6,9 +7,55 @@ namespace Game
     public abstract class ScriptableAchievement : ScriptableObjectNonAlloc
     {
         public AchievementTypes type;
+        public AchievementCategory category;
         public ScriptableAchievement successor;
         public byte points;
         public ItemSlot[] rewards;
+        public virtual string GetDescription()
+        {
+            return String.Empty;
+        }
+        public virtual string GetProgress()
+        {
+            return String.Empty;
+        }
+        public virtual float GetProgressPercentage()
+        {
+            return float.NegativeInfinity;
+        }
+        // statics
+        public static List<ScriptableAchievement> GetByCategory(AchievementCategory targetCategory)
+        {
+            List<ScriptableAchievement> result = new List<ScriptableAchievement>();
+            if(dict.Count > 0)
+            {
+                for (int i = 0; i < dict.Count; i++)
+                {
+                    if(cache[i].category == targetCategory)
+                    {
+                        result.Add(cache[i]);
+                    }
+                }
+            }
+            return result;
+        }
+        public static int GetCategoryCount()
+        {
+            return Enum.GetValues(typeof(AchievementCategory)).Length;
+        }
+        // points
+        public static ushort totalPoints = 0;
+        public static ushort[] categoryTotalPoints;
+        static void CalculateCachedPoints()
+        {
+            if(cache.Count > 0)
+            {
+                for (int i = 0; i < cache.Count; i++)
+                {
+                    totalPoints += (ushort)cache[i].points;
+                }
+            }
+        }
         //cash
         static Dictionary<int, ScriptableAchievement> cache;
         public static Dictionary<int, ScriptableAchievement> dict
@@ -22,6 +69,7 @@ namespace Game
                     if (duplicates.Count == 0)
                     {
                         cache = items.ToDictionary(item => item.name, item => item);
+                        CalculateCachedPoints();
                     }
                     else
                     {

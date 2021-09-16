@@ -13,7 +13,7 @@ namespace Game
         Tribe,
         MilitaryRank,
         Wardrop,
-        AchievementName, AchievementRequirement,
+        AchievementName, AchievementCategory,
         NetworkError,
         Source
     }

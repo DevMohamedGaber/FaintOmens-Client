@@ -17,6 +17,7 @@ namespace Game
         public sd.Arena arena;
         public sd.Item item;
         public sd.Team team;
+        public sd.DefaultAchievements achievements;
 
         public GameObject[] eventMaps;
 
