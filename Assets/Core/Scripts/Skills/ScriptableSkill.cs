@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 namespace Game
 {
     public abstract class ScriptableSkill : ScriptableObjectNonAlloc
     {
         [Header("Info")]
         public bool followupDefaultAttack;
-        [SerializeField, TextArea(1, 30)] protected string toolTip; // not public, use ToolTip()
         public Sprite image;
         public bool learnDefault; // normal attack etc.
         public bool showCastBar;
@@ -18,7 +18,7 @@ namespace Game
         public int predecessorLevel = 1; // level of predecessor skill that is required
         public WeaponType reqWeapon = WeaponType.Any;
         public LinearInt requiredLevel; // required player level
-        public LinearLong requiredSkillExperience;
+        public uint[] requiredSkillExperience;
 
         [Header("Properties")]
         public int maxLevel = 1;
@@ -27,6 +27,14 @@ namespace Game
         public LinearFloat cooldown;
         public LinearFloat castRange;
         public GameObject effects;
+
+        public string Name
+        {
+            get
+            {
+                return LanguageManger.GetWord(name, LanguageDictionaryCategories.SkillName);
+            }
+        }
         
         //[Header("Sound")]
         //public AudioClip castSound;
@@ -76,6 +84,15 @@ namespace Game
             {
                 player.onCastingFinished();
             }
+        }
+        public virtual string GetDescription(int level = 1)
+        {
+            StringBuilder result = new StringBuilder(LanguageManger.GetWord(name, LanguageDictionaryCategories.SkillDescription));
+            if(result.Length > 0)
+            {
+                result.Replace("{RANGE}", $"<color=orange>{castRange.Get(level).ToString()}</color>");
+            }
+            return result.ToString();
         }
         static Dictionary<int, ScriptableSkill> cache;
         public static Dictionary<int, ScriptableSkill> dict

@@ -15,6 +15,7 @@ namespace Game
         Wardrop,
         AchievementName, AchievementCategory,
         NetworkError,
-        Source
+        Source,
+        SkillName, SkillDescription
     }
 }
