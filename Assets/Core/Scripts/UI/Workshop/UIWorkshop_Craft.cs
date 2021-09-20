@@ -1,12 +1,15 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class UIWorkshop_Craft : UISubWindowBase {
+    public class UIWorkshop_Craft : UISubWindowBase
+    {
         [SerializeField] Transform catContent;
-        public override void Refresh() {
+        public override void Refresh()
+        {
 
         }
-        void Awake() {
+        void Awake()
+        {
 
         }
     }

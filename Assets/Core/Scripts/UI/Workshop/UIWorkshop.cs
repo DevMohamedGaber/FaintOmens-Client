@@ -1,10 +1,9 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class UIWorkshop : Window
+    public class UIWorkshop : WindowWithBasicCurrencies
     {
         [SerializeField] UISubWindowBase[] pages;
-        [SerializeField] TMPro.TMP_Text goldTxt;
         int currentPage = 0;
         public override void Refresh()
         {
@@ -12,10 +11,6 @@ namespace Game.UI
             {
                 pages[currentPage].Refresh();
             }
-        }
-        public override void UpdateCurrency()
-        {
-            goldTxt.text = player.own.gold.ToString();
         }
         public void GoToPage(int index)
         {

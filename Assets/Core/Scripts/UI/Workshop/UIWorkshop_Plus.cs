@@ -3,7 +3,8 @@ using System;
 using TMPro;
 namespace Game.UI
 {
-    public class UIWorkshop_Plus : UISubWindowBase {
+    public class UIWorkshop_Plus : UISubWindowBase
+    {
     #region Data
         [Header("UI")]
         [SerializeField] Transform invContent;
@@ -22,15 +23,19 @@ namespace Game.UI
         UIWorkshopItemSlot[] slots;
     #endregion
     #region Update
-        public override void Refresh() {
+        public override void Refresh()
+        {
             RefreshInventory();
             UpdateEnhancmentSlots();
         }
-        void RefreshInventory() {
+        void RefreshInventory()
+        {
             int nextSlot = 0, i = 0;
             // equipments
-            for(i = 0; i < player.equipment.Count; i++) {
-                if(!player.equipment[i].isEmpty) {
+            for(i = 0; i < player.equipment.Count; i++)
+            {
+                if(!player.equipment[i].isEmpty)
+                {
                     if(player.equipment[i].item.plus == Storage.data.item.maxPlus || (selectedSlot.IsAssigned() &&
                         selectedSlot.from == WorkshopOperationFrom.Equipments && selectedSlot.ID == i))
                         continue;
@@ -40,8 +45,10 @@ namespace Game.UI
                 }
             }
             // accessories
-            for(i = 0; i < player.own.accessories.Count; i++) {
-                if(!player.own.accessories[i].isEmpty) {
+            for(i = 0; i < player.own.accessories.Count; i++)
+            {
+                if(!player.own.accessories[i].isEmpty)
+                {
                     if(player.own.accessories[i].item.plus == Storage.data.item.maxPlus || (selectedSlot.IsAssigned() &&
                         selectedSlot.from == WorkshopOperationFrom.Accessories && selectedSlot.ID == i))
                         continue;
@@ -51,8 +58,10 @@ namespace Game.UI
                 }
             }
             // inventory
-            for(i = 0; i < player.own.inventorySize; i++) {
-                if(!player.own.inventory[i].isEmpty && player.own.inventory[i].item.data is EquipmentItem) {
+            for(i = 0; i < player.own.inventorySize; i++)
+            {
+                if(!player.own.inventory[i].isEmpty && player.own.inventory[i].item.data is EquipmentItem)
+                {
                     if(player.own.inventory[i].item.plus == Storage.data.item.maxPlus || (selectedSlot.IsAssigned() &&
                         selectedSlot.from == WorkshopOperationFrom.Inventory && selectedSlot.ID == i))
                         continue;
@@ -62,27 +71,35 @@ namespace Game.UI
                 }
             }
             // empty the rest
-            if(nextSlot < slots.Length - 1) {
-                for(i = nextSlot; i < slots.Length; i++) {
+            if(nextSlot < slots.Length - 1)
+            {
+                for(i = nextSlot; i < slots.Length; i++)
+                {
                     slots[i].Unassign();
                 }
             }
         }
-        void UpdateEnhancmentSlots() {
+        void UpdateEnhancmentSlots()
+        {
             // update selected item
-            if(selectedSlot.IsAssigned()) {
+            if(selectedSlot.IsAssigned())
+            {
                 // selected equipment
-                if(selectedSlot.from == WorkshopOperationFrom.Equipments) {
+                if(selectedSlot.from == WorkshopOperationFrom.Equipments)
+                {
                     selectedSlot.UpdateData(player.equipment[selectedSlot.ID]);
                 }
-                else if(selectedSlot.from == WorkshopOperationFrom.Accessories) {
+                else if(selectedSlot.from == WorkshopOperationFrom.Accessories)
+                {
                     selectedSlot.UpdateData(player.own.accessories[selectedSlot.ID]);
                 }
-                else if(selectedSlot.from == WorkshopOperationFrom.Inventory) {
+                else if(selectedSlot.from == WorkshopOperationFrom.Inventory)
+                {
                     selectedSlot.UpdateData(player.own.inventory[selectedSlot.ID]);
                 }
                 
-                if(selectedSlot.data.plus == Storage.data.item.maxPlus) {
+                if(selectedSlot.data.plus == Storage.data.item.maxPlus)
+                {
                     OnDeselectSlot();
                     return;
                 }
@@ -92,10 +109,15 @@ namespace Game.UI
                 costTxt.text = Storage.data.item.plusUpCost[(int)selectedSlot.data.plus].ToString();
                 float sRate = Storage.data.item.plusUpSuccessRate[(int)selectedSlot.data.plus];
                 // update luck Charm Slot
-                if(luckCharmSlot.IsAssigned()) {
+                if(luckCharmSlot.IsAssigned())
+                {
                     uint lcCount = player.InventoryCountById(luckCharmSlot.data.id);
-                    if(lcCount == 0) luckCharmSlot.Unassign();
-                    else{
+                    if(lcCount == 0)
+                    {
+                        luckCharmSlot.Unassign();
+                    }
+                    else
+                    {
                         luckCharmSlot.SetAmount(lcCount);
                         sRate += ((LuckCharmItem)luckCharmsList[luckCharmSlot.ID].data).amount;
                     }
@@ -105,7 +127,8 @@ namespace Game.UI
                 sRateTxt.color = sRateColors[(int)Math.Floor(sRate / 25f) - 1];
                 return;
             }
-            else {
+            else
+            {
                 stonesSlot.Unassign();
                 luckCharmSlot.Unassign();
                 sRateTxt.text = "-";
@@ -115,22 +138,31 @@ namespace Game.UI
         }
     #endregion
     #region Selected ItemSlot
-        public void OnDeselectSlot() {
+        public void OnDeselectSlot()
+        {
             selectedSlot.Unassign();
             Refresh();
         }
-        void OnSelectSlot(UIWorkshopItemSlot itemSlot) {
-            if(itemSlot.IsAssigned()) {
+        void OnSelectSlot(UIWorkshopItemSlot itemSlot)
+        {
+            if(itemSlot.IsAssigned())
+            {
                 selectedSlot.Assign(itemSlot);
                 Refresh();
             }
         }
     #endregion
     #region Luck Charm
-        public void OnSelectLuckCharm(int index) {
-            if(index == -1) luckCharmSlot.Unassign();
-            else {
-                if(index < 0 && index >= luckCharmsList.Length) {
+        public void OnSelectLuckCharm(int index)
+        {
+            if(index == -1)
+            {
+                luckCharmSlot.Unassign();
+            }
+            else
+            {
+                if(index < 0 && index >= luckCharmsList.Length)
+                {
                     UINotifications.list.Add("Select a valid luckCharm");
                     return;
                 }
@@ -143,58 +175,76 @@ namespace Game.UI
                 luckCharmSlot.Assign(luckCharmSlots[index]);
             }
         }
-        public void OnOpenLuckCharmList() {
-            for(int i = 0; i < luckCharmSlots.Length; i++) {
+        public void OnOpenLuckCharmList()
+        {
+            for(int i = 0; i < luckCharmSlots.Length; i++)
+            {
                 luckCharmSlots[i].SetAmount(player.InventoryCountById(luckCharmSlots[i].data.id));
             }
         }
-        public void CloseLuckCharmListObj() => luckCharmListObj.SetActive(false);
+        public void CloseLuckCharmListObj()
+        {
+            luckCharmListObj.SetActive(false);
+        }
     #endregion
     #region Operations
-        public void OnEnhance() {
-            if(!selectedSlot.IsAssigned()) {
+        public void OnEnhance()
+        {
+            if(!selectedSlot.IsAssigned())
+            {
                 UINotifications.list.Add("Please select an item to enhance");
                 return;
             }
-            if(!stonesSlot.IsAssigned()) {
+            if(!stonesSlot.IsAssigned())
+            {
                 UINotifications.list.Add("Please select an item to enhance");
                 return;
             }
-            if(selectedSlot.data.plus >= Storage.data.item.maxPlus) {
+            if(selectedSlot.data.plus >= Storage.data.item.maxPlus)
+            {
                 UINotifications.list.Add("Item reached max plus");
                 return;
             }
-            if(player.own.gold < Storage.data.item.plusUpCost[(int)selectedSlot.data.plus]) {
+            if(player.own.gold < Storage.data.item.plusUpCost[(int)selectedSlot.data.plus])
+            {
                 UINotifications.list.Add("Gold isn't enough");
                 return;
             }
-            if(stonesSlot.amount < (int)Math.Floor((int)selectedSlot.data.plus / 12d)) {
+            if(stonesSlot.amount < (int)Math.Floor((int)selectedSlot.data.plus / 12d))
+            {
                 UINotifications.list.Add("Not enough stones");
                 return;
             }
-            if(luckCharmSlot.IsAssigned() && luckCharmSlot.amount > 0) {
+            if(luckCharmSlot.IsAssigned() && luckCharmSlot.amount > 0)
+            {
                 UINotifications.list.Add("Selected LuckCharm isn't enough");
                 return;
             } 
             player.CmdWorkshopPlus(selectedSlot.ID, selectedSlot.from, luckCharmSlot.ID);
         }
-        protected override void OnEnable() {
+        protected override void OnEnable()
+        {
             base.OnEnable();
             Refresh();
         }
-        void OnDisable() {
+        void OnDisable()
+        {
             selectedSlot.Unassign();
-            for(int i = 0; i < slots.Length; i++) {
+            for(int i = 0; i < slots.Length; i++)
+            {
                 slots[i].Unassign();
             }
         }
-        void Awake() {
+        void Awake()
+        {
             slots = new UIWorkshopItemSlot[(int)player.own.inventorySize + Storage.data.player.equipmentCount + Storage.data.player.accessoriesCount];
-            for(int i = 0; i < slots.Length; i++) {
+            for(int i = 0; i < slots.Length; i++)
+            {
                 GameObject go = Instantiate(prefab, invContent, false);
                 slots[i] = go.transform.GetComponent<UIWorkshopItemSlot>();
             }
-            for(int i = 0; i < luckCharmSlots.Length; i++) {
+            for(int i = 0; i < luckCharmSlots.Length; i++)
+            {
                 luckCharmSlots[i].Assign(luckCharmsList[i]);
             }
         }
