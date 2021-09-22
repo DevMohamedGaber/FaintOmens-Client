@@ -1280,6 +1280,8 @@ namespace Game
         [Command] public void CmdWorkshopAddGemInSocket(int index, WorkshopOperationFrom from, int socketIndex, int gemIndex) {}
         // quality
         [Command] public void CmdWorkshopUpgradeItemQuality(int index, WorkshopOperationFrom from, int feedItem) {}
+        // repair
+        [Command] public void CmdWorkshopEquipmentRepair(int index, WorkshopOperationFrom from) {}
         // craft
         [Command] public void CmdCraft(int recipeId, uint amount) {}
         [TargetRpc] public void TargetItemEnhanceSuccess() {

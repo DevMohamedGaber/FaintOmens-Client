@@ -206,7 +206,7 @@ namespace Game.UI
             if(!UseOnClick) return;// Assigned to be used on click
             
             if(this.m_SpellInfo.level < 1) {// check active
-                UINotifications.list.Add($"Requires Level {this.m_SpellInfo.data.requiredLevel.baseValue}");
+                Notifications.list.Add($"Requires Level {this.m_SpellInfo.data.requiredLevel.baseValue}");
                 return;
             }
             bool canCast = Player.localPlayer.CastCheckSelf(this.m_SpellInfo);// can use

@@ -56,6 +56,14 @@ namespace Game
             return data is EquipmentItem ? (ushort)
                                             ((dataEquip.durability + ( plus * 10)) * ((int)quality.current + 1)) : (ushort)0;
         }
+        public bool HasMaxDurability()
+        {
+            return durability == MaxDurability();
+        }
+        public uint GetRepairDurabilityCost()
+        {
+            return (uint)((MaxDurability() - durability) * data.minLevel * plus * ((int)quality.current + 1u));
+        }
         #endregion
         // equipment's functions
         public void SetQualityEffect(GameObject go)

@@ -34,7 +34,7 @@ namespace Game.UI
         }
         public void OnCollect(int day) {
             if(day < 1 || day > 7) {
-                UINotifications.list.Add("UnKnowen reward has been selected", "تم اختيار جائزة غير معروفة");
+                Notifications.list.Add("UnKnowen reward has been selected", "تم اختيار جائزة غير معروفة");
                 return;
             }
             player.CmdCollect7DaysSignUpReward(day);

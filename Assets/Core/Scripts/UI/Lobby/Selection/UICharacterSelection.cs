@@ -84,7 +84,7 @@ namespace Game.UI
         {
             if(characters == null || selected < 0 || selected > characters.Length)
             {
-                UINotifications.list.Add("Select Character", "اختر شخصية");
+                Notifications.list.Add("Select Character", "اختر شخصية");
                 return;
             }
             if(!NetworkClient.ready)
@@ -100,7 +100,7 @@ namespace Game.UI
         {
             if(characters == null || selected < 0 || selected > characters.Length)
             {
-                UINotifications.list.Add("Select Character", "اختر شخصية");
+                Notifications.list.Add("Select Character", "اختر شخصية");
                 return;
             }
             confirmDelete.SetActive(true);
@@ -108,7 +108,7 @@ namespace Game.UI
         public void OnConfirmDelete() {
             if(characters == null || selected < 0 || selected > characters.Length)
             {
-                UINotifications.list.Add("Select Character", "اختر شخصية");
+                Notifications.list.Add("Select Character", "اختر شخصية");
                 return;
             }
             confirmDelete.SetActive(false);

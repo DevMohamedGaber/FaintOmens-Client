@@ -53,36 +53,36 @@ namespace Game.UI
         }
         public void OnUpgradeHall() {
             if(!canUpgrade) {
-                UINotifications.list.Add("You don't have permission to upgrade", "ليس لديك الصلاحية لتطوير");
+                Notifications.list.Add("You don't have permission to upgrade", "ليس لديك الصلاحية لتطوير");
                 return;
             }
             if(guild.buildings.hall == Storage.data.guild.maxLevel) {
-                UINotifications.list.Add("Hall already reached max level", "وصلت القاعة لاعلي مستوي بالفعل");
+                Notifications.list.Add("Hall already reached max level", "وصلت القاعة لاعلي مستوي بالفعل");
                 return;
             }
             if(guild.level < guild.buildings.hall + 1) {
-                UINotifications.list.Add($"Guild level {guild.buildings.hall + 1} is required", $"يلزم مستوي النقابة {guild.buildings.hall + 1}");
+                Notifications.list.Add($"Guild level {guild.buildings.hall + 1} is required", $"يلزم مستوي النقابة {guild.buildings.hall + 1}");
                 return;
             }
             GuildAssets req = hall.reqs[guild.buildings.hall];
             if(guild.assets.wealth < req.wealth) {
-                UINotifications.list.Add("Didn't meet the Wealth required to upgrade the Hall", "لم تحقق الثروة المطلوبة لتطوير القاعة");
+                Notifications.list.Add("Didn't meet the Wealth required to upgrade the Hall", "لم تحقق الثروة المطلوبة لتطوير القاعة");
                 return;
             }
             if(guild.assets.wood < req.wood) {
-                UINotifications.list.Add("Didn't meet the Wood required to upgrade the Hall", "لم تحقق الخشب المطلوبة لتطوير القاعة");
+                Notifications.list.Add("Didn't meet the Wood required to upgrade the Hall", "لم تحقق الخشب المطلوبة لتطوير القاعة");
                 return;
             }
             if(guild.assets.stone < req.stone) {
-                UINotifications.list.Add("Didn't meet the Stone required to upgrade the Hall", "لم تحقق الحجارة المطلوبة لتطوير القاعة");
+                Notifications.list.Add("Didn't meet the Stone required to upgrade the Hall", "لم تحقق الحجارة المطلوبة لتطوير القاعة");
                 return;
             }
             if(guild.assets.iron < req.iron) {
-                UINotifications.list.Add("Didn't meet the Iron required to upgrade the Hall", "لم تحقق الحديد المطلوبة لتطوير القاعة");
+                Notifications.list.Add("Didn't meet the Iron required to upgrade the Hall", "لم تحقق الحديد المطلوبة لتطوير القاعة");
                 return;
             }
             if(guild.assets.food < req.food) {
-                UINotifications.list.Add("Didn't meet the Food required to upgrade the Hall", "لم تحقق الطعام المطلوبة لتطوير القاعة");
+                Notifications.list.Add("Didn't meet the Food required to upgrade the Hall", "لم تحقق الطعام المطلوبة لتطوير القاعة");
                 return;
             }
             player.CmdGuildUpgradeHall();

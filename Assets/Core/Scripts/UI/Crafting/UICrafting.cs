@@ -108,11 +108,11 @@ namespace Game.UI
         }
         public void OnCraft() {
             if(current < 1) 
-                UINotifications.list.Add("Please choose a Recipe to craft.");
+                Notifications.list.Add("Please choose a Recipe to craft.");
             else if(count == 0)
-                UINotifications.list.Add("You don't have the nessisary requirments.");
+                Notifications.list.Add("You don't have the nessisary requirments.");
             else if(!ScriptableRecipe.dict[current].CanCraft(player, count))
-                UINotifications.list.Add("You can't craft this item.");
+                Notifications.list.Add("You can't craft this item.");
             else
                 player.CmdCraft(current, count);
         }

@@ -111,7 +111,7 @@ namespace Game.UI
                     }
                 }
                 if(notEmpty) player.CmdCollectAllMails();
-                else UINotifications.list.Add("All mails are empty.");
+                else Notifications.list.Add("All mails are empty.");
             }
         }
         public void OnCollect() {
@@ -119,7 +119,7 @@ namespace Game.UI
                 if(!player.own.mailBox[current].IsEmpty()) {
                     player.CmdCollectMail(current);
                 }
-                else UINotifications.list.Add("Already Recieved.");
+                else Notifications.list.Add("Already Recieved.");
             }
         }
         public void OnDeleteAll() {

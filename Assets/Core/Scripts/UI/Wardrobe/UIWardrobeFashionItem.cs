@@ -29,7 +29,7 @@ namespace Game.UI
                 player.CmdWardrobeEquip(id);
                 Debug.Log("called");
             }
-            else UINotifications.list.Add("Wardrop isn't active", "العتاد غير مفعل");
+            else Notifications.list.Add("Wardrop isn't active", "العتاد غير مفعل");
         }
     }
 }

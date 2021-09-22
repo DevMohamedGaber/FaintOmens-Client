@@ -28,7 +28,7 @@ namespace Game.UI
             {
                 if(player.own.gold >= Storage.data.guild.goldToContribution)
                     goldInput.text = Storage.data.guild.goldToContribution.ToString();
-                UINotifications.list.Add($"Minimum of {Storage.data.guild.goldToContribution} gold has to be donated", $"مطلوب {Storage.data.guild.goldToContribution} ذهب كحد ادني");
+                Notifications.list.Add($"Minimum of {Storage.data.guild.goldToContribution} gold has to be donated", $"مطلوب {Storage.data.guild.goldToContribution} ذهب كحد ادني");
                 return;
             }
             if(player.own.gold < input) {
@@ -43,7 +43,7 @@ namespace Game.UI
             if(input < Storage.data.guild.diamondToContribution) {
                 if(player.own.diamonds >= Storage.data.guild.diamondToContribution)
                     diamonsInput.text = Storage.data.guild.diamondToContribution.ToString();
-                UINotifications.list.Add($"Minimum of {Storage.data.guild.diamondToContribution} diamonds has to be donated", $"مطلوب {Storage.data.guild.diamondToContribution} الماس كحد ادني");
+                Notifications.list.Add($"Minimum of {Storage.data.guild.diamondToContribution} diamonds has to be donated", $"مطلوب {Storage.data.guild.diamondToContribution} الماس كحد ادني");
                 return;
             }
             if(player.own.diamonds < input) {

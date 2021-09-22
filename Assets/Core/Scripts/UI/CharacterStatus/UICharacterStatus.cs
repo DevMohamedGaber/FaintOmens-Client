@@ -169,24 +169,24 @@ namespace Game.UI
         }
         public void OnIncreaseVitality() {
             if(player.own.freepoints > 0) player.CmdIncreaseVitality();
-            else UINotifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
+            else Notifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
         }
         public void OnIncreaseStrength() {
             if(player.own.freepoints > 0) player.CmdIncreaseStrength();
-            else UINotifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
+            else Notifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
         }
         public void OnIncreaseIntelligence() {
             if(player.own.freepoints > 0) player.CmdIncreaseIntelligence();
-            else UINotifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
+            else Notifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
         }
         public void OnIncreaseEndurance() {
             if(player.own.freepoints > 0) player.CmdIncreaseEndurance();
-            else UINotifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
+            else Notifications.list.Add("No available points to use", "لا يوجد نقاط قدرة كافية");
         }
         public void OnPromote() {
             if(ScriptableMilitaryRank.dict.TryGetValue(player.own.militaryRank, out ScriptableMilitaryRank rank)) {
                 if(rank.CanPromote(player)) player.CmdPromoteMilitaryRank();
-                else UINotifications.list.Add("You didn't meet the requirements yet", "لم توافي الشروط بعد");
+                else Notifications.list.Add("You didn't meet the requirements yet", "لم توافي الشروط بعد");
             }
         }
         public void SetMPShown(bool status) => mpShown = status;

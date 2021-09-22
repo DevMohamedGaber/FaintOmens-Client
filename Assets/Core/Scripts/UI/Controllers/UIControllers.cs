@@ -35,7 +35,7 @@ namespace Game.UI
             }
             else
             {
-                UINotifications.list.Add("Please select a skill", "برجاء اختيار مهارة");
+                Notifications.list.Add("Please select a skill", "برجاء اختيار مهارة");
             }
         }
         public void OnMount()
@@ -53,7 +53,7 @@ namespace Game.UI
             }
             else
             {
-                UINotifications.list.Add("Select a mount first", "اختر راكب اولا");
+                Notifications.list.Add("Select a mount first", "اختر راكب اولا");
             }
         }
         public void UpdateMountButton()

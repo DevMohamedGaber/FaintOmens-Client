@@ -21,7 +21,7 @@ namespace Game.UI
                 InvokeRepeating("UpdateData", 0, updateInterval);
             } else {
                 gameObject.SetActive(false);
-                UINotifications.list.Add("Already reached max promotion", "لقد وصلت لاعلي ترقية");
+                Notifications.list.Add("Already reached max promotion", "لقد وصلت لاعلي ترقية");
             }
         }
         void OnDisable() {

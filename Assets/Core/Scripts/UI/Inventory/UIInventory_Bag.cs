@@ -3,7 +3,7 @@ using System;
 using TMPro;
 namespace Game.UI
 {
-    public class UIInventory_Bag : UISubWindowBase {
+    public class UIInventory_Bag : SubWindowBase {
         [SerializeField] GameObject prefab;
         [SerializeField] Transform content;
         [SerializeField] TMP_Text countText;

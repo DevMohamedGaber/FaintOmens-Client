@@ -3,7 +3,7 @@ namespace Game.UI
 {
     public class Workshop : WindowWithBasicCurrencies
     {
-        [SerializeField] UISubWindowBase[] pages;
+        [SerializeField] SubWindowBase[] pages;
         int currentPage = 0;
         public override void Refresh()
         {

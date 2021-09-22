@@ -80,11 +80,11 @@ namespace Game.UI
         }
         bool Check() {
             if(!slots.main.IsAssigned() || !slots.other.IsAssigned()) {
-                UINotifications.list.Add("Please choose 2 items to synthesize");
+                Notifications.list.Add("Please choose 2 items to synthesize");
                 return false;
             }
             if(slots.main.data.plus != slots.other.data.plus) {
-                UINotifications.list.Add("Both items has to have the same enhancment level");
+                Notifications.list.Add("Both items has to have the same enhancment level");
                 return false;
             }
             if(player.own.gold < cost[slots.main.data.plus]) {

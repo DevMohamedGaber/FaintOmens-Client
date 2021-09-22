@@ -62,7 +62,7 @@ namespace Game.UI
         {
             if(accepted)
             {
-                UINotifications.list.Add("you have already accepted the offer");
+                Notifications.list.Add("you have already accepted the offer");
                 return;
             }
             if(confirmTimes < 3)
@@ -76,7 +76,7 @@ namespace Game.UI
             }
             else
             {
-                UINotifications.list.Add("you can't confirm more than 3 times");
+                Notifications.list.Add("you can't confirm more than 3 times");
             }
         }
         public void OnAccept()
@@ -90,7 +90,7 @@ namespace Game.UI
             }
             else
             {
-                UINotifications.list.Add("Already accepted the trade offer");
+                Notifications.list.Add("Already accepted the trade offer");
             }
         }
         public void OtherAccepted()

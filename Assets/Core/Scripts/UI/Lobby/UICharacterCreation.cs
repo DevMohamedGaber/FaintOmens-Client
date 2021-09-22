@@ -16,27 +16,27 @@ namespace Game.UI
         {
             if(nameInput.text.Length == 0)
             {
-                UINotifications.list.Add("Enter a Name", "ادخل اسم");
+                Notifications.list.Add("Enter a Name", "ادخل اسم");
                 return;
             }
             if(!networkManager.IsAllowedCharacterName(nameInput.text))
             {
-                UINotifications.list.Add("Invalid Name", "الاسم غير مسموح");
+                Notifications.list.Add("Invalid Name", "الاسم غير مسموح");
                 return;
             }
             if(!ScriptableClass.dict.ContainsKey(selectedClass))
             {
-                UINotifications.list.Add("Select a Class", "اختر تخصص");
+                Notifications.list.Add("Select a Class", "اختر تخصص");
                 return;
             }
             if(selectedGender != Gender.Male && selectedGender != Gender.Female)
             {
-                UINotifications.list.Add("Select a Gender", "اختر نوع");
+                Notifications.list.Add("Select a Gender", "اختر نوع");
                 return;
             }
             if(!TribeSystem.ValidateId((int)selectedTribe))
             {
-                UINotifications.list.Add("Select a Tribe", "اختر عشيرة");
+                Notifications.list.Add("Select a Tribe", "اختر عشيرة");
                 return;
             }
             

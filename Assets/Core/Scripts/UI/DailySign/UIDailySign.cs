@@ -74,7 +74,7 @@ namespace Game.UI
         }
         public void OnSelectReward(int index) {
             if(index < -1 || index >= Storage.data.dailySignRewards.Length) {
-                UINotifications.list.Add("Unidentified Rewared has been selected", "تم اختيار جائزة غير معرفة");
+                Notifications.list.Add("Unidentified Rewared has been selected", "تم اختيار جائزة غير معرفة");
                 return;
             }
             currentReward = index;
@@ -82,7 +82,7 @@ namespace Game.UI
         }
         public void OnRecieveReward() {
             if(currentReward < -1 || currentReward >= Storage.data.dailySignRewards.Length) {
-                UINotifications.list.Add("Unidentified Rewared has been selected", "تم اختيار جائزة غير معرفة");
+                Notifications.list.Add("Unidentified Rewared has been selected", "تم اختيار جائزة غير معرفة");
                 return;
             }
             player.CmdCollectDailySignReward(currentReward);

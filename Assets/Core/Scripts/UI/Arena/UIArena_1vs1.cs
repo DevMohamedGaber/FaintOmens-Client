@@ -33,7 +33,7 @@ namespace Game.UI
         {
             if(player.own.occupation != PlayerOccupation.None)
             {
-                UINotifications.list.Add("Already registered", "مسجل بالفعل");
+                Notifications.list.Add("Already registered", "مسجل بالفعل");
                 return;
             }
             player.CmdRegisterInArena1v1();
@@ -42,7 +42,7 @@ namespace Game.UI
         {
             if(player.own.occupation != PlayerOccupation.RegisteredArena1v1)
             {
-                UINotifications.list.Add("Not registered", "غير مسجل");
+                Notifications.list.Add("Not registered", "غير مسجل");
                 return;
             }
             player.CmdUnRegisterInArena1v1();

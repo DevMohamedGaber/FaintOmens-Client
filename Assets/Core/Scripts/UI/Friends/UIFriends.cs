@@ -70,7 +70,7 @@ namespace Game.UI
                         return;
                     }
                 }
-                UINotifications.list.Add("Player is Offline.", "اللاعب غير متصل الان.");
+                Notifications.list.Add("Player is Offline.", "اللاعب غير متصل الان.");
             }
         }
         public void OnInspect() {
@@ -86,9 +86,9 @@ namespace Game.UI
                     addPanelObj.SetActive(false);
                     addInput.text = "";
                 }
-                else UINotifications.list.Add("Please enter a valid ID.", "برجاء ادخال رقم تعريفي صحيح.");
+                else Notifications.list.Add("Please enter a valid ID.", "برجاء ادخال رقم تعريفي صحيح.");
             }
-            else UINotifications.list.Add("Please enter an ID.", "برجاء ادخال رقم تعريفي.");
+            else Notifications.list.Add("Please enter an ID.", "برجاء ادخال رقم تعريفي.");
         }
         public void Show() => gameObject.SetActive(true);
         void OnEnable() {

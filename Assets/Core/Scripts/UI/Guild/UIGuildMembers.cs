@@ -90,7 +90,7 @@ namespace Game.UI
                 return;
             }
             if(player.own.guildRank < Storage.data.guild.promoteMinRank) {
-                UINotifications.list.Add("You don't have permission to promote members", "ليس لديك صلاحية ترقية الاعضاء");
+                Notifications.list.Add("You don't have permission to promote members", "ليس لديك صلاحية ترقية الاعضاء");
                 return;
             }
             player.CmdGuildPromote(selected);
@@ -101,7 +101,7 @@ namespace Game.UI
                 return;
             }
             if(player.own.guildRank < Storage.data.guild.promoteMinRank) {
-                UINotifications.list.Add("You don't have permission to demote members", "ليس لديك صلاحية خفض رتبة الاعضاء");
+                Notifications.list.Add("You don't have permission to demote members", "ليس لديك صلاحية خفض رتبة الاعضاء");
                 return;
             }
             player.CmdGuildDemote(selected);

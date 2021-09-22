@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class Workshop_Craft : UISubWindowBase
+    public class Workshop_Craft : SubWindowBase
     {
         [Header("List")]
         [SerializeField] Transform categoryContent;
@@ -69,7 +69,22 @@ namespace Game.UI
         }
         public void OnCraft()
         {
-
+            if(current == null)
+            {
+                Notifications.list.Add("Please choose a Recipe to craft.");
+                return;
+            } 
+            if(countSwitch.count == 0)
+            {
+                Notifications.list.Add("You don't have the nessisary requirments.");
+                return;
+            }
+            if(!current.CanCraft(countSwitch.count))
+            {
+                Notifications.list.Add("You can't craft this item.");
+                return;
+            }
+            player.CmdCraft(current.name, countSwitch.count);
         }
         void Awake()
         {

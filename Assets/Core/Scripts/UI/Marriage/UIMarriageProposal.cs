@@ -23,14 +23,14 @@ namespace Game.UI
         }
         public void OnAccept() {
             if(index < 0 || index >= player.own.marriageProposals.Count) 
-                UINotifications.list.SomethingWentWrong();
+                Notify.SomethingWentWrong();
             else if(player.IsMarried())
-                UINotifications.list.AlreadyMarried();
+                Notify.AlreadyMarried();
             else player.CmdAcceptMarriageProposal(index);
         }
         public void OnRefuse() {
             if(index < 0 || index >= player.own.marriageProposals.Count) 
-                UINotifications.list.SomethingWentWrong();
+                Notify.SomethingWentWrong();
             else player.CmdRefuseMarriageProposal(index);
         }
     }

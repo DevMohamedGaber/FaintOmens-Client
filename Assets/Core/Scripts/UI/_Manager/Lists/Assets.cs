@@ -12,6 +12,7 @@ namespace Game.UI.ManagerLists
         public Sprite[] currency;
         public Sprite[] discountArrows;
         public GameObject itemSlotPrefab;
+        public GameObject workshopSlotPrefab;
         public Sprite[] socketSlot; // 0 => locked; 1 => empty
         public Sprite defaultItem;
     }

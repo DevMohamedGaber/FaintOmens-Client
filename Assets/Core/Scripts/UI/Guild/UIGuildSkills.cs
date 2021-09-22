@@ -20,11 +20,11 @@ namespace Game.UI
             }
             byte lvl = player.own.guildSkills[skill];
             if(lvl == Storage.data.guild.maxLevel) {
-                UINotifications.list.Add("Skill already reached max level", "المهارة وصلت لاعلي مستوي بالفعل");
+                Notifications.list.Add("Skill already reached max level", "المهارة وصلت لاعلي مستوي بالفعل");
                 return;
             }
             if(academy < lvl + 1) {
-                UINotifications.list.Add($"Academy level {lvl + 1} is required", $"مطلوب اكاديمية مستوي {lvl + 1}");
+                Notifications.list.Add($"Academy level {lvl + 1} is required", $"مطلوب اكاديمية مستوي {lvl + 1}");
                 return;
             }
             player.CmdLearnGuildSkill(skill);

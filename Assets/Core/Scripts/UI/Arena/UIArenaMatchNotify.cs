@@ -42,7 +42,7 @@ namespace Game.UI
             //else if(player.own.occupation = PlayerOccupation.ReadyArena5v5)
             else
             {
-                UINotifications.list.Add("You're not registered in any event", "انت غير مسجل باي حدث");
+                Notifications.list.Add("You're not registered in any event", "انت غير مسجل باي حدث");
             }
         }
         public void OnRefuse()
@@ -55,7 +55,7 @@ namespace Game.UI
             //else if(player.own.occupation = PlayerOccupation.ReadyArena5v5)
             else
             {
-                UINotifications.list.Add("You're not registered in any event", "انت غير مسجل باي حدث");
+                Notifications.list.Add("You're not registered in any event", "انت غير مسجل باي حدث");
             }
         }
         public void Hide()

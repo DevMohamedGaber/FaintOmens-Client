@@ -8,7 +8,7 @@ namespace Game.UI
                 if(player.own.occupation == PlayerOccupation.InMatchArena1v1)
                     player.CmdLeaveArena1v1();
             }
-            else UINotifications.list.Add("You're not in an Event", "انت لست في حدث");
+            else Notifications.list.Add("You're not in an Event", "انت لست في حدث");
         }
     }
 }
