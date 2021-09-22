@@ -1,6 +1,6 @@
 ﻿/* - MODIFICATIONS TO THE MAIN CLASS -
 - remove the original class
-*/
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -167,4 +167,4 @@ namespace Game.UI
             lang.Refresh();
         }
     }
-}
+}*/

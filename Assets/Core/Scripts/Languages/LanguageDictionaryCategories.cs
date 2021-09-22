@@ -16,6 +16,7 @@ namespace Game
         AchievementName, AchievementCategory,
         NetworkError,
         Source,
-        SkillName, SkillDescription
+        SkillName, SkillDescription,
+        CraftCategory, CraftRecipeName
     }
 }

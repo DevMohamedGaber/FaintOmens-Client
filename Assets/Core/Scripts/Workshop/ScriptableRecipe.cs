@@ -9,27 +9,39 @@ namespace Game
         public CraftCategory category;
         public Item result; // item out
         public uint cost;
-        public ScriptableItemAndAmount[] ingredients; // items in
-        public virtual bool CanCraft(Player player, uint count)
+        public ItemSlot[] ingredients; // items in
+        public string Name
         {
-            if(player.own.gold < cost)
+            get
+            {
+                return LanguageManger.GetWord(name, LanguageDictionaryCategories.CraftRecipeName);
+            }
+        }
+
+        public virtual bool CanCraft(uint count)
+        {
+            if(Player.localPlayer.own.gold < cost)
+            {
                 return false;
+            }
             for(int i = 0; i < ingredients.Length; i++)
             {
-                if(ingredients[i].amount > 0 && ingredients[i].item != null)
+                if(!ingredients[i].isEmpty)
                 {
-                    if(player.InventoryCountById(ingredients[i].item.name) < ingredients[i].amount)
+                    if(Player.localPlayer.InventoryCountById(ingredients[i].item.id) < ingredients[i].amount)
+                    {
                         return false; 
+                    }
                 }
             }
             return true;
         }
-        public virtual uint MaxCraftable(Player player)
+        public virtual uint MaxCraftable()
         {
             uint smallest = 0;
             for(int i = 0; i < ingredients.Length; i++)
             {
-                uint itemCount = player.InventoryCountById(ingredients[i].item.name);
+                uint itemCount = Player.localPlayer.InventoryCountById(ingredients[i].item.id);
                 if(itemCount > 0)
                 {
                     uint needed = (uint)(itemCount - (itemCount % ingredients[i].amount));
@@ -40,6 +52,21 @@ namespace Game
                 }
             }
             return smallest;
+        }
+        public static List<ScriptableRecipe> GetByCategory(CraftCategory targetCategory)
+        {
+            List<ScriptableRecipe> result = new List<ScriptableRecipe>();
+            if(dict.Count > 0)
+            {
+                for (int i = 0; i < dict.Count; i++)
+                {
+                    if(cache[i].category == targetCategory)
+                    {
+                        result.Add(cache[i]);
+                    }
+                }
+            }
+            return result;
         }
         static Dictionary<int, ScriptableRecipe> cache;
         public static Dictionary<int, ScriptableRecipe> dict

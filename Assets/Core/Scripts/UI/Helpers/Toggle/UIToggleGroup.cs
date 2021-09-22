@@ -10,10 +10,42 @@ namespace Game.UI
         public int currentIndex = -1;
         public List<UIToggle> list => m_list;
         public UIToggle current => currentIndex > -1 ? m_list[currentIndex] : null;
-        public void UpdateTogglesList()
+        public void UpdateTogglesList(bool indepth = false)
         {
             Clear();
             if(transform.childCount > 0)
+            {
+                if(indepth)
+                {
+                    GetTogglesInDepth();
+                }
+                else
+                {
+                    GetToggles();
+                }
+
+                if(m_list.Count > 0 && defaultIndex > -1)
+                {
+                    Select(defaultIndex);
+                }
+            }
+        }
+        void GetToggles()
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                UIToggle child = transform.GetChild(i).GetComponent<UIToggle>();
+                if(child != null)
+                {
+                    m_list.Add(child);
+                    child.index = i;
+                }
+            }
+        }
+        void GetTogglesInDepth()
+        {
+            UIToggle[] list = transform.GetComponentsInChildren<UIToggle>();
+            if(list.Length > 0)
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
@@ -23,10 +55,6 @@ namespace Game.UI
                         m_list.Add(child);
                         child.index = i;
                     }
-                }
-                if(m_list.Count > 0 && defaultIndex > -1)
-                {
-                    Select(defaultIndex);
                 }
             }
         }

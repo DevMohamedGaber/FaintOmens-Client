@@ -1,10 +1,9 @@
 using UnityEngine;
-using System;
-using TMPro;
 namespace Game.UI
 {
-    public class UICountSwitch : MonoBehaviour {
-        [SerializeField] TMP_InputField input;
+    public class UICountSwitch : MonoBehaviour
+    {
+        [SerializeField] TMPro.TMP_InputField input;
         [SerializeField] GameObject prevButton;
         [SerializeField] GameObject nextButton;
         [SerializeField] GameObject minButton;
@@ -46,9 +45,17 @@ namespace Game.UI
             }
             UpdateInfo();
         }
+        void UpdateInfo()
+        {
+            input.text = m_count.ToString();
+            prevButton.SetActive(m_count > min);
+            minButton.SetActive(m_count > min);
+            nextButton.SetActive(m_count < max);
+            maxButton.SetActive(m_count < max);
+        }
         public void OnInputEditEnd(string textValue)
         {
-            uint v = Convert.ToUInt32(textValue);
+            uint v = textValue.ToUInt();
             if(v < 1)
             {
                 m_count = min > 0 ? min : 1;
@@ -68,6 +75,15 @@ namespace Game.UI
             this.max = max;
             UpdateInfo();
         }
+        public void SetMax(uint max)
+        {
+            this.max = max;
+            if(m_count > max)
+            {
+                m_count = max;
+                UpdateInfo();
+            }
+        }
         public bool IsValid()
         {
             return m_count >= min && m_count <= max;
@@ -80,14 +96,6 @@ namespace Game.UI
         public void Hide()
         {
             gameObject.SetActive(false);
-        }
-        void UpdateInfo()
-        {
-            input.text = m_count.ToString();
-            prevButton.SetActive(m_count > min);
-            minButton.SetActive(m_count > min);
-            nextButton.SetActive(m_count < max);
-            maxButton.SetActive(m_count < max);
         }
         void OnDisable()
         {

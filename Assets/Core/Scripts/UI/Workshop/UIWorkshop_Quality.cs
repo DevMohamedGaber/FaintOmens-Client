@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 namespace Game.UI
 {
     public class UIWorkshop_Quality : UISubWindowBase
@@ -8,7 +7,7 @@ namespace Game.UI
         [SerializeField] Transform invContent;
         [SerializeField] GameObject prefab;
         [SerializeField] UIWorkshopItemSlot selectedSlot;
-        [SerializeField] Slider progress;
+        [SerializeField] UIProgressBar progress;
         [SerializeField] TMPro.TMP_Text progressTxt;
         [SerializeField] UICountableItemSlot[] stoneSlots;
         [SerializeField] ushort[] stoneIds;
@@ -99,9 +98,8 @@ namespace Game.UI
                     return;
                 }
                 // stones Count
-                progress.value = selectedSlot.data.quality.progress;
-                progress.maxValue = selectedSlot.data.quality.expMax;
-                progressTxt.text = $"{selectedSlot.data.quality.progress} / {selectedSlot.data.quality.expMax}  ({((selectedSlot.data.quality.progress / selectedSlot.data.quality.expMax) * 100).ToString("F0")}%)";
+                progress.fillAmount = (float)selectedSlot.data.quality.progress / (float)selectedSlot.data.quality.expMax;
+                progressTxt.text = $"{selectedSlot.data.quality.progress} / {selectedSlot.data.quality.expMax}  ({(progress.fillAmount * 100f).ToString("F0")}%)";
                 for(int i = 0; i < stoneSlots.Length; i++)
                 {
                     stoneSlots[i].SetAmount(player.InventoryCountById(stoneIds[i]), 1);
@@ -110,9 +108,8 @@ namespace Game.UI
             }
             else
             {
-                progressTxt.text = "";
-                progress.value = 1;
-                progress.maxValue = 1;
+                progressTxt.text = "0 / 0";
+                progress.fillAmount = 0;
                 for(int i = 0; i < stoneSlots.Length; i++)
                 {
                     stoneSlots[i].Unassign();

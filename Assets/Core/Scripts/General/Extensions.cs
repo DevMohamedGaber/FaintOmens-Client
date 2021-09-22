@@ -14,7 +14,11 @@ public static class Extensions
         Int32.TryParse(value, out errVal);
         return errVal;
     }
-
+    public static uint ToUInt(this string value, uint errVal=0)
+    {
+        UInt32.TryParse(value, out errVal);
+        return errVal;
+    }
     // string to long (returns errVal if failed)
     public static long ToLong(this string value, long errVal=0)
     {
