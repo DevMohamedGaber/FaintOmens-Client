@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class Workshop_Sockets : SubWindowBase
+    public class Workshop_Sockets : SubWindow
     {
     #region Data
         [Header("UI")]

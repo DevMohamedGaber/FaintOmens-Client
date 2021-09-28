@@ -84,6 +84,13 @@ namespace Game.UI
             unlockBtn.gameObject.SetActive(true);
             unlockBtn.onClick = onUnLock;
         }
+        public void UpdateAmount()
+        {
+            if(Player.localPlayer != null && IsAssigned())
+            {
+                SetAmount(Player.localPlayer.InventoryCountById(data.id));
+            }
+        }
         void Unlock() {
             if(isLocked) {
                 unlockBtn.gameObject.SetActive(false);

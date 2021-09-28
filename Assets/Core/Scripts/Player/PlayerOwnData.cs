@@ -95,8 +95,20 @@ namespace Game
     #region Leveling
         [Header("Experience")]
         [SyncVar(hook = "OnExperienceChanged")] uint _experience = 0;
-        public uint experience => _experience;
-        public uint experienceMax => Storage.data.player.expMax.Get(own.level);
+        public uint experience
+        {
+            get
+            {
+                return _experience;
+            }
+        }
+        public uint experienceMax
+        {
+            get
+            {
+                return Storage.data.player.expMax.Get(own.level);
+            }
+        }
         #endregion
         public override void OnStartClient()
         {
@@ -116,26 +128,40 @@ namespace Game
                 UIManager.data.inScene.sideBox.Refresh();
             }
         }
-        void OnInventoryChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldItem, ItemSlot newItem) {
+        void OnInventoryChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldItem, ItemSlot newItem)
+        {
             RefreshCurrentWindow();
         }
-        void OnMailBoxChanged(SyncListMail.Operation op, int index, Mail oldMail, Mail newMail) {
+        void OnMailBoxChanged(SyncListMail.Operation op, int index, Mail oldMail, Mail newMail)
+        {
             if(op == SyncListMail.Operation.OP_ADD || op == SyncListMail.Operation.OP_INSERT)
+            {
                 UIManager.data.notifiyIconsList.ShowNewMail();
+            }
         }
-        void OnAchievementsChanged(SyncListAchievements.Operation op, int index, Achievement oldAch, Achievement newAch) {
+        void OnAchievementsChanged(SyncListAchievements.Operation op, int index, Achievement oldAch, Achievement newAch)
+        {
             if(op == SyncListAchievements.Operation.OP_ADD)
+            {
                 UIManager.data.achievementNotice.Show(newAch);
+            }
         }
-        void OnPetsChanged(SyncListPets.Operation op, int index, PetInfo oldPet, PetInfo newPet) {
-            if(op == SyncListPets.Operation.OP_ADD && UIManager.data.pages.pets.IsVisible())
-                UIManager.data.pages.pets.OnPetUpdated(newPet);
+        void OnPetsChanged(SyncListPets.Operation op, int index, PetInfo oldPet, PetInfo newPet)
+        {
+            if(op == SyncListPets.Operation.OP_ADD && UIManager.data.currenOpenWindow is Pets petsWindow)
+            {
+                petsWindow.OnPetUpdated(newPet);
+            }
         }
-        void OnMountsChanged(SyncListMounts.Operation op, int index, Mount oldValue, Mount newValue) {
+        void OnMountsChanged(SyncListMounts.Operation op, int index, Mount oldValue, Mount newValue)
+        {
             if(op == SyncListMounts.Operation.OP_ADD && UIManager.data.pages.mounts.IsVisible())
+            {
                 UIManager.data.pages.mounts.OnMountUpdated(newValue);
+            }
         }
-        void OnTradeInvitationsChanged(SyncListTradeInvitations.Operation op, int index, TradeInvitation oldValue, TradeInvitation newValue) {
+        void OnTradeInvitationsChanged(SyncListTradeInvitations.Operation op, int index, TradeInvitation oldValue, TradeInvitation newValue)
+        {
             
         }
     #endregion
@@ -154,9 +180,9 @@ namespace Game
         }
         void OnPetExpShareChanged(bool oldShare, bool newShare)
         {
-            if(oldShare != newShare && UIManager.data.pages.pets.IsVisible())
+            if(oldShare != newShare && UIManager.data.currenOpenWindow is Pets petsWindow)
             {
-                UIManager.data.pages.pets.UpdateExpShare();
+                petsWindow.UpdateExpShare();
             }
         }
         void OnExperienceChanged(uint oldExp, uint newExp)

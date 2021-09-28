@@ -19,7 +19,7 @@ namespace Game.UI
         [SerializeField] GameObject locked;
         [SerializeField] TMP_Text brTxt;
         [SerializeField] RTLTextMeshPro sourceTxt;
-        [SerializeField] Stats stats;
+        [SerializeField] TitleStats stats;
         void OnSelectTitle(int titleId)
         {
             if(ScriptableTitle.dict.TryGetValue(titleId, out ScriptableTitle title))
@@ -29,7 +29,7 @@ namespace Game.UI
                 brTxt.text = title.CalculateBR(isActive).ToString();
                 sourceTxt.text = title.GetSource();
                 locked.SetActive(!isActive);
-                stats.SetTitle(title, isActive);
+                stats.Set(title, isActive);
             }
             else
             {

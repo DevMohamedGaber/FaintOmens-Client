@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class Workshop_Repair : SubWindowBase
+    public class Workshop_Repair : SubWindow
     {
         [SerializeField] Transform invContent;
         [SerializeField] UIWorkshopItemSlot selectedSlot;

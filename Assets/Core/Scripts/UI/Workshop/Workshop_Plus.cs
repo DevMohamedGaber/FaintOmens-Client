@@ -3,7 +3,7 @@ using System;
 using TMPro;
 namespace Game.UI
 {
-    public class UIWorkshop_Plus : SubWindowBase
+    public class Workshop_Plus : SubWindow
     {
     #region Data
         [Header("UI")]

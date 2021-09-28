@@ -3,6 +3,7 @@ namespace Game
     [System.Serializable]
     public struct PetInfo
     {
+        public static readonly PetInfo Empty = new PetInfo();
         public ushort id;
         public SummonableStatus status;
         public byte level;

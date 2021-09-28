@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class Workshop_Quality : SubWindowBase
+    public class Workshop_Quality : SubWindow
     {
     #region Data
         [SerializeField] Transform invContent;

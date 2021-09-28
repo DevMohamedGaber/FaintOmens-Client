@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class UIEquipments : SubWindowBase
+    public class UIEquipments : SubWindow
     {
         [SerializeField] UIItemSlotWithType[] slots;
         public override void Refresh()

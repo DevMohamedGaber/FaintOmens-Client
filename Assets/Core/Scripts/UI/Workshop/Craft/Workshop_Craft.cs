@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Game.UI
 {
-    public class Workshop_Craft : SubWindowBase
+    public class Workshop_Craft : SubWindow
     {
         [Header("List")]
         [SerializeField] Transform categoryContent;

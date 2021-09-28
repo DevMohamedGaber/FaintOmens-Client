@@ -3,16 +3,20 @@ using System;
 using TMPro;
 namespace Game.UI
 {
-    public class UIInventory_Bag : SubWindowBase {
+    public class UIInventory_Bag : SubWindow
+    {
         [SerializeField] GameObject prefab;
         [SerializeField] Transform content;
         [SerializeField] TMP_Text countText;
         [SerializeField] GameObject OpenSlotConfirmMsg;
         UIItemSlot[] slots;
         DateTime lastSort;
-        public override void Refresh() {
-            for(int i = 0; i < player.own.inventorySize; i++) {
-                if(player.own.inventory.Count > 0 && player.own.inventory[i].amount > 0) {
+        public override void Refresh()
+        {
+            for(int i = 0; i < player.own.inventorySize; i++)
+            {
+                if(player.own.inventory.Count > 0 && player.own.inventory[i].amount > 0)
+                {
                     slots[i].Assign(slot: player.own.inventory[i], id: i);
                     slots[i].onClick.SetListener((itemSlot) => {
                         if(itemSlot.IsAssigned() && itemSlot.amount > 0) {
@@ -33,21 +37,28 @@ namespace Game.UI
                         }
                     });
                 }
-                else slots[i].Unassign();
+                else
+                {
+                    slots[i].Unassign();
+                }
             }
-            for(int i = player.own.inventorySize; i < Storage.data.player.maxInventorySize; i++) {
+            for(int i = player.own.inventorySize; i < Storage.data.player.maxInventorySize; i++)
+            {
                 int iCopy = i;
                 slots[i].Lock(() => OpenSlotConfirm(iCopy));
             }
             countText.text = $"{player.InventorySlotsOccupied()} / {player.own.inventorySize}";
         }
-        public void OnSort() {
-            if(lastSort.AddSeconds(10) <= Server.time) {
+        public void OnSort()
+        {
+            if(lastSort.AddSeconds(10) <= Server.time)
+            {
                 player.CmdSortInventory();
                 lastSort = Server.time;
             }
         }
-        public void OpenSlotConfirm(int slotIndex) {
+        public void OpenSlotConfirm(int slotIndex)
+         {
             /*if(slotIndex <= Storage.data.player.maxInventorySize - 1) {
                 OpenSlotConfirmMsg.SetActive(true);
                 int slots = slotIndex - player.own.inventorySize + 1;
@@ -60,17 +71,22 @@ namespace Game.UI
                 });
             }*/
         }
-        protected override void OnEnable() {
+        protected override void OnEnable()
+        {
             base.OnEnable();
             slots = new UIItemSlot[Storage.data.player.maxInventorySize];
             for(int i = 0; i < Storage.data.player.maxInventorySize; i++)
+            {
                 slots[i] = content.GetChild(i).GetComponent<UIItemSlot>();
+            }
             Refresh();
         }
-        void OnDisable() {
+        void OnDisable()
+        {
             slots = new UIItemSlot[]{};
         }
-        private void Awake() {
+        private void Awake()
+        {
             UIUtils.BalancePrefabs(prefab, Storage.data.player.maxInventorySize, content);
         }
     }
