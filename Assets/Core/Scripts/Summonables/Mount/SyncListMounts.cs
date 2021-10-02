@@ -16,7 +16,7 @@ namespace Game
             }
             return -1;
         }
-        public Mount? Get(ushort id)
+        public Mount Get(ushort id)
         {
             if(Count > 0)
             {
@@ -28,7 +28,7 @@ namespace Game
                     }
                 }
             }
-            return null;
+            return Mount.Empty;
         }
     }
 }

@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 namespace Game.UI
 {
-    public class UIInventory_Sell : MonoBehaviour {
+    public class UIInventory_Sell : SubWindow
+    {
         [SerializeField] UIItemSlot prefab;
         [SerializeField] Transform Content;
         [SerializeField] Button SelectAllButton;
         [SerializeField] Button ConfirmButton;
         [SerializeField] Text TotalGoldText;
         [SerializeField] Button CloseOverLay;
-        Player player => Player.localPlayer;
-        public bool isVisible => gameObject.activeSelf;
         List<int> items = new List<int>();
         long totalGold;
         bool isAllSelected = false;
-        public void Refresh() {
+        public void Refresh()
+        {
 
         }
         void Update() {

@@ -3,18 +3,42 @@ namespace Game
     [System.Serializable]
     public struct Mount
     {
+        public static readonly Mount Empty = new Mount();
         public ushort id;
         public SummonableStatus status;
-        public byte level;
+        public byte _level;
         public uint experience;
         public Tier tier;
-        public byte stars;
+        public byte _stars;
         public ushort vitality;
         public ushort intelligence;
         public ushort endurance;
         public ushort strength;
+        public MountTraining training;
         public uint expMax => Storage.data.mount.expMax.Get(level);
         public ScriptableMount data => ScriptableMount.dict[id];
+        public int level
+        {
+            set
+            {
+                _level = (byte)value;
+            }
+            get
+            {
+                return (int)_level;
+            }
+        }
+        public int stars
+        {
+            set
+            {
+                _stars = (byte)value;
+            }
+            get
+            {
+                return (int)_stars;
+            }
+        }
         // unsummoned data
         public int healthMax
         {

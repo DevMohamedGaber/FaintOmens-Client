@@ -13,7 +13,6 @@ namespace Game.UI
         [SerializeField] RTLTMPro.RTLTextMeshPro awakeItemName;
         [Header("Feed")]
         [SerializeField] GameObject feedPanel;
-        [SerializeField] Transform feedContent;
         [SerializeField] UIItemSlot[] feedSlots;
         int SelectedFeed = -1;
         public override void Refresh()

@@ -30,7 +30,7 @@ namespace Game.UI
                     stats.SetWithNextTireBonus(pet);
                     if(nameTxt != null && slot.IsAssigned())
                     {
-                        uint count = player.InventoryCountById(Storage.data.pet.UpgradeItemId);
+                        uint count = player.InventoryCountById(Storage.data.pet.upgradeItemId);
                         uint req = Storage.data.pet.upgradeReqCount[(int)pet.tier];
                         nameTxt.text = $"{slot.data.Name} <color={(count > req ? "green" : "red")}>{LanguageManger.UseSymbols($"{count} / {req}", "(", ")")}</color>";
                     }
@@ -55,7 +55,7 @@ namespace Game.UI
                 Notify.list.Add("Pet already reached max tier", "المرافق وصل لاعلي سمو");
                 return;
             }
-            if(player.InventoryCountById(Storage.data.pet.UpgradeItemId) < Storage.data.pet.upgradeReqCount[(int)currentTier])
+            if(player.InventoryCountById(Storage.data.pet.upgradeItemId) < Storage.data.pet.upgradeReqCount[(int)currentTier])
             {
                 Notify.list.Add("Not enough UpgradeItemId", "UpgradeItemId غير كافي");
                 return;
@@ -64,7 +64,7 @@ namespace Game.UI
         }
         void Awake()
         {
-            slot.Assign(Storage.data.pet.UpgradeItemId);
+            slot.Assign(Storage.data.pet.upgradeItemId);
         }
     }
 }

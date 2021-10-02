@@ -7,10 +7,12 @@ namespace Game.StorageData
         public ExponentialUInt expMax;
         public byte starsCap;
         public ushort pointPerLvl;
+        public int trainItemId;
         public int upgradeItemId;
-        public uint[] upgradeReqCount;
         public int starsUpItemId;
+        public uint[] upgradeReqCount;
         public uint[] starUpReqCount;
+        public ushort[] trainingExpMax;
         public FeedItem[] feeds;
     }
 }

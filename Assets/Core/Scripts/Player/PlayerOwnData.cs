@@ -155,7 +155,7 @@ namespace Game
         }
         void OnMountsChanged(SyncListMounts.Operation op, int index, Mount oldValue, Mount newValue)
         {
-            if(op == SyncListMounts.Operation.OP_ADD && UIManager.data.pages.mounts.IsVisible())
+            if(op == SyncListMounts.Operation.OP_ADD && UIManager.data.pages.mounts.isVisible)
             {
                 UIManager.data.pages.mounts.OnMountUpdated(newValue);
             }
@@ -193,7 +193,7 @@ namespace Game
         {
             if(UIManager.data.currenOpenWindow != null)
             {
-                if(UIManager.data.currenOpenWindow is UIInventory window)
+                if(UIManager.data.currenOpenWindow is Inventory window)
                 {
                     window.Refresh();
                 }

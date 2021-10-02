@@ -43,11 +43,6 @@ namespace Game
         [Header("Player Synced")]
         [SyncVar] public uint id;
         [SyncVar(hook ="OnStateChanged")] public EntityState state = EntityState.Idle;
-        /*[SyncVar(hook ="OnLevelChanged")] byte _level;
-        public int level {
-            get => (int)_level;
-            set => _level = (byte)value;
-        }*/
         [SyncVar] public PlayerClassData classInfo;
         [SyncVar(hook = "OnGenderChanged")] public Gender gender;
         [SyncVar(hook = "OnCityChanged")] public byte cityId;
@@ -936,48 +931,67 @@ namespace Game
         }
     #endregion //Client Commands
     #region BodyModels
-        void RefreshBodyLocation() {
+        void RefreshBodyLocation()
+        {
             if(bodyHolder == null)
                 return;
             int index = (int)ClothingCategory.Body;
-            if(wardrobe[index].isUsed && showWardrop) {
-                if(bodyHolder.childCount > 0) Destroy(bodyHolder.GetChild(0).gameObject);
+            if(wardrobe[index].isUsed && showWardrop)
+            {
+                if(bodyHolder.childCount > 0)
+                {
+                    Destroy(bodyHolder.GetChild(0).gameObject);
+                }
                 GameObject go = Instantiate(ScriptableWardrobe.dict[wardrobe[index].id].modelPrefab[(int)gender], bodyHolder, false);
                 OnRefreshBodyLocation(go);
             }
-            else {
+            else
+            {
                 index = (int)EquipmentsCategory.Armor;
                 if(bodyHolder.childCount > 0)
+                {
                     Destroy(bodyHolder.GetChild(0).gameObject);
-                if(equipment.Count >= index && equipment[index].item.id > 0 && equipment[index].amount == 1) {
+                }
+                if(equipment.Count >= index && equipment[index].item.id > 0 && equipment[index].amount == 1)
+                {
                     EquipmentItem itemData = (EquipmentItem)equipment[index].item.data;
-                    if(itemData != null && itemData.modelPrefab[(int)gender] != null) {
+                    if(itemData != null && itemData.modelPrefab[(int)gender] != null)
+                    {
                         GameObject go = Instantiate(itemData.modelPrefab[(int)gender], bodyHolder, false);
                         OnRefreshBodyLocation(go);
                     }
-                } else {
+                }
+                else
+                {
                     GameObject go = Instantiate(Storage.data.basicBody[(int)gender], bodyHolder, false);
                     OnRefreshBodyLocation(go);
                 }
             }
         }
-        void OnRefreshBodyLocation(GameObject go) {
+        void OnRefreshBodyLocation(GameObject go)
+        {
             ResetMeshAndAnimation(go);
             BodyPlaceholders bp = go.GetComponentInChildren<BodyPlaceholders>();
-            if(bp != null) {
+            if(bp != null)
+            {
                 effectMount = bp.rightHand;
                 rWeaponHolder = bp.rightWeapon;
                 lWeaponHolder = bp.leftWeapon;
                 wingsHolder = bp.wing;
                 animator.avatar = bp.avatar;
-                if(classInfo.type == PlayerClass.Archer) {
+                if(classInfo.type == PlayerClass.Archer)
+                {
                     Instantiate(Storage.data.player.arrowPrefab, rWeaponHolder, false);
                 }
             }
             if(wardrobe[(int)ClothingCategory.Weapon].isUsed)
+            {
                 RefreshMainWeaponLocation();// RefreshWeaponsLocation(); // after adding artifacts/second weapon
+            }
             if(wardrobe[(int)ClothingCategory.Wings].isUsed)
+            {
                 RefreshWingsLocation();
+            }
         }
         void RefreshMainWeaponLocation()
         {
@@ -1011,91 +1025,125 @@ namespace Game
                     Instantiate(itemData.modelPrefab[0], mainHand, false);
                 }
             }
-            if(classInfo.type == PlayerClass.Archer && mainHand.childCount > 0) {
+            if(classInfo.type == PlayerClass.Archer && mainHand.childCount > 0)
+            {
                 BowInfo bowInfo = mainHand.GetChild(0).GetComponent<BowInfo>();
-                if(bowInfo != null) {
+                if(bowInfo != null)
+                {
 
                 }
             }
         }
-        void RefreshWingsLocation() {
+        void RefreshWingsLocation()
+        {
             if(wingsHolder == null)
                 return;
             if(wingsHolder.childCount > 0)
+            {
                 Destroy(wingsHolder.GetChild(0).gameObject);
+            }
             int index = (int)ClothingCategory.Wings;
             if(wardrobe[index].isUsed && showWardrop)
+            {
                 Instantiate(ScriptableWardrobe.dict[wardrobe[index].id].modelPrefab[0], wingsHolder, false);
+            }
             UIManager.data.controllers.UpdateFlyButton();
         }
-        void RefreshSoulLocation() {
+        void RefreshSoulLocation()
+        {
             if(spiritHolder == null)
                 return;
             if(spiritHolder.childCount > 0)
+            {
                 Destroy(spiritHolder.GetChild(0).gameObject);
+            }
             int index = (int)ClothingCategory.Spirit;
             if(wardrobe[index].isUsed && showWardrop)
+            {
                 Instantiate(ScriptableWardrobe.dict[wardrobe[index].id].modelPrefab[0], spiritHolder, false);
+            }
         }
-        public void RefreshAllLocation() {
+        public void RefreshAllLocation()
+        {
             RefreshBodyLocation();
             RefreshMainWeaponLocation();// RefreshWeaponsLocation(); // after adding artifacts/second weapon
             RefreshWingsLocation();
             RefreshSoulLocation();
         }
         // callbacks
-        void OnWardrobeVisibilityChanged(bool oldValue = false, bool newValue = false) { 
+        void OnWardrobeVisibilityChanged(bool oldValue = false, bool newValue = false)
+        { 
             RefreshAllLocation();
             if(UIManager.data.wardrobe.IsVisible())
+            {
                 UIManager.data.wardrobe.UpdateVisibility();
+            }
         }
-        void OnWardrobeChanged(SyncListWardrop.Operation op, int index, WardrobeItem oldcloth, WardrobeItem newCloth) {
+        void OnWardrobeChanged(SyncListWardrop.Operation op, int index, WardrobeItem oldcloth, WardrobeItem newCloth)
+        {
             RefreshAllLocation();
             //UIManager.data.wardrob.UpdatePreview();
         }
-        void OnEquipmentChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldcloth, ItemSlot newCloth) {
+        void OnEquipmentChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldcloth, ItemSlot newCloth)
+        {
             RefreshAllLocation();
             //UIManager.data.wardrob.UpdatePreview();
-            if(UIManager.data.currenOpenWindow != null) {
-                if(UIManager.data.currenOpenWindow is UIInventory invWin) {
+            if(UIManager.data.currenOpenWindow != null)
+            {
+                if(UIManager.data.currenOpenWindow is Inventory invWin)
+                {
                     invWin.RefreshEquipments();
                 }
             }
         }
-        void OnGenderChanged(Gender oldValue, Gender newValue) {
+        void OnGenderChanged(Gender oldValue, Gender newValue)
+        {
             RefreshAllLocation();
         }
         // helpers
-        void ResetMeshAndAnimation(GameObject go) {
+        void ResetMeshAndAnimation(GameObject go)
+        {
             SkinnedMeshRenderer equipmentSkin = go.GetComponentInChildren<SkinnedMeshRenderer>();
             if (equipmentSkin != null && CanReplaceAllBones(equipmentSkin))
+            {
                 ReplaceAllBones(equipmentSkin);
+            }
             //Animator anims = go.GetComponentInChildren<Animator>();
             //anims.runtimeAnimatorController = animator.runtimeAnimatorController;// assign main animation controller to it
             RebindAnimators();// restart all animators, so that skinned mesh equipment will be in sync with the main animation
         }
-        bool CanReplaceAllBones(SkinnedMeshRenderer equipmentSkin) {
+        bool CanReplaceAllBones(SkinnedMeshRenderer equipmentSkin)
+        {
             // are all equipment SkinnedMeshRenderer bones in the player bones?
             foreach(Transform bone in equipmentSkin.bones)
+            {
                 if(!skinBones.ContainsKey(bone.name))
                     return false;
+            }
             return true;
         }
-        void ReplaceAllBones(SkinnedMeshRenderer equipmentSkin) {
+        void ReplaceAllBones(SkinnedMeshRenderer equipmentSkin)
+        {
             // get equipment bones
             Transform[] bones = equipmentSkin.bones;
             // replace each one
-            for (int i = 0; i < bones.Length; ++i) {
+            for (int i = 0; i < bones.Length; ++i)
+            {
                 string boneName = bones[i].name;
                 if(!skinBones.TryGetValue(boneName, out bones[i]))
+                {
                     Debug.LogWarning(equipmentSkin.name + " bone " + boneName + " not found in original player bones. Make sure to check CanReplaceAllBones before.");
+                }
             }
             // reassign bones
             equipmentSkin.bones = bones;
         }
-        void RebindAnimators() {
+        void RebindAnimators()
+        {
             foreach(Animator anim in GetComponentsInChildren<Animator>())
+            {
                 anim.Rebind();
+            }
         }
     #endregion
     #region Client Callbacks
@@ -1490,18 +1538,26 @@ namespace Game
         [Command] public void CmdPetChangeExpShare() {}
     #endregion
     #region Mount
-        public bool IsMounted() => mount.canMount && mount.mounted;
-        void OnActiveMountChanged(ActiveMount oldInfo, ActiveMount newInfo) {
+        public bool IsMounted()
+        {
+            return mount.canMount && mount.mounted;
+        }
+        void OnActiveMountChanged(ActiveMount oldInfo, ActiveMount newInfo)
+        {
             if(mountObj != null && (newInfo.mounted == false || oldInfo.id != newInfo.id))
+            {
                 Destroy(mountObj.gameObject);
+            }
 
-            if(IsMounted()) {
+            if(IsMounted())
+            {
                 mountObj = Instantiate(newInfo.prefab).GetComponent<MountBody>();
                 mountObj.dataIndex = own.mounts.FindIndex(m => m.id == newInfo.id);
                 mountObj.Set(transform, speed);
             }
             
-            if(oldInfo.id != newInfo.id || oldInfo.mounted != newInfo.mounted) {
+            if(oldInfo.id != newInfo.id || oldInfo.mounted != newInfo.mounted)
+            {
                 UIManager.data.controllers.UpdateMountButton();
             }
             UpdateAnimation();
@@ -1515,14 +1571,21 @@ namespace Game
         [Command] public void CmdMountStarUp(ushort mountId) {}
         [Command] public void CmdMountSummon() {}
         [Command] public void CmdMountUnsummon() {}
-
-        void ApplyMountSeatOffset() {
-            if (meshToOffsetWhenMounted != null) {// apply seat offset if on mount (not a dead one), reset otherwise
-                if(IsMounted() && mountObj != null) {
+        [Command] public void CmdMountTrain(ushort mountId, byte type) {}
+        [Command] public void CmdMountTrainx10(ushort mountId, byte type) {}
+        void ApplyMountSeatOffset()
+        {
+            if (meshToOffsetWhenMounted != null) // apply seat offset if on mount (not a dead one), reset otherwise
+            {
+                if(IsMounted() && mountObj != null)
+                {
                     meshToOffsetWhenMounted.transform.position = mountObj.seat.position + Vector3.up * seatOffsetY;
                     Debug.Log(mountObj.seat.position + Vector3.up * seatOffsetY);
                 }
-                else meshToOffsetWhenMounted.transform.localPosition = Vector3.zero;
+                else
+                {
+                    meshToOffsetWhenMounted.transform.localPosition = Vector3.zero;
+                }
             }
         }
     #endregion

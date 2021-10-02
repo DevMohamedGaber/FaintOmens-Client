@@ -10,7 +10,7 @@ namespace Game.StorageData
         public byte potentialToAP;
         public byte potentialMax;
         public int trainItemId;
-        public int UpgradeItemId;
+        public int upgradeItemId;
         public int starsUpItemId;
         public uint[] upgradeReqCount;
         public uint[] starUpReqCount;

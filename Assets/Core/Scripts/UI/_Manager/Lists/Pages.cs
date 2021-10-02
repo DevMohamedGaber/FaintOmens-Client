@@ -4,7 +4,7 @@ namespace Game.UI.ManagerLists
     public struct Pages
     {
         public Pets pets;
-        public UIMounts mounts;
+        public Mounts mounts;
         public UIArena arena;
         public Trade trade;
         public Store store;
