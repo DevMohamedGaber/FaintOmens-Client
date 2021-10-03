@@ -12,27 +12,17 @@ namespace Game.UI
         DateTime lastSort;
         public override void Refresh()
         {
-            for(int i = 0; i < player.own.inventorySize; i++)
+            int i;
+            for(i = 0; i < player.own.inventorySize; i++)
             {
                 if(player.own.inventory.Count > 0 && player.own.inventory[i].amount > 0)
                 {
                     slots[i].Assign(slot: player.own.inventory[i], id: i);
-                    slots[i].onClick.SetListener((itemSlot) => {
-                        if(itemSlot.IsAssigned() && itemSlot.amount > 0) {
+                    slots[i].onClick.SetListener((itemSlot) =>
+                    {
+                        if(itemSlot.IsAssigned() && itemSlot.amount > 0)
+                        {
                             UIManager.data.inScene.tooltip.Show(itemSlot.data, ToolTipFrom.Inventory, itemSlot.ID);
-                            /*if(itemSlot.data.data is UsableItem &&
-                                ((UsableItem)itemSlot.data.data).CanUse()) {
-                                    player.CmdUseInventoryItem(itemSlot.ID);
-                                    ToolTip.data.Hide();
-                                }
-                            ToolTip.data.onUse = () => {
-                                if(itemSlot.data.data is UsableItem &&
-                                    ((UsableItem)itemSlot.data.data).CanUse()) {
-                                        player.CmdUseInventoryItem(itemSlot.ID);
-                                        ToolTip.data.Hide();
-                                    }
-                            };*/
-                            //ToolTip.data.ShowItem(itemSlot.data, itemSlot.transform.position, true);
                         }
                     });
                 }
@@ -41,7 +31,7 @@ namespace Game.UI
                     slots[i].Unassign();
                 }
             }
-            for(int i = player.own.inventorySize; i < Storage.data.player.maxInventorySize; i++)
+            for(i = player.own.inventorySize; i < Storage.data.player.maxInventorySize; i++)
             {
                 int iCopy = i;
                 slots[i].Lock(() => OpenSlotConfirm(iCopy));

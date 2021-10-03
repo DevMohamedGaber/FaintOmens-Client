@@ -17,6 +17,6 @@ namespace Game
                 return (int)_level;
             }
         }
-        ushort expMax => Storage.data.mount.trainingExpMax[level];
+        public ushort expMax => Storage.data.mount.trainingExpMax[level];
     }
 }

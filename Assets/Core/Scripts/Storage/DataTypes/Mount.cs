@@ -13,6 +13,7 @@ namespace Game.StorageData
         public uint[] upgradeReqCount;
         public uint[] starUpReqCount;
         public ushort[] trainingExpMax;
+        public int pointPerTrainingLevel;
         public FeedItem[] feeds;
     }
 }

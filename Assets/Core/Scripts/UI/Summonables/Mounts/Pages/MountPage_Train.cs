@@ -4,58 +4,125 @@ namespace Game.UI
 {
     public class MountPage_Train : MountPage
     {
-        /*[SerializeField] TMP_Text current;
-        [SerializeField] TMP_Text p_to_attr;
-        [SerializeField] GameObject requirementsObj;
-        [SerializeField] GameObject maxedObj;
-        [SerializeField] UIItemSlot slot;
-        [SerializeField] RTLTMPro.RTLTextMeshPro nameTxt;
+        [Header("Training")]
+        [SerializeField] UIItemSlot itemSlot;
+        [SerializeField] RTLTMPro.RTLTextMeshPro itemName;
+        [SerializeField] UIToggleGroup toggleGroup;
+        [Header("Attributes")]
+        [SerializeField] MountPage_Train_Attribute vitality;
+        [SerializeField] MountPage_Train_Attribute strength;
+        [SerializeField] MountPage_Train_Attribute intelligence;
+        [SerializeField] MountPage_Train_Attribute endurance;
         public override void Refresh()
         {
             base.Refresh();
-            PetInfo pet = player.own.pets.Get(id);
-            if(pet.id != 0)
-            {
-                current.text = pet.potential.ToString();
-                p_to_attr.text = (pet.potential % Storage.data.pet.potentialToAP).ToString();
 
-                bool isMaxed = pet.potential == Storage.data.pet.potentialMax;
-                maxedObj.SetActive(isMaxed);
-                requirementsObj.SetActive(!isMaxed);
-                if(nameTxt != null && slot.IsAssigned())
+            Mount info = player.own.mounts.Get(id);
+            if(info.id != 0)
+            {
+                vitality.Set(info.training.vitality);
+                strength.Set(info.training.strength);
+                intelligence.Set(info.training.intelligence);
+                endurance.Set(info.training.endurance);
+                if(itemName != null && itemSlot != null && itemSlot.IsAssigned())
                 {
-                    uint count = player.InventoryCountById(Storage.data.pet.trainItemId);
-                    nameTxt.text = $"{slot.data.Name} <color={(count > 0 ? "green" : "white")}>{LanguageManger.UseSymbols(count.ToString(), "(", ")")}</color>";
+                    uint count = player.InventoryCountById(Storage.data.mount.trainItemId);
+                    itemName.text = $"{itemSlot.data.Name} <color={(count > 0 ? "green" : "red")}>({count})</color>";
                 }
             }
             else
             {
-                pets.window.Status();
+                mounts.window.Status();
             }
         }
         public void OnTrain()
         {
-            int pIndex = player.own.pets.Has(id);
-            if(pIndex == -1)
-            {
-                Notify.list.Add("Pet isn't active", "المرافق غير مفعل");
+            if(!IsTrainable())
                 return;
-            }
-            if(player.own.pets[pIndex].potential >= Storage.data.pet.potentialMax)
-            {
-                Notify.list.Add("Pet already reached max potential", "المرافق وصل لاعلي طموح");
+            player.CmdMountTrain(id, (byte)toggleGroup.currentIndex);
+        }
+        public void OnTrainx10()
+        {
+            if(!IsTrainable())
                 return;
-            }
-            if(player.InventoryCountById(Storage.data.pet.trainItemId) < 1)
+            player.CmdMountTrainx10(id, (byte)toggleGroup.currentIndex);
+        }
+        bool IsTrainable()
+        {
+            int index = player.own.mounts.Has(id);
+            if(index == -1)
             {
-                Notify.list.Add("Not enough trainingItem", "تمرين غير كافي");
-                return;
+                Notify.list.Add("Mount isn't active", "المرافق غير مفعل");
+                return false;
             }
-            player.CmdPetTrain(id);
+            if(toggleGroup.currentIndex == -1 || toggleGroup.currentIndex > 3)
+            {
+                Notify.list.Add("Please select an attribute");
+                return false;
+            }
+            if(!CanTrainAttribute(index))
+            {
+                Notify.list.Add("attribute level can't excede mount level");
+                return false;
+            }
+            if(player.InventoryCountById(Storage.data.mount.trainItemId) < 1)
+            {
+                Notify.list.Add($"You don't have enough [{itemSlot.data.Name}]");
+                return false;
+            }
+            return true;
+        }
+        bool CanTrainAttribute(int index)
+        {
+            Mount mount = player.own.mounts[index];
+            if(toggleGroup.currentIndex == 0)
+            {
+                return mount.training.vitality.level < mount.level;
+            }
+            if(toggleGroup.currentIndex == 1)
+            {
+                return mount.training.strength.level < mount.level;
+            }
+            if(toggleGroup.currentIndex == 2)
+            {
+                return mount.training.intelligence.level < mount.level;
+            }
+            if(toggleGroup.currentIndex == 3)
+            {
+                return mount.training.endurance.level < mount.level;
+            }
+            return false;
         }
         void Awake()
         {
-            slot.Assign(Storage.data.pet.trainItemId);
-        }*/
+            itemSlot.Assign(Storage.data.mount.trainItemId);
+        }
+        [System.Serializable]
+        public struct MountPage_Train_Attribute
+        {
+            [SerializeField] TMP_Text levelTxt;
+            [SerializeField] TMP_Text pointsTxt;
+            [SerializeField] TMP_Text expTxt;
+            [SerializeField] UIProgressBar progressBar;
+            public void Set(MountTrainingAttribute data)
+            {
+                if(levelTxt != null)
+                {
+                    levelTxt.text = data.level.ToString();
+                }
+                if(pointsTxt != null)
+                {
+                    pointsTxt.text = (data.level * Storage.data.mount.pointPerTrainingLevel).ToString();
+                }
+                if(expTxt != null)
+                {
+                    expTxt.text = $"{data.exp} / {data.expMax}";
+                }
+                if(progressBar != null)
+                {
+                    progressBar.fillAmount = (float)data.exp / (float)data.expMax;
+                }
+            }
+        }
     }
 }
