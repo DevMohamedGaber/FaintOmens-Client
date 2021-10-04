@@ -29,7 +29,7 @@ namespace Game.UI
             }
             if(rewardsContent != null && data.rewards.Length > 0)
             {
-                UIUtils.BalancePrefabs(UIManager.data.assets.itemSlotPrefab, data.rewards.Length, rewardsContent);
+                UIUtils.BalancePrefabs(UIManager.data.assets.itemSlots.normal, data.rewards.Length, rewardsContent);
                 for (int i = 0; i < data.rewards.Length; i++)
                 {
                     UIItemSlot slotSlot = rewardsContent.GetChild(i).GetComponent<UIItemSlot>();

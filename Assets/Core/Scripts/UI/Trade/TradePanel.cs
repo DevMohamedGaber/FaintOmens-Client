@@ -113,7 +113,7 @@ namespace Game.UI
         }
         public void Initialize(int count)
         {
-            UIUtils.BalancePrefabs(UIManager.data.assets.itemSlotPrefab, count, itemsContent);
+            UIUtils.BalancePrefabs(UIManager.data.assets.itemSlots.normal, count, itemsContent);
             offerItems = new List<UIItemSlot>();
             itemsList = new List<UIItemSlot>();
             for(int i = 0; i < count; i++)

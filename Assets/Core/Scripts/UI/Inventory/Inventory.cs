@@ -7,7 +7,7 @@ namespace Game.UI
         [Header("Inventroy")]
         [SerializeField] UIEquipments equipments;
         [SerializeField] Inventory_Bag bag;
-        [SerializeField] UIInventory_Sell sell;
+        [SerializeField] Inventory_Sell sell;
         public override void Refresh()
         {
             if(bag.isVisible)

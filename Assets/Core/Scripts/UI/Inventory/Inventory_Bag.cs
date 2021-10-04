@@ -67,7 +67,7 @@ namespace Game.UI
         }
         private void Awake()
         {
-            UIUtils.BalancePrefabs(UIManager.data.assets.itemSlotPrefab, Storage.data.player.maxInventorySize, content);
+            UIUtils.BalancePrefabs(UIManager.data.assets.itemSlots.normal, Storage.data.player.maxInventorySize, content);
             slots = new UIItemSlot[Storage.data.player.maxInventorySize];
             for(int i = 0; i < Storage.data.player.maxInventorySize; i++)
             {

@@ -4,7 +4,7 @@ namespace Game.UI
 {
     public class UIGuildShopSlot : MonoBehaviour
     {
-        public UIInventorySlot item;
+        public UIItemSlot item;
         public Text Name;
         public Text cost;
         public Button Buy;

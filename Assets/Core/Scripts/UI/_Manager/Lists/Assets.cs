@@ -11,9 +11,17 @@ namespace Game.UI.ManagerLists
         public Sprite[] gender;
         public Sprite[] currency;
         public Sprite[] discountArrows;
-        public GameObject itemSlotPrefab;
-        public GameObject workshopSlotPrefab;
+        public Assets_Slots itemSlots;
         public Sprite[] socketSlot; // 0 => locked; 1 => empty
         public Sprite defaultItem;
+
+        [System.Serializable]
+        public struct Assets_Slots
+        {
+            public GameObject normal;
+            public GameObject workshop;
+            public GameObject selectable;
+            public GameObject countable;
+        }
     }
 }

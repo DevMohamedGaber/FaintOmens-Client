@@ -106,7 +106,7 @@ namespace Game.UI
             slots = new UIWorkshopItemSlot[(int)player.own.inventorySize + Storage.data.player.equipmentCount + Storage.data.player.accessoriesCount];
             for(int i = 0; i < slots.Length; i++)
             {
-                GameObject go = Instantiate(UIManager.data.assets.workshopSlotPrefab, invContent, false);
+                GameObject go = Instantiate(UIManager.data.assets.itemSlots.workshop, invContent, false);
                 slots[i] = go.transform.GetComponent<UIWorkshopItemSlot>();
             }
         }

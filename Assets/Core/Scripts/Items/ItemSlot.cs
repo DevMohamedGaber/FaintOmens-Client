@@ -13,5 +13,9 @@ namespace Game
             this.item = item;
             this.amount = amount;
         }
+        public uint SellPrice()
+        {
+            return 0;
+        }
     }
 }
