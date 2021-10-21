@@ -8,19 +8,33 @@ namespace Game.UI
     {
         [SerializeField] Image avatar;
         [SerializeField] Image frame;
-        [SerializeField] RTLTextMeshPro Name;
+        [SerializeField] RTLTextMeshPro nameTxt;
         [SerializeField] RTLTextMeshPro msg;
         [SerializeField] RTLTextMeshPro time;
         uint playerId;
 
         public void Set(ChatMessage data)
         {
-            avatar.sprite = Storage.data.avatars[data.sender.avatar];
-            frame.sprite = Storage.data.avatarFrames[data.sender.frame];
-            Name.text = data.sender.name;
-            Name.text += data.sender.vip > 0 ? $" [VIP {data.sender.vip}]" : "";
-            msg.text = data.message;
-            time.text = DateTime.FromOADate(data.sendTime).ToString("hh:mm");
+            if(avatar != null)
+            {
+                avatar.sprite = UIManager.data.assets.avatars[data.sender.avatar];
+            }
+            if(frame != null)
+            {
+                frame.sprite = UIManager.data.assets.frames[data.sender.frame];
+            }
+            if(nameTxt != null)
+            {
+                nameTxt.text = $"{data.sender.name} {(data.sender.vip > 0 ? $" [VIP {data.sender.vip}]" : "")}";
+            }
+            if(msg != null)
+            {
+                msg.text = data.message;
+            }
+            if(time != null)
+            {
+                time.text = DateTime.FromOADate(data.sendTime).ToString("hh:mm");
+            }
             playerId = data.sender.id;
         }
     }

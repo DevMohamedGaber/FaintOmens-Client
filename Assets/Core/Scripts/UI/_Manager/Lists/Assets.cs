@@ -4,10 +4,12 @@ namespace Game.UI.ManagerLists
     [System.Serializable]
     public struct Assets
     {
+        public Sprite[] classTypeIcons;
         public Sprite[] tiers;
         public Sprite[] stars;
         public Color[] tierColor;
         public Sprite[] avatars;
+        public Sprite[] frames;
         public Sprite[] gender;
         public Sprite[] currency;
         public Sprite[] discountArrows;

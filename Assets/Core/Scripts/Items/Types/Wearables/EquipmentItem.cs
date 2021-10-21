@@ -26,6 +26,18 @@ namespace Game
         public GameObject[] modelPrefab; // [0] -> female / [1] -> male
         public GameObject QualityEffect;
 
+        public override Sprite GetImage(Gender gender = Gender.Any)
+        {
+            if(image.Length < 1)
+            {
+                return null;
+            }
+            if(gender != Gender.Any)
+            {
+                return image[(int)gender];
+            }
+            return image[0];
+        }
         public override bool CanUse()
         {
             if(player.level < minLevel)

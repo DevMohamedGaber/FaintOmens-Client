@@ -1,3 +1,4 @@
+using UnityEngine;
 namespace Game.StorageData
 {
     [System.Serializable]
@@ -22,6 +23,7 @@ namespace Game.StorageData
         public GuildRank promoteMinRank;
         public GuildRank recallMinRank;
         public GuildRank notifyMinRank;
+        public Color memberColor;
         public void OnAwake()
         {
             expMax = new uint[maxLevel];

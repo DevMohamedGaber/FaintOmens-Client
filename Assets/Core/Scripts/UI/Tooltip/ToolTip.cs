@@ -13,7 +13,7 @@ namespace Game.UI
         void ShowItem(Item item)
         {
             // set info
-            info.icon.sprite = item.data.image;
+            info.icon.sprite = item.data.GetImage();
             info.Name.text = item.Name;
             info.Name.color = item.quality.data.color;
             info.type.text = item.typeName;

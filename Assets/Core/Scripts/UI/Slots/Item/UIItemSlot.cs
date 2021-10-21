@@ -28,7 +28,7 @@ namespace Game.UI
             data = item;
             if(item.id > 0)
             {
-                SetIcon(data.data.image);
+                SetIcon(data.data.GetImage());
                 SetAmount(amount);
                 SetPlus(data.plus);
                 quality.SetFrame(data.quality.current);

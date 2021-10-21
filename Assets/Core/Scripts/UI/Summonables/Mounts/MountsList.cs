@@ -29,7 +29,7 @@ namespace Game.UI
                 summonBtn.SetActive(info.id != 0 && info.status == SummonableStatus.Saved);
                 unsummonBtn.SetActive(info.id != 0 && info.status == SummonableStatus.Deployed);
 
-                typeImg.sprite = Storage.data.classTypeIcons[(int)data.classType];
+                typeImg.sprite = UIManager.data.assets.classTypeIcons[(int)data.classType];
 
                 if(info.id != 0)
                 {

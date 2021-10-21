@@ -66,9 +66,9 @@ namespace Game
                 Notify.list.Add("No Message", "لا يوجد رسالة");
                 return false;
             }
-            if(msg.Length > Storage.data.chatMaxMsgSize)
+            if(msg.Length > Storage.data.chat.chatMaxMsgSize)
             {
-                Notify.list.Add($"Message is More than {Storage.data.chatMaxMsgSize} characters", $"الرسالة اكثر من {Storage.data.chatMaxMsgSize} حرف");
+                Notify.list.Add($"Message is More than {Storage.data.chat.chatMaxMsgSize} characters", $"الرسالة اكثر من {Storage.data.chat.chatMaxMsgSize} حرف");
                 return false;
             }
             return true;

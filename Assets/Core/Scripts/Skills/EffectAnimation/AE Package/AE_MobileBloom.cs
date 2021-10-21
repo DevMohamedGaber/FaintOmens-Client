@@ -49,12 +49,12 @@ public class AE_MobileBloom : MonoBehaviour
     void OnPreRender()
     {
         Source = RenderTexture.GetTemporary(Screen.width, Screen.height, 24, SupportedHdrFormat());
-        Camera.main.targetTexture = Source;
+        Game.Storage.data.mainCam.targetTexture = Source;
     }
 
     void OnPostRender()
     {
-        Camera.main.targetTexture = null;
+        Game.Storage.data.mainCam.targetTexture = null;
         UpdateBloom(Source, null as RenderTexture);
         RenderTexture.ReleaseTemporary(Source);
     }

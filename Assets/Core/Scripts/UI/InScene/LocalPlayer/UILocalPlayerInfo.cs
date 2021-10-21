@@ -48,14 +48,14 @@ namespace Game.UI
         {
             if(avatarFrame != null)
             {
-                avatarFrame.sprite = Storage.data.avatarFrames[player.frame];
+                avatarFrame.sprite = UIManager.data.assets.frames[(int)player.frame];
             }
         }
         public void UpdateAvatar()
         {
             if(avatar != null)
             {
-                avatar.sprite = Storage.data.avatars[player.avatar];
+                avatar.sprite = UIManager.data.assets.avatars[(int)player.avatar];
             }
         }
         public void UpdateLevel()

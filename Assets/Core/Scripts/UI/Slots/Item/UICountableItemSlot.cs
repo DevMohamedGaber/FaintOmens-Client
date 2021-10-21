@@ -12,7 +12,7 @@ namespace Game.UI
                 return;
             Unassign();
             data = item;
-            SetIcon(data.data.image);
+            SetIcon(data.data.GetImage());
             SetAmount(amount, max);
             SetPlus(data.plus);
             quality.SetFrame(data.quality.current);

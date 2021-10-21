@@ -74,13 +74,13 @@ namespace Game.UI
         }
         void Awake()
         {
-            int[] tgArr = (int[]) Enum.GetValues(typeof(TitleCaregory));
+            TitleCaregory[] tgArr = (TitleCaregory[]) Enum.GetValues(typeof(TitleCaregory));
             UIUtils.BalancePrefabs(categoryPrefab, tgArr.Length, categoryContent);
             for (int i = 0; i < tgArr.Length; i++)
             {
                 Transform cBtn = categoryContent.GetChild(i);
-                cBtn.GetComponentInChildren<RTLTextMeshPro>().text = LanguageManger.GetWord(tgArr[i], LanguageDictionaryCategories.TitleCategory);
-                cBtn.GetComponent<BasicButton>().onClick = () => OnSelectCategory((TitleCaregory)tgArr[i]);
+                cBtn.GetComponentInChildren<RTLTextMeshPro>().text = LanguageManger.GetWord((int)tgArr[i], LanguageDictionaryCategories.TitleCategory);
+                cBtn.GetComponent<BasicButton>().onClick = () => OnSelectCategory(tgArr[i]);
             }
         }
     }

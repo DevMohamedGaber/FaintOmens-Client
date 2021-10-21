@@ -2,7 +2,7 @@
 using TMPro;
 namespace Game.UI
 {
-    public class Inventory : WindowWithBasicCurrencies
+    public class Inventory : WindowWithBasicCurrencies, IWindowWithEquipments
     {
         [Header("Inventroy")]
         [SerializeField] UIEquipments equipments;

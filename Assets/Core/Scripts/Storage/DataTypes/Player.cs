@@ -12,5 +12,6 @@ namespace Game.StorageData
         public byte maxInventorySize;
         public int equipmentCount;
         public int accessoriesCount;
+        public GameObject[] basicBody;
     }
 }

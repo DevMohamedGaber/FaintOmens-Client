@@ -1,3 +1,4 @@
+using UnityEngine;
 namespace Game.StorageData
 {
     [System.Serializable]
@@ -6,5 +7,6 @@ namespace Game.StorageData
         public float bonusPerMemeber;
         public float bonusPerFriendLevel;
         public int capacity;
+        public Color memberColor;
     }
 }

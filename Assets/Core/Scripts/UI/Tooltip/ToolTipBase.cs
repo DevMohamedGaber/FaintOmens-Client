@@ -81,7 +81,7 @@ namespace Game.UI
                             Name.text = LanguageManger.Decide("Empty Socket", "فارغ");
                         }
                         else {
-                            icon.sprite = socket.data.image;
+                            icon.sprite = socket.data.GetImage();
                             Name.text = $"{socket.Name} <color=green>{socket.bonusText}</color>";
                         }
                     }

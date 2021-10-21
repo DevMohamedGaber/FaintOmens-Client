@@ -10,6 +10,8 @@ namespace Game
         public Sprite icon;
         public GameObject prefab;
         public SubclassInfo[] subs;
+        public Quality quality;
+        public ScriptableQuality qualityData => ScriptableQuality.dict[(int)quality];
         //public bool CanPromote(Player player) => player.level == reqLevel && player.battlepower == reqBR
         //                                        && player.own.militaryRank == reqMilitaryRank;
         public bool CanShowPromote(int playerLevel) => /*playerLevel == reqLevel*/false;

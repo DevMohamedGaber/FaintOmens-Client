@@ -7,6 +7,15 @@ namespace Game.UI
 {
     public class UIUtils
     {
+        public static void AddToClipboard(object value)
+        {
+            TextEditor editor = new TextEditor
+            {
+                text = value.ToString()
+            };
+            editor.SelectAll();
+            editor.Copy();
+        }
         public static void BalancePrefabs(GameObject prefab, int amount, Transform parent)
         {
             // instantiate until amount

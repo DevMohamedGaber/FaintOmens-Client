@@ -31,7 +31,7 @@ namespace Game.UI
                 unsummonBtn.SetActive(info.id != 0 && info.status == SummonableStatus.Deployed);
 
                 //nameTxt.text = pet.Name;
-                typeImg.sprite = Storage.data.classTypeIcons[(int)pet.classType];
+                typeImg.sprite = UIManager.data.assets.classTypeIcons[(int)pet.classType];
 
                 if(info.id != 0)
                 {

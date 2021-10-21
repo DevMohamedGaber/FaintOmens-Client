@@ -19,7 +19,6 @@ namespace Game
     #region Variables
         #region Static
         [Header("Static Variables")]
-        public GameObject damagePopupPrefab;
         public GameObject stunnedOverlay;
         public Transform effectMount;
         public DamageType classType;
@@ -361,14 +360,16 @@ namespace Game
         public bool CastCheckTarget(Skill skill) => skill.CheckTarget(this);
         public bool CastCheckDistance(Skill skill, out Vector3 destination) => skill.CheckDistance(this, out destination);
         // client 
-        [Client] void ShowDamagePopup(int amount, AttackType damageType) {
-            if (damagePopupPrefab != null) { // spawn the damage popup (if any) and set the text
+        [Client] void ShowDamagePopup(int amount, AttackType damageType)
+        {
+            if (Storage.data.utils.damagePopup != null)
+            { // spawn the damage popup (if any) and set the text
                 // showing it above their head looks best, and we don't have to use
                 // a custom shader to draw world space UI in front of the entity
                 Bounds bounds = collider.bounds;
                 Vector3 position = new Vector3(bounds.center.x, bounds.max.y, bounds.center.z);
 
-                GameObject popup = Instantiate(damagePopupPrefab, position, Quaternion.identity);
+                GameObject popup = Instantiate(Storage.data.utils.damagePopup, position, Quaternion.identity);
                 if (damageType == AttackType.Normal)
                     popup.GetComponentInChildren<TextMeshPro>().text = amount.ToString();
                 else if (damageType == AttackType.Block)

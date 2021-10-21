@@ -25,7 +25,7 @@ namespace Game
             {
                 int result = data.health.Get(level);
                 result += tier != Tier.F ? (result / 5) * qualityBonus : 0;
-                result += vitality * Storage.data.AP_Vitality;
+                result += vitality * Storage.data.ratios.AP_Vitality;
                 return result;
             }
         }
@@ -35,7 +35,7 @@ namespace Game
             {
                 int result = data.mana.Get(level);
                 result += tier != Tier.F ? (result / 5) * qualityBonus : 0;
-                result += intelligence * Storage.data.AP_Intelligence_MANA;
+                result += intelligence * Storage.data.ratios.AP_Intelligence_MANA;
                 return result;
             }
         }
@@ -45,7 +45,7 @@ namespace Game
             {
                 int result = data.pAtk.Get(level);
                 result += tier != Tier.F ? (result / 5) * qualityBonus : 0;
-                result += strength * Storage.data.AP_Strength_ATK;
+                result += strength * Storage.data.ratios.AP_Strength_ATK;
                 return result;
             }
         }
@@ -55,7 +55,7 @@ namespace Game
             {
                 int result = data.mAtk.Get(level);
                 result += tier != Tier.F ? (result / 5) * qualityBonus : 0;
-                result += intelligence * Storage.data.AP_Intelligence_ATK;
+                result += intelligence * Storage.data.ratios.AP_Intelligence_ATK;
                 return result;
             }
         }
@@ -65,7 +65,7 @@ namespace Game
             {
                 int result = data.pDef.Get(level);
                 result += tier != Tier.F ? (result / 5) * qualityBonus : 0;
-                result += endurance * Storage.data.AP_Endurance + intelligence * Storage.data.AP_Strength_DEF;
+                result += endurance * Storage.data.ratios.AP_Endurance + intelligence * Storage.data.ratios.AP_Strength_DEF;
                 return result;
             }
         }
@@ -75,7 +75,7 @@ namespace Game
             {
                 int result = data.mDef.Get(level);
                 result += tier != Tier.F ? (result / 5) * qualityBonus : 0;
-                result += endurance * Storage.data.AP_Endurance + intelligence * Storage.data.AP_Intelligence_DEF;
+                result += endurance * Storage.data.ratios.AP_Endurance + intelligence * Storage.data.ratios.AP_Intelligence_DEF;
                 return result;
             }
         }

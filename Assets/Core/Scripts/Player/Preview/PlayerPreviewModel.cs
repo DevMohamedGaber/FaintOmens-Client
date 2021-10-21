@@ -56,7 +56,7 @@ namespace Game
                 }
                 else
                 {
-                    GameObject go = Instantiate(Storage.data.basicBody[(int)gender], bodyHolder, false);
+                    GameObject go = Instantiate(Storage.data.player.basicBody[(int)gender], bodyHolder, false);
                     OnRefreshBodyLocation(go);
                 }
             }

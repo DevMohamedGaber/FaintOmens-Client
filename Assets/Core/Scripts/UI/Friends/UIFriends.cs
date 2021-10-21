@@ -40,7 +40,7 @@ namespace Game.UI
                     slotTurn++;
                 }
             }
-            lang.SetSuffix(3, $": {player.own.friends.Count} / {Storage.data.maxFriendsCount}");
+            lang.SetSuffix(3, $": {player.own.friends.Count} / {Storage.data.friend.maxCount}");
             lang.SetSuffix(4, $": {onlineCount} / {player.own.friends.Count}");
             lang.RefreshRange(3, 4);
         }

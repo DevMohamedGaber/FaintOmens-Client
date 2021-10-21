@@ -12,7 +12,7 @@ namespace Game
         public Quality quality;
         public ushort itemId;
         public string Name => itemId > 0 ? ScriptableItem.dict[itemId].Name : LanguageManger.Decide("Unknown", "غير معروف");
-        public Sprite image => itemId > 0 ? ScriptableItem.dict[itemId].image : UIManager.data.assets.defaultItem;
+        public Sprite image => itemId > 0 ? ScriptableItem.dict[itemId].GetImage() : UIManager.data.assets.defaultItem;
         public GameObject[] modelPrefab;
         [Header("Bonus")]
         public LinearInt hp;

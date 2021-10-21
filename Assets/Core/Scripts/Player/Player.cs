@@ -79,7 +79,7 @@ namespace Game
         int respawnRequested = -1;
         int useSkillWhenCloser = -1;
         Dictionary<string, Transform> skinBones = new Dictionary<string, Transform>();
-        Camera cam; // Camera.main calls FindObjectWithTag each time. cache it!
+        //Camera cam; // Camera.main calls FindObjectWithTag each time. cache it!
         int pendingSkill = -1;
         Vector3 pendingDestination;
         bool pendingDestinationValid;
@@ -90,7 +90,7 @@ namespace Game
         #region Basics(Health/Mana/Speed)
         public override int healthMax {
             get {
-                int i, result = own.vitality * Storage.data.AP_Vitality + classInfo.hp;
+                int i, result = own.vitality * Storage.data.ratios.AP_Vitality + classInfo.hp;
                 for(i = 0; i < equipment.Count; i++) {
                     if(equipment[i].amount > 0 && equipment[i].item.data != null)
                         result += (int)equipment[i].item.GetSocketOfType(BonusType.hp) + equipment[i].item.health;
@@ -117,13 +117,13 @@ namespace Game
                             result += own.titles[i] == activeTitle ? title.hp.active : title.hp.notActive;
                     }
                 }
-                result += InGuild() ? ScriptableGuildSkill.dict[0].Get(own.guildSkills[0]) * Storage.data.AP_Vitality : 0;
+                result += InGuild() ? ScriptableGuildSkill.dict[0].Get(own.guildSkills[0]) * Storage.data.ratios.AP_Vitality : 0;
                 return base.healthMax + result;
             }
         }
         public override int manaMax {
             get {
-                int i, result = own.intelligence * Storage.data.AP_Intelligence_MANA + classInfo.mp;
+                int i, result = own.intelligence * Storage.data.ratios.AP_Intelligence_MANA + classInfo.mp;
                 for(i = 0; i < equipment.Count; i++) {
                     if(equipment[i].amount > 0 && equipment[i].item.data != null)
                         result += equipment[i].item.mana;
@@ -150,7 +150,7 @@ namespace Game
                             result += own.titles[i] == activeTitle ? title.mp.active : title.mp.notActive;
                     }
                 }
-                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.AP_Intelligence_MANA : 0;
+                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.ratios.AP_Intelligence_MANA : 0;
                 return base.manaMax + result;
             }
         }
@@ -163,7 +163,7 @@ namespace Game
         #region Attack
         public override int p_atk {
             get {
-                int i, result = own.strength * Storage.data.AP_Strength_ATK + classInfo.pAtk;
+                int i, result = own.strength * Storage.data.ratios.AP_Strength_ATK + classInfo.pAtk;
                 for(i = 0; i < equipment.Count; i++) {
                     if(equipment[i].amount > 0 && equipment[i].item.data != null)
                         result += (int)equipment[i].item.GetSocketOfType(BonusType.pAtk) + equipment[i].item.pAtk;
@@ -189,13 +189,13 @@ namespace Game
                         if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
                             result += own.titles[i] == activeTitle ? title.pAtk.active : title.pAtk.notActive;
                 }
-                result += InGuild() ? ScriptableGuildSkill.dict[1].Get(own.guildSkills[1]) * Storage.data.AP_Strength_ATK : 0;
+                result += InGuild() ? ScriptableGuildSkill.dict[1].Get(own.guildSkills[1]) * Storage.data.ratios.AP_Strength_ATK : 0;
                 return base.p_atk + result;
             }
         }
         public override int m_atk {
             get {
-                int i, result = own.intelligence * Storage.data.AP_Intelligence_ATK + classInfo.mAtk;
+                int i, result = own.intelligence * Storage.data.ratios.AP_Intelligence_ATK + classInfo.mAtk;
                 for(i = 0; i < equipment.Count; i++) {
                     if(equipment[i].amount > 0 && equipment[i].item.data != null)
                         result += (int)equipment[i].item.GetSocketOfType(BonusType.mAtk) + equipment[i].item.mAtk;
@@ -221,7 +221,7 @@ namespace Game
                         if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
                             result += own.titles[i] == activeTitle ? title.mAtk.active : title.mAtk.notActive;
                 }
-                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.AP_Intelligence_ATK : 0;
+                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.ratios.AP_Intelligence_ATK : 0;
                 return base.m_atk + result;
             }
         }
@@ -229,7 +229,7 @@ namespace Game
         #region Defense
         public override int p_def {
             get {
-                int i, result = own.endurance * Storage.data.AP_Endurance + own.strength * Storage.data.AP_Strength_DEF
+                int i, result = own.endurance * Storage.data.ratios.AP_Endurance + own.strength * Storage.data.ratios.AP_Strength_DEF
                             + classInfo.pDef;
                 for(i = 0; i < equipment.Count; i++) {
                     if(equipment[i].amount > 0 && equipment[i].item.data != null)
@@ -256,14 +256,14 @@ namespace Game
                         if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
                             result += own.titles[i] == activeTitle ? title.pDef.active : title.pDef.notActive;
                 }
-                result += InGuild() ? ScriptableGuildSkill.dict[1].Get(own.guildSkills[1]) * Storage.data.AP_Strength_DEF +
-                            ScriptableGuildSkill.dict[3].Get(own.guildSkills[3]) * Storage.data.AP_Endurance : 0;
+                result += InGuild() ? ScriptableGuildSkill.dict[1].Get(own.guildSkills[1]) * Storage.data.ratios.AP_Strength_DEF +
+                            ScriptableGuildSkill.dict[3].Get(own.guildSkills[3]) * Storage.data.ratios.AP_Endurance : 0;
                 return base.p_def + result;
             }
         }
         public override int m_def {
             get {
-                int i, result = own.endurance * Storage.data.AP_Endurance + own.intelligence * Storage.data.AP_Intelligence_DEF
+                int i, result = own.endurance * Storage.data.ratios.AP_Endurance + own.intelligence * Storage.data.ratios.AP_Intelligence_DEF
                             + classInfo.mDef;
                 for(i = 0; i < equipment.Count; i++) {
                     if(equipment[i].amount > 0 && equipment[i].item.data != null)
@@ -290,8 +290,8 @@ namespace Game
                         if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
                             result += own.titles[i] == activeTitle ? title.mDef.active : title.mDef.notActive;
                 }
-                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.AP_Intelligence_DEF +
-                            ScriptableGuildSkill.dict[3].Get(own.guildSkills[3]) * Storage.data.AP_Endurance : 0;
+                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.ratios.AP_Intelligence_DEF +
+                            ScriptableGuildSkill.dict[3].Get(own.guildSkills[3]) * Storage.data.ratios.AP_Endurance : 0;
                 return base.m_def + result;
             }
         }
@@ -444,20 +444,25 @@ namespace Game
         #endregion
     #endregion //Attributes
     #region Basic Functions and Helpers
-        public override async void OnStartLocalPlayer() {
+        public override async void OnStartLocalPlayer()
+        {
             localPlayer = this;// set singleton
-            cam = Camera.main;// setup camera targets
-            cam.GetComponent<CameraMMO>().target = transform;
-            await LoadMap();
+            Storage.data.mainCam.gameObject.GetComponent<CameraMMO>().target = transform;
+            await Task.Run(() => LoadMap());
             //onPlayerInfoOverlay.enabled = true;
             // tribe flag
             tribeOverlay.sprite = ScriptableTribe.dict[tribeId].flag;
             CmdSetCurrentLanguage(UIManager.data.gameSettings.currentLang);
             UIManager.data.inScene.expBar.Refresh();
         }
-        int NextSkill() {
-            for (int i = 1; i < skills.Count; i++) {
-                if(CastCheckSelf(skills[i])) return i;
+        int NextSkill()
+        {
+            for (int i = 1; i < skills.Count; i++)
+            {
+                if(CastCheckSelf(skills[i]))
+                {
+                    return i;
+                }
             }
             return 0;
         }
@@ -511,9 +516,12 @@ namespace Game
                 mountObj.Moving(IsMoving() && state != EntityState.Casting);
             }
         }
-        public override void ResetMovement() => agent.ResetMovement();
+        public override void ResetMovement()
+        {
+            agent.ResetMovement();
+        }
         [Client]
-        async Task LoadMap()
+        void LoadMap()
         {
             if(Storage.data.currentLoadedMap != null)
             {
@@ -537,7 +545,7 @@ namespace Game
                 if (input.magnitude > 1) input = input.normalized;
 
                 // get camera rotation without up/down angle, only left/right
-                Vector3 angles = cam.transform.rotation.eulerAngles;
+                Vector3 angles = Storage.data.mainCam.transform.rotation.eulerAngles;
                 angles.x = 0;
                 Quaternion rotation = Quaternion.Euler(angles); // back to quaternion
 
@@ -591,7 +599,7 @@ namespace Game
                     if (input.magnitude > 1) input = input.normalized;
 
                     // get camera rotation without up/down angle, only left/right
-                    Vector3 angles = cam.transform.rotation.eulerAngles;
+                    Vector3 angles = Storage.data.mainCam.transform.rotation.eulerAngles;
                     angles.x = 0;
                     Quaternion rotation = Quaternion.Euler(angles); // back to quaternion
 
@@ -642,7 +650,7 @@ namespace Game
         {
             if (Input.GetMouseButtonDown(0) && !Utils.IsCursorOverUserInterface() && Input.touchCount <= 1)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Ray ray = Storage.data.mainCam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 bool cast = localPlayerClickThrough ? Utils.RaycastWithout(ray, out hit, gameObject) : Physics.Raycast(ray, out hit);
                 
@@ -786,7 +794,7 @@ namespace Game
                         // can we still attack the target? maybe it was switched.
                         if (CanAttack(target))
                         {
-                            float range = skills[useSkillWhenCloser].castRange * Storage.data.attackToMoveRangeRatio;
+                            float range = skills[useSkillWhenCloser].castRange * Storage.data.ratios.playerAttackToMoveRange;
                             if (Utils.ClosestDistance(this, target) <= range)
                             {
                                 // then stop moving and start attacking
@@ -894,7 +902,7 @@ namespace Game
                 }
                 if(guildText != null && InGuild() && localPlayer.InGuild() && localPlayer.guild.id == guild.id)
                 {
-                    guildText.color = Storage.data.guildMemberColor;
+                    guildText.color = Storage.data.guild.memberColor;
                 }
                 if(mount.canMount && mount.mounted)
                 {
@@ -963,7 +971,7 @@ namespace Game
                 }
                 else
                 {
-                    GameObject go = Instantiate(Storage.data.basicBody[(int)gender], bodyHolder, false);
+                    GameObject go = Instantiate(Storage.data.player.basicBody[(int)gender], bodyHolder, false);
                     OnRefreshBodyLocation(go);
                 }
             }
@@ -1022,7 +1030,8 @@ namespace Game
                     {
                         Destroy(mainHand.GetChild(0).gameObject);
                     }
-                    Instantiate(itemData.modelPrefab[0], mainHand, false);
+                    //Instantiate(itemData.modelPrefab[0], mainHand, false); // one weapon prefab
+                    Instantiate(itemData.modelPrefab[(int)gender], mainHand, false); // two(gender) weapon prefabs
                 }
             }
             if(classInfo.type == PlayerClass.Archer && mainHand.childCount > 0)
@@ -1088,12 +1097,9 @@ namespace Game
         {
             RefreshAllLocation();
             //UIManager.data.wardrob.UpdatePreview();
-            if(UIManager.data.currenOpenWindow != null)
+            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is IWindowWithEquipments eqWin)
             {
-                if(UIManager.data.currenOpenWindow is Inventory invWin)
-                {
-                    invWin.RefreshEquipments();
-                }
+                eqWin.RefreshEquipments();
             }
         }
         void OnGenderChanged(Gender oldValue, Gender newValue)
@@ -1218,7 +1224,7 @@ namespace Game
                     }
                     else {
                         // move to the target first (use collider point(s) to also work with big entities)
-                        Navigate(destination, skill.castRange * Storage.data.attackToMoveRangeRatio);
+                        Navigate(destination, skill.castRange * Storage.data.ratios.playerAttackToMoveRange);
                         // use skill when there
                         useSkillWhenCloser = skillIndex;
                     }
@@ -1446,7 +1452,7 @@ namespace Game
         [Command] public void CmdAddMarketItem(int slot, int amount, int price, int hoursIndex) {}
     #endregion
     #region Teleportation
-        public bool CanTeleportTo(int mapIndex) => mapIndex > -1 && mapIndex < Storage.data.cities.Count;
+        public bool CanTeleportTo(int mapIndex) => mapIndex > -1 && mapIndex < ScribtableCity.dict.Count;
         public async void OnCityChanged(byte oldCity, byte newCity)
         {
             await Task.Run(() => LoadMap());

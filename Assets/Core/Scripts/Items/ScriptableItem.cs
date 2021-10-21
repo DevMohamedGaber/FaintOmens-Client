@@ -8,7 +8,7 @@ namespace Game
     public class ScriptableItem : ScriptableObjectNonAlloc
     {
         [Header("Base Stats")]
-        public Sprite image;
+        public Sprite[] image;
         public Quality quality;
         public int maxStack = 999;
         public uint buyPrice;
@@ -23,6 +23,11 @@ namespace Game
         public ItemType type = ItemType.Item;
         public byte minLevel = 1;
         public string Name => LanguageManger.GetWord(name, LanguageDictionaryCategories.ItemName);
+
+        public virtual Sprite GetImage(Gender gender = Gender.Any)
+        {
+            return image.Length > 0 ? image[0] : null;
+        }
 
         // cache
         static Dictionary<int, ScriptableItem> cache;

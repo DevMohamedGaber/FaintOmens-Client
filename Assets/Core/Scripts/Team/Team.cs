@@ -8,7 +8,7 @@ namespace Game
         public float[] bonuses;
         public uint leaderId;
         public ExperiaceShareType share;
-        public bool IsFull => members != null && members.Length == Storage.data.teamMaxCapacity;
+        public bool IsFull => members != null && members.Length == Storage.data.team.capacity;
         public bool Contains(uint memberId)
         {
             if (members != null)

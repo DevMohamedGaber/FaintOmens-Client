@@ -39,11 +39,15 @@ namespace Game.Network
         {
             print("OnClientError: " + message.error);
 
-            if(state == NetworkState.Offline) {
+            if(state == NetworkState.Offline)
+            {
                 if(UIManager.data.lobby.current != null)
+                {
                     UIManager.data.lobby.current.OnError(message.error);
+                }
             }
-            if(message.action == NetworkErrorAction.Disconnect) {
+            if(message.action == NetworkErrorAction.Disconnect)
+            {
                 conn.Disconnect();
             }
         }
@@ -63,14 +67,15 @@ namespace Game.Network
                 Notify.list.Add("You are not inside the game", "انت لست بداخل اللعبة");
             }
         }
-        public override void OnClientDisconnect(NetworkConnection conn) {
-        print("OnClientDisconnect");
+        public override void OnClientDisconnect(NetworkConnection conn)
+        {
+            print("OnClientDisconnect");
             base.OnClientDisconnect(conn);
             // set state
             state = NetworkState.Offline;
             // TODO: re-connect with Master Server Lobby
             UIManager.data.lobby.login.Show();
-            //Camera.main.transform.position = new Vector3();
+            Storage.data.mainCam.transform.position = Vector3.zero;
         }
         public bool IsConnecting() => NetworkClient.active && !ClientScene.ready;
         public static void Quit()

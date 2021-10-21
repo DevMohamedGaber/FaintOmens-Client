@@ -14,7 +14,7 @@ namespace Game.UI
         public GameObject overlay;
         public Button button;
         public void Set(Friend info) {
-            avatar.sprite = Storage.data.avatars[info.avatar];
+            avatar.sprite = UIManager.data.assets.avatars[info.avatar];
             tribeFlag.sprite = ScriptableTribe.dict[info.tribe].flag;
             classIcon.sprite = info.classInfo.data.icon;
             name.text = info.name;

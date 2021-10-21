@@ -23,13 +23,19 @@ namespace Game.Components
         void OnTriggerEnter(Collider co)
         {
             Entity entity = co.GetComponentInParent<Entity>();
-            if (entity) owner.OnAggro(entity);
+            if (entity)
+            {
+                owner.OnAggro(entity);
+            }
         }
 
         void OnTriggerStay(Collider co)
         {
             Entity entity = co.GetComponentInParent<Entity>();
-            if (entity) owner.OnAggro(entity);
+            if (entity)
+            {
+                owner.OnAggro(entity);
+            }
         }
     }
 }
