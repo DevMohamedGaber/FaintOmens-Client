@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 namespace Game.UI
 {
-    public class UIGuildDonation : MonoBehaviour
+    /*public class UIGuildDonation : MonoBehaviour
     {
         [SerializeField] float updateInterval = 1f;
         [SerializeField] TMP_Text myGold;
@@ -63,5 +63,5 @@ namespace Game.UI
         void OnDisable() {
             CancelInvoke("UpdateData");
         }
-    }
+    }*/
 }

@@ -1283,23 +1283,40 @@ namespace Game
         [Command] public void CmdAcceptGuildJoinRequest(uint requesterId, bool answer) {}
         [Command] public void CmdGuildUpgradeHall() {}
         [Command] public void CmdSetGuildNotice(string notice) {}
-        [TargetRpc] public void TargetSetAvailableGuildsToJoin(GuildJoinInfo[] data) {
-            UIManager.data.guildWindow.SetAvailableGuildsToJoin(data);
+        [TargetRpc] public void TargetSetAvailableGuildsToJoin(GuildJoinInfo[] data)
+        {
+            if(UIManager.data.currenOpenWindow is UI.Guild guildWindow)
+            {
+                guildWindow.SetAvailableGuildsToJoin(data);
+            }
         }
-        [TargetRpc] public void TargetJoinedGuild() {
-            UIManager.data.guildWindow.OnJoinedGuild();
+        [TargetRpc] public void TargetJoinedGuild()
+        {
+            if(UIManager.data.currenOpenWindow is UI.Guild guildWindow)
+            {
+                guildWindow.OnJoinedGuild();
+            }
         }
         [TargetRpc] public void TargetShowGuildInvitationNotification() {
             UIManager.data.notifiyIconsList.ShowGuildInvitation();
         }
-        [TargetRpc] public void TargetSetGuildMembersListIntoWindow(GuildMember[] membersList) {
-            UIManager.data.guildWindow.SetMembersList(membersList);
+        [TargetRpc] public void TargetSetGuildMembersListIntoWindow(GuildMember[] membersList)
+        {
+            if(UIManager.data.currenOpenWindow is UI.Guild guildWindow)
+            {
+                guildWindow.SetMembersList(membersList);
+            }
         }
-        [TargetRpc] public void TargetShowGuildRecall(GuildRecallRequest request) {
+        [TargetRpc] public void TargetShowGuildRecall(GuildRecallRequest request)
+        {
             UIManager.data.guildRecallMsg.Show(request);
         }
-        [TargetRpc] public void TargetSetGuildJoinRequests(GuildJoinRequest[] data) {
-            UIManager.data.guildWindow.SetJoinRequestsList(data);
+        [TargetRpc] public void TargetSetGuildJoinRequests(GuildJoinRequest[] data)
+        {
+            if(UIManager.data.currenOpenWindow is UI.Guild guildWindow)
+            {
+                guildWindow.SetJoinRequestsList(data);
+            }
         }
     #endregion
     #region Team

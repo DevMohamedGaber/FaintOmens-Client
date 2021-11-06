@@ -10,6 +10,8 @@ namespace Game
         public byte requiredLevel;
         public byte membersCount;
         public byte capacity;
+        public string notice;
+        public uint br;
         public bool autoAccept;
     }
 }

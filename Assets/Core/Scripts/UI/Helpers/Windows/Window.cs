@@ -20,7 +20,7 @@ namespace Game.UI
                     UIManager.data.history.Pop().Show();
                 }
             }
-        } 
+        }
         public virtual void Refresh() {}
         public virtual void UpdateCurrency() {}
         protected virtual void OnEnable()

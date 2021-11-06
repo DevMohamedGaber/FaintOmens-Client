@@ -3,7 +3,7 @@ using System;
 using TMPro;
 namespace Game.UI
 {
-    public class UIGuildHall : MonoBehaviour {
+    /*public class UIGuildHall : MonoBehaviour {
         [SerializeField] float updateInterval = 2f;
         [SerializeField] UIGuildHall_Assets assets;
         [SerializeField] UIGuildHall_Building hall;
@@ -111,5 +111,5 @@ namespace Game.UI
             public TMP_Text iron;
             public TMP_Text food;
         }
-    }
+    }*/
 }

@@ -33,7 +33,6 @@ namespace Game
         public UIControllers controllers;
         public UIRankingWindow RankingWindow;
         public UIPlayerPreview playerPreviewWindow;
-        public UIGuild guildWindow;
         public UIMiniNotifyIconsList notifiyIconsList;
         public UIGuildRecallMsg guildRecallMsg;
         public UIMiniChat miniChat;

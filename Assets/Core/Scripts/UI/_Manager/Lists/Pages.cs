@@ -8,5 +8,6 @@ namespace Game.UI.ManagerLists
         public UIArena arena;
         public Trade trade;
         public Store store;
+        public Guild guild;
     }
 }

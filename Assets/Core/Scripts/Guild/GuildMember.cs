@@ -5,6 +5,7 @@ namespace Game
     {
         public uint id;
         public string Name;
+        public byte avatar;
         public byte level;
         public uint br;
         public PlayerClassData classInfo;
