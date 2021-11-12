@@ -48,9 +48,7 @@ namespace Game
     #endregion
     #region Guild
         [Header("Guild")]
-        [SyncVar] public Guild guild;
         [SyncVar] public GuildRank guildRank;
-        [SyncVar] public uint guildContribution;
         public SyncListByte guildSkills = new SyncListByte();
     #endregion
     #region Tribe

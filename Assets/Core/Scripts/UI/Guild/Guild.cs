@@ -5,10 +5,10 @@ namespace Game.UI
     {
         [Header("Guild")]
         [SerializeField] SubWindow[] pages;
-        int activePage = 0;
-        public Guild data;
-        public GuildMember myData;
+        public Game.Guild data;
+        public Game.GuildMember myData;
         public GuildJoinOrCreate joinWindow => pages[0].GetComponent<GuildJoinOrCreate>();
+        int activePage = -1;
         public override void Refresh()
         {
             pages[activePage].Refresh();
@@ -66,6 +66,10 @@ namespace Game.UI
             }
 
             activePage = index;
+            if(!isVisible)
+            {
+                Show();
+            }
         }
         protected override void OnEnable()
         {
@@ -77,7 +81,12 @@ namespace Game.UI
             }
             else
             {
-                FetchDate();
+                player.CmdGetGuildData();
+
+                if(activePage == -1)
+                {
+                    Home();
+                }
             }
         }
         protected override void OnDisable()
@@ -88,6 +97,7 @@ namespace Game.UI
             {
                 pages[i].Hide();
             }
+            activePage = -1;
         }
     }
 }

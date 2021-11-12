@@ -6,6 +6,7 @@ namespace Game.UI
 {
     public class GuildSkillRow : MonoBehaviour
     {
+        [SerializeField] Image icon;
         [SerializeField] TMP_Text lvlTxt;
         [SerializeField] TMP_Text currentPoints;
         [SerializeField] TMP_Text nextPoints;
@@ -26,6 +27,8 @@ namespace Game.UI
             lvlTxt.text = sLvl.ToString();
 
             ScriptableGuildSkill skill = ScriptableGuildSkill.dict[sId];
+            
+            icon.sprite = skill.icon;
             currentPoints.text = "+" + skill.Get(sLvl);
             
             if(isUpgradable)

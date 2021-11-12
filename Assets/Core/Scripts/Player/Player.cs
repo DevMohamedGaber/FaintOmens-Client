@@ -1260,9 +1260,11 @@ namespace Game
     #endregion
     #region Guild
         public bool InGuild() => guild.id > 0;
+        // actions
         [Command] public void CmdGetAvailableGuildsToJoin() {}
         [Command] public void CmdSendJoinRequestToGuild(uint guildId) {}
         [Command] public void CmdCreateGuild(string guildName) {}
+        [Command] public void CmdGetGuildData() {}
         [Command] public void CmdSendGuildInvitationToTarget() {}
         [Command] public void CmdSendGuildInvitation(uint playerId) {}
         [Command] public void CmdTerminateGuild() {}
@@ -1283,6 +1285,16 @@ namespace Game
         [Command] public void CmdAcceptGuildJoinRequest(uint requesterId, bool answer) {}
         [Command] public void CmdGuildUpgradeHall() {}
         [Command] public void CmdSetGuildNotice(string notice) {}
+        // ui and responses
+        [TargetRpc] public void TargetSetGuildData(Guild data, GuildMember myData)
+        {
+            if(UIManager.data.currenOpenWindow is UI.Guild guildWindow)
+            {
+                guildWindow.data = data;
+                guildWindow.myData = myData;
+                guildWindow.Refresh();
+            }
+        }
         [TargetRpc] public void TargetSetAvailableGuildsToJoin(GuildJoinInfo[] data)
         {
             if(UIManager.data.currenOpenWindow is UI.Guild guildWindow)
