@@ -11,6 +11,10 @@ namespace Game
         public GameObject prefab;
         public SubclassInfo[] subs;
         public Quality quality;
+        public LinearInt healthMax = new LinearInt{baseValue=100};
+        public LinearInt manaMax = new LinearInt{baseValue=100};
+        public LinearInt pAtk = new LinearInt{baseValue=100};
+        public LinearInt mAtk = new LinearInt{baseValue=100};
         public ScriptableQuality qualityData => ScriptableQuality.dict[(int)quality];
         //public bool CanPromote(Player player) => player.level == reqLevel && player.battlepower == reqBR
         //                                        && player.own.militaryRank == reqMilitaryRank;

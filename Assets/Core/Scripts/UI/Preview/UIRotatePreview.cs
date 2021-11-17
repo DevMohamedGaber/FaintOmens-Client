@@ -7,11 +7,11 @@ namespace Game.UI
         float x;
         public void OnBeginDrag(PointerEventData eventData) => x = eventData.position.x;
         public void OnDrag(PointerEventData eventData) {
-            UIPreviewManager.singleton.Rotate((x - eventData.position.x) * speed);
+            PreviewManager.singleton.Rotate((x - eventData.position.x) * speed);
             x = eventData.position.x;
         }
         void OnDisable() {
-            UIPreviewManager.singleton.Clear();
+            PreviewManager.singleton.Clear();
         }
     }
 }

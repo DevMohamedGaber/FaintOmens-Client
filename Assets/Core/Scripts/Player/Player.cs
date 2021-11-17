@@ -20,6 +20,7 @@ namespace Game
         [Header("Player Static")]
         public ChatComponent chat;
         public PlayerOwnData own;
+        public PlayerStats stats;
         [SerializeField] NetworkNavMeshAgentRubberbanding rubberbanding;
         [SerializeField] FaceCamera onPlayerInfoOverlay;
         [SerializeField] SpriteRenderer tribeOverlay;
@@ -44,8 +45,7 @@ namespace Game
         [SyncVar] public uint id;
         [SyncVar(hook ="OnStateChanged")] public EntityState state = EntityState.Idle;
         [SyncVar] public PlayerClassData classInfo;
-        [SyncVar(hook = "OnGenderChanged")] public Gender gender;
-        [SyncVar(hook = "OnCityChanged")] public byte cityId;
+        [SyncVar(hook = "OnModelChanged")] public PlayerModelData model;
         [SyncVar] public PrivacyLevel privacy;
         [SyncVar(hook = "OnAvatarChanged")] public byte avatar;
         [SyncVar(hook = "OnFrameChanged")] public byte frame;
@@ -53,12 +53,9 @@ namespace Game
         [SyncVar(hook = "OnGuildInfoChanged")] public GuildPublicInfo guild;
         [SyncVar(hook = "OnTeamChanged")] public uint teamId;
         [SyncVar(hook = "OnTitleChanged")] public ushort activeTitle;
-        [SyncVar(hook = "OnWardrobeVisibilityChanged")] public bool showWardrop;
         [SyncVar(hook = "OnActiveMountChanged")] public ActiveMount mount;
         [SyncVar] GameObject _nextTarget;
         [SyncVar] GameObject _activePet;
-        public SyncListItemSlot equipment = new SyncListItemSlot();
-        public SyncListWardrop wardrobe = new SyncListWardrop();
     #endregion
     #region local
         public IAnimationEventEffects animationEventEffects;
@@ -68,14 +65,14 @@ namespace Game
         public Transform secondaryWeaponHolder => classInfo.type == PlayerClass.Archer ? rWeaponHolder : lWeaponHolder;
         MountBody mountObj;
         GameObject indicator;
-        public ScribtableCity city => ScribtableCity.dict[cityId];
-
+        public ScribtableCity city => ScribtableCity.dict[own.cityId];
         public Entity nextTarget => _nextTarget != null  ? _nextTarget.GetComponent<Entity>() : null;
         public Pet activePet => _activePet != null  ? _activePet.GetComponent<Pet>() : null;
         public Vector3 petDestination => transform.position - transform.right * collider.bounds.size.x;
         public double allowedLogoutTime => lastCombatTime + ((NetworkManagerMMO)NetworkManager.singleton).combatLogoutDelay;
         public double remainingLogoutTime => NetworkTime.time < allowedLogoutTime ? (allowedLogoutTime - NetworkTime.time) : 0;
         public int MaxHonorPerDay => 6000 + own.vip.data.bonusHonor;
+        public override float speed => base.speed + (IsMounted() ? own.mounts[mountObj.dataIndex].speed : 0);
         int respawnRequested = -1;
         int useSkillWhenCloser = -1;
         Dictionary<string, Transform> skinBones = new Dictionary<string, Transform>();
@@ -87,374 +84,20 @@ namespace Game
         bool pendingVelocityValid;
         #endregion
     #region Attributes
-        #region Basics(Health/Mana/Speed)
-        public override int healthMax {
-            get {
-                int i, result = own.vitality * Storage.data.ratios.AP_Vitality + classInfo.hp;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += (int)equipment[i].item.GetSocketOfType(BonusType.hp) + equipment[i].item.health;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += (int)own.accessories[i].item.GetSocketOfType(BonusType.hp) + own.accessories[i].item.health;
-                }
-                result += activePet != null ? activePet.healthMax : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].healthMax / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].healthMax / 2 : own.mounts[i].healthMax;
-                }
-                result += own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].hp : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++) {
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.hp.active : title.hp.notActive;
-                    }
-                }
-                result += InGuild() ? ScriptableGuildSkill.dict[0].Get(own.guildSkills[0]) * Storage.data.ratios.AP_Vitality : 0;
-                return base.healthMax + result;
-            }
-        }
-        public override int manaMax {
-            get {
-                int i, result = own.intelligence * Storage.data.ratios.AP_Intelligence_MANA + classInfo.mp;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += equipment[i].item.mana;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += own.accessories[i].item.mana;
-                }
-                result += activePet != null ? activePet.manaMax : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].manaMax / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].manaMax / 2 : own.mounts[i].manaMax;
-                }
-                result += own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].mp : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++) {
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.mp.active : title.mp.notActive;
-                    }
-                }
-                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.ratios.AP_Intelligence_MANA : 0;
-                return base.manaMax + result;
-            }
-        }
-        public override float speed {
-            get {
-                return base.speed + (IsMounted() ? own.mounts[mountObj.dataIndex].speed : 0);
-            }
-        }
-        #endregion
-        #region Attack
-        public override int p_atk {
-            get {
-                int i, result = own.strength * Storage.data.ratios.AP_Strength_ATK + classInfo.pAtk;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += (int)equipment[i].item.GetSocketOfType(BonusType.pAtk) + equipment[i].item.pAtk;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += (int)own.accessories[i].item.GetSocketOfType(BonusType.pAtk) + own.accessories[i].item.pAtk;
-                }
-                result += activePet != null ? activePet.p_atk : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].p_atk / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].p_atk / 2 : own.mounts[i].p_atk;
-                }
-                result += own.militaryRank > 0 && classType == DamageType.Physical ? ScriptableMilitaryRank.dict[own.militaryRank].atk : 0;
-                if(classType == DamageType.Physical && own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.pAtk.active : title.pAtk.notActive;
-                }
-                result += InGuild() ? ScriptableGuildSkill.dict[1].Get(own.guildSkills[1]) * Storage.data.ratios.AP_Strength_ATK : 0;
-                return base.p_atk + result;
-            }
-        }
-        public override int m_atk {
-            get {
-                int i, result = own.intelligence * Storage.data.ratios.AP_Intelligence_ATK + classInfo.mAtk;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += (int)equipment[i].item.GetSocketOfType(BonusType.mAtk) + equipment[i].item.mAtk;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += (int)own.accessories[i].item.GetSocketOfType(BonusType.mAtk) + own.accessories[i].item.mAtk;
-                }
-                result += activePet != null ? activePet.m_atk : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].m_atk / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].m_atk / 2 : own.mounts[i].m_atk;
-                }
-                result += own.militaryRank > 0 && classType == DamageType.Magical ? ScriptableMilitaryRank.dict[own.militaryRank].atk : 0;
-                if(classType == DamageType.Magical && own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.mAtk.active : title.mAtk.notActive;
-                }
-                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.ratios.AP_Intelligence_ATK : 0;
-                return base.m_atk + result;
-            }
-        }
-        #endregion
-        #region Defense
-        public override int p_def {
-            get {
-                int i, result = own.endurance * Storage.data.ratios.AP_Endurance + own.strength * Storage.data.ratios.AP_Strength_DEF
-                            + classInfo.pDef;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += (int)equipment[i].item.GetSocketOfType(BonusType.pDef) + equipment[i].item.pDef;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += (int)own.accessories[i].item.GetSocketOfType(BonusType.pDef) + own.accessories[i].item.pDef;
-                }
-                result += activePet != null ? activePet.p_def : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].p_def / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].p_def / 2 : own.mounts[i].p_def;
-                }
-                result += own.militaryRank > 0 && classType == DamageType.Physical ? ScriptableMilitaryRank.dict[own.militaryRank].def : 0;
-                if(classType == DamageType.Physical && own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.pDef.active : title.pDef.notActive;
-                }
-                result += InGuild() ? ScriptableGuildSkill.dict[1].Get(own.guildSkills[1]) * Storage.data.ratios.AP_Strength_DEF +
-                            ScriptableGuildSkill.dict[3].Get(own.guildSkills[3]) * Storage.data.ratios.AP_Endurance : 0;
-                return base.p_def + result;
-            }
-        }
-        public override int m_def {
-            get {
-                int i, result = own.endurance * Storage.data.ratios.AP_Endurance + own.intelligence * Storage.data.ratios.AP_Intelligence_DEF
-                            + classInfo.mDef;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += (int)equipment[i].item.GetSocketOfType(BonusType.mDef) + equipment[i].item.mDef;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += (int)own.accessories[i].item.GetSocketOfType(BonusType.mDef) + own.accessories[i].item.mDef;
-                }
-                result += activePet != null ? activePet.m_def : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].m_def / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].m_def / 2 : own.mounts[i].m_def;
-                }
-                result += own.militaryRank > 0 && classType == DamageType.Magical ? ScriptableMilitaryRank.dict[own.militaryRank].def : 0;
-                if(classType == DamageType.Magical && own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.mDef.active : title.mDef.notActive;
-                }
-                result += InGuild() ? ScriptableGuildSkill.dict[2].Get(own.guildSkills[2]) * Storage.data.ratios.AP_Intelligence_DEF +
-                            ScriptableGuildSkill.dict[3].Get(own.guildSkills[3]) * Storage.data.ratios.AP_Endurance : 0;
-                return base.m_def + result;
-            }
-        }
-        #endregion
-        #region Block
-        public override float blockChance {
-            get {
-                int i;
-                float result = classInfo.block;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += equipment[i].item.GetSocketOfType(BonusType.block) + equipment[i].item.block;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += own.accessories[i].item.GetSocketOfType(BonusType.block) + own.accessories[i].item.block;
-                }
-                result += activePet != null ? activePet.blockChance : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].block / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].blockChance / 2 : own.mounts[i].blockChance;
-                }
-                result= own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].block : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.block.active : title.block.notActive;
-                }
-                result += InGuild() ? (float)ScriptableGuildSkill.dict[5].Get(own.guildSkills[5]) * .1f : 0;
-                return base.blockChance + result;
-            }
-        }
-        public override float untiBlockChance {
-            get {
-                int i;
-                float result = classInfo.untiBlock;
-                result += activePet != null ? activePet.untiBlockChance : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].antiBlock / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].untiBlockChance / 2 : own.mounts[i].untiBlockChance;
-                }
-                result += own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].untiBlock : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.antiBlock.active : title.antiBlock.notActive;
-                }
-                return base.untiBlockChance + result;
-            }
-        }
-        #endregion
-        #region Critical
-        public override float critRate {
-            get {
-                int i;
-                float result = classInfo.crit;
-                for(i = 0; i < equipment.Count; i++) {
-                    if(equipment[i].amount > 0 && equipment[i].item.data != null)
-                        result += equipment[i].item.GetSocketOfType(BonusType.crit) + equipment[i].item.critRate;
-                }
-                for(i = 0; i < own.accessories.Count; i++) {
-                    if(own.accessories[i].amount > 0 && own.accessories[i].item.data != null)
-                        result += own.accessories[i].item.GetSocketOfType(BonusType.crit) + own.accessories[i].item.critRate;
-                }
-                result += activePet != null ? activePet.critRate : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].critRate / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].criticalChance / 2 : own.mounts[i].criticalChance;
-                }
-                result += own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].crit : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.critRate.active : title.critRate.notActive;
-                }
-                result += InGuild() ? (float)ScriptableGuildSkill.dict[4].Get(own.guildSkills[4]) * .1f : 0;
-                return base.critRate + result;
-            }
-        }
-        public override float critDmg {
-            get {
-                int i;
-                float result = classInfo.critDmg;
-                result += activePet != null ? activePet.critDmg : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].critDmg / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].criticalRate / 2 : own.mounts[i].criticalRate;
-                }
-                result += own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].critDmg : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.critDmg.active : title.critDmg.notActive;
-                }
-                return base.critDmg + result;
-            }
-        }
-        public override float antiCrit {
-            get {
-                int i;
-                float result = classInfo.untiCrit;
-                result += activePet != null ? activePet.antiCrit : 0;
-                if(own.pets.Count > 0) {
-                    for(i = 0; i < own.pets.Count; i++) {
-                        if(own.pets[i].status == SummonableStatus.Saved)
-                            result += own.pets[i].antiCrit / 2;
-                    }
-                }
-                if(own.mounts.Count > 0) {
-                    for(i = 0; i < own.mounts.Count; i++)
-                        result += own.mounts[i].status == SummonableStatus.Saved ? own.mounts[i].untiCriticalChance / 2 : own.mounts[i].untiCriticalChance;
-                }
-                result += own.militaryRank > 0 ? ScriptableMilitaryRank.dict[own.militaryRank].untiCrit : 0;
-                if(own.titles.Count > 0) {
-                    for(i = 0; i < own.titles.Count; i++)
-                        if(ScriptableTitle.dict.TryGetValue(own.titles[i], out ScriptableTitle title))
-                            result += own.titles[i] == activeTitle ? title.antiCrit.active : title.antiCrit.notActive;
-                }
-                return base.antiCrit + result;
-            }
-        }
-        #endregion
-        #region Helpers
-        public uint battlepower => Convert.ToUInt32(healthMax + manaMax + m_atk + p_atk + m_def + p_def + 
-        (blockChance + untiBlockChance + critRate + critDmg + antiCrit + untiStunChance) * 100);
-        #endregion
     #endregion //Attributes
     #region Basic Functions and Helpers
         public override async void OnStartLocalPlayer()
         {
             localPlayer = this;// set singleton
             Storage.data.mainCam.gameObject.GetComponent<CameraMMO>().target = transform;
-            await Task.Run(() => LoadMap());
+            await LoadMapAsync();
             //onPlayerInfoOverlay.enabled = true;
             // tribe flag
             tribeOverlay.sprite = ScriptableTribe.dict[tribeId].flag;
             CmdSetCurrentLanguage(UIManager.data.gameSettings.currentLang);
             UIManager.data.inScene.expBar.Refresh();
         }
+
         int NextSkill()
         {
             for (int i = 1; i < skills.Count; i++)
@@ -519,6 +162,10 @@ namespace Game
         public override void ResetMovement()
         {
             agent.ResetMovement();
+        }
+        Task LoadMapAsync()
+        {
+            return Task.Run(() => LoadMap());
         }
         [Client]
         void LoadMap()
@@ -863,8 +510,7 @@ namespace Game
         {
             base.OnStartClient();
             // 3d model
-            equipment.Callback += OnEquipmentChanged;
-            wardrobe.Callback += OnWardrobeChanged;
+            
             RefreshAllLocation();
             //overlays
             if(onPlayerInfoOverlay != null)
@@ -943,35 +589,33 @@ namespace Game
         {
             if(bodyHolder == null)
                 return;
-            int index = (int)ClothingCategory.Body;
-            if(wardrobe[index].isUsed && showWardrop)
+            if(model.body.type == PlayerModelPartType.Clothing && model.body.id > 0)
             {
                 if(bodyHolder.childCount > 0)
                 {
                     Destroy(bodyHolder.GetChild(0).gameObject);
                 }
-                GameObject go = Instantiate(ScriptableWardrobe.dict[wardrobe[index].id].modelPrefab[(int)gender], bodyHolder, false);
+                GameObject go = Instantiate(ScriptableWardrobe.dict[model.body.id].modelPrefab[(int)model.gender], bodyHolder, false);
                 OnRefreshBodyLocation(go);
             }
             else
             {
-                index = (int)EquipmentsCategory.Armor;
                 if(bodyHolder.childCount > 0)
                 {
                     Destroy(bodyHolder.GetChild(0).gameObject);
                 }
-                if(equipment.Count >= index && equipment[index].item.id > 0 && equipment[index].amount == 1)
+                if(model.body.id > 0 && ScriptableItem.dict.TryGetValue(model.body.id, out ScriptableItem sItemData))
                 {
-                    EquipmentItem itemData = (EquipmentItem)equipment[index].item.data;
-                    if(itemData != null && itemData.modelPrefab[(int)gender] != null)
+                    EquipmentItem itemData = (EquipmentItem)sItemData;
+                    if(itemData != null && itemData.modelPrefab[(int)model.gender] != null)
                     {
-                        GameObject go = Instantiate(itemData.modelPrefab[(int)gender], bodyHolder, false);
+                        GameObject go = Instantiate(itemData.modelPrefab[(int)model.gender], bodyHolder, false);
                         OnRefreshBodyLocation(go);
                     }
                 }
                 else
                 {
-                    GameObject go = Instantiate(Storage.data.player.basicBody[(int)gender], bodyHolder, false);
+                    GameObject go = Instantiate(Storage.data.player.basicBody[(int)model.gender], bodyHolder, false);
                     OnRefreshBodyLocation(go);
                 }
             }
@@ -987,59 +631,43 @@ namespace Game
                 lWeaponHolder = bp.leftWeapon;
                 wingsHolder = bp.wing;
                 animator.avatar = bp.avatar;
-                if(classInfo.type == PlayerClass.Archer)
-                {
-                    Instantiate(Storage.data.player.arrowPrefab, rWeaponHolder, false);
-                }
             }
-            if(wardrobe[(int)ClothingCategory.Weapon].isUsed)
-            {
-                RefreshMainWeaponLocation();// RefreshWeaponsLocation(); // after adding artifacts/second weapon
-            }
-            if(wardrobe[(int)ClothingCategory.Wings].isUsed)
+            RefreshMainWeaponLocation();// RefreshWeaponsLocation(); // after adding artifacts/second weapon
+            if(model.wing > 0)
             {
                 RefreshWingsLocation();
             }
         }
         void RefreshMainWeaponLocation()
         {
-            Transform mainHand = mainWeaponHolder;
+            Transform mainHand = classInfo.type == PlayerClass.Archer ? lWeaponHolder : rWeaponHolder;
             if(mainHand == null)
                 return;
-            int index = (int)ClothingCategory.Weapon;
-            if(wardrobe[index].isUsed && showWardrop &&
-                ScriptableWardrobe.dict.TryGetValue(wardrobe[index].id, out ScriptableWardrobe weapon))
+            if(model.weapon.type == PlayerModelPartType.Clothing && model.weapon.id > 0
+                && ScriptableWardrobe.dict.TryGetValue(model.weapon.id, out ScriptableWardrobe weapon))
             {
                 if(weapon.category != ClothingCategory.Weapon)
-                    return;
+                return;
+
                 if(mainHand.childCount > 0)
                 {
                     Destroy(mainHand.GetChild(0).gameObject);
                 }
-                Instantiate(weapon.modelPrefab[(int)classInfo.type - 1], mainHand, false);
+                Instantiate(weapon.modelPrefab[(int)classInfo.type], mainHand, false);
             }
             else
-            {// armor index => 7
-                index = (int)EquipmentsCategory.Weapon;
-                if(equipment.Count < index || equipment[index].item.id == 0 || equipment[index].amount != 1) 
-                    return;
-                EquipmentItem itemData = (EquipmentItem)equipment[index].item.data;
-                if(itemData != null && itemData.category == EquipmentsCategory.Weapon && itemData.modelPrefab[0] != null)
-                {
-                    if(mainHand.childCount > 0)
-                    {
-                        Destroy(mainHand.GetChild(0).gameObject);
-                    }
-                    //Instantiate(itemData.modelPrefab[0], mainHand, false); // one weapon prefab
-                    Instantiate(itemData.modelPrefab[(int)gender], mainHand, false); // two(gender) weapon prefabs
-                }
-            }
-            if(classInfo.type == PlayerClass.Archer && mainHand.childCount > 0)
             {
-                BowInfo bowInfo = mainHand.GetChild(0).GetComponent<BowInfo>();
-                if(bowInfo != null)
+                if(model.weapon.id > 0 && ScriptableItem.dict.TryGetValue(model.weapon.id, out ScriptableItem sItemData)) 
                 {
-
+                    EquipmentItem itemData = (EquipmentItem)sItemData;
+                    if(itemData != null && itemData.category == EquipmentsCategory.Weapon && itemData.modelPrefab[0] != null)
+                    {
+                        if(mainHand.childCount > 0)
+                        {
+                            Destroy(mainHand.GetChild(0).gameObject);
+                        }
+                        Instantiate(itemData.modelPrefab[0], mainHand, false);
+                    }
                 }
             }
         }
@@ -1051,12 +679,10 @@ namespace Game
             {
                 Destroy(wingsHolder.GetChild(0).gameObject);
             }
-            int index = (int)ClothingCategory.Wings;
-            if(wardrobe[index].isUsed && showWardrop)
+            if(model.wing > 0)
             {
-                Instantiate(ScriptableWardrobe.dict[wardrobe[index].id].modelPrefab[0], wingsHolder, false);
+                Instantiate(ScriptableWardrobe.dict[model.wing].modelPrefab[0], wingsHolder, false);
             }
-            UIManager.data.controllers.UpdateFlyButton();
         }
         void RefreshSoulLocation()
         {
@@ -1066,10 +692,9 @@ namespace Game
             {
                 Destroy(spiritHolder.GetChild(0).gameObject);
             }
-            int index = (int)ClothingCategory.Spirit;
-            if(wardrobe[index].isUsed && showWardrop)
+            if(model.soul > 0)
             {
-                Instantiate(ScriptableWardrobe.dict[wardrobe[index].id].modelPrefab[0], spiritHolder, false);
+                Instantiate(ScriptableWardrobe.dict[model.soul].modelPrefab[0], spiritHolder, false);
             }
         }
         public void RefreshAllLocation()
@@ -1080,29 +705,13 @@ namespace Game
             RefreshSoulLocation();
         }
         // callbacks
-        void OnWardrobeVisibilityChanged(bool oldValue = false, bool newValue = false)
-        { 
-            RefreshAllLocation();
-            if(UIManager.data.wardrobe.IsVisible())
-            {
-                UIManager.data.wardrobe.UpdateVisibility();
-            }
-        }
         void OnWardrobeChanged(SyncListWardrop.Operation op, int index, WardrobeItem oldcloth, WardrobeItem newCloth)
         {
             RefreshAllLocation();
             //UIManager.data.wardrob.UpdatePreview();
         }
-        void OnEquipmentChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldcloth, ItemSlot newCloth)
-        {
-            RefreshAllLocation();
-            //UIManager.data.wardrob.UpdatePreview();
-            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is IWindowWithEquipments eqWin)
-            {
-                eqWin.RefreshEquipments();
-            }
-        }
-        void OnGenderChanged(Gender oldValue, Gender newValue)
+        
+        void OnModelChanged(PlayerModelData oldValue, PlayerModelData newValue)
         {
             RefreshAllLocation();
         }
@@ -1333,16 +942,21 @@ namespace Game
     #endregion
     #region Team
         public bool InTeam() => teamId > 0;
-        public List<Player> GetTeamMembersInProximity() {
+        public List<Player> GetTeamMembersInProximity()
+        {
             List<Player> players = new List<Player>();
-            foreach(NetworkConnection conn in netIdentity.observers.Values) {
+            foreach(NetworkConnection conn in netIdentity.observers.Values)
+            {
                 Player player = conn.identity.GetComponent<Player>();
                 if(player != null && player.teamId == teamId)
+                {
                     players.Add(player);
+                }
             }
             return players;
         }
-        void OnTeamChanged(uint oldTeam, uint newTeam) {
+        void OnTeamChanged(uint oldTeam, uint newTeam)
+        {
             // change ui
         }
         [Command] public void CmdFormTeam() {}
@@ -1429,16 +1043,11 @@ namespace Game
         }
     #endregion
     #region Equipments
-
-        /*void OnEquipmentChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldSlot, ItemSlot newSlot) {
-            if(index == 1) RefreshBodyLocation();
-            else if(index == 7) RefreshMainWeaponLocation();
-        }*/
         public bool IsEquipedWithWeapon(WeaponType type)
         {
-            if( equipment.Count < (int)EquipmentsCategory.Weapon ||
-                !equipment[(int)EquipmentsCategory.Weapon].isEquipment ||
-                ((WeaponItem)equipment[(int)EquipmentsCategory.Weapon].item.data).weaponType != type)
+            if( own.equipment.Count < (int)EquipmentsCategory.Weapon ||
+                !own.equipment[(int)EquipmentsCategory.Weapon].isEquipment ||
+                ((WeaponItem)own.equipment[(int)EquipmentsCategory.Weapon].item.data).weaponType != type)
             {
                 return false;
             }
@@ -1453,7 +1062,7 @@ namespace Game
     #region Wardrobe
         public bool IsWinged()
         {
-            return wardrobe[(int)ClothingCategory.Wings].isUsed;
+            return model.wing > 0;
         }
         [Command] public void CmdWardrobeEquip(ushort wardropId) {}
         [Command] public void CmdWardrobeUnEquip(int index) {}
@@ -1466,23 +1075,21 @@ namespace Game
         [Command] public void CmdCollectAllMails() {}
         [Command] public void CmdDeleteMail(int index) {}
         [Command] public void CmdDeleteAllMails() {}
-        [TargetRpc] public void TargetUpdateMailItems(int index, bool[] recievedItems) {
+        [TargetRpc] public void TargetUpdateMailItems(int index, bool[] recievedItems)
+        {
             for(int i = 0; i < own.mailBox[index].items.Length; i++)
+            {
                 own.mailBox[index].items[i].recieved = recievedItems[i];
+            }
         }
         
     #endregion
     #region VIP
         [Command] public void CmdGetFirstReward(int level) {}
     #endregion
-    #region Market
-        [Command] public void CmdGetMarketItems() {}
-        [Command] public void CmdBuyMarketItem(int id) {}
-        [Command] public void CmdAddMarketItem(int slot, int amount, int price, int hoursIndex) {}
-    #endregion
     #region Teleportation
         public bool CanTeleportTo(int mapIndex) => mapIndex > -1 && mapIndex < ScribtableCity.dict.Count;
-        public async void OnCityChanged(byte oldCity, byte newCity)
+        public async Task UpdateCityMap()
         {
             await Task.Run(() => LoadMap());
             CmdConfirmTeleport();

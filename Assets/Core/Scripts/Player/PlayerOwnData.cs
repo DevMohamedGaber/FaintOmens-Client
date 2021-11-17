@@ -19,9 +19,13 @@ namespace Game
         [SyncVar(hook="OnInventorySizeChanged")] public byte inventorySize;
         [SyncVar] public double nextRiskyActionTime;
         [SyncVar(hook = "OnOccupationChanged")] public PlayerOccupation occupation;
+        [SyncVar(hook = "OnCityChanged")] public byte cityId;
         public SyncListItemSlot inventory = new SyncListItemSlot();
         public SyncListItemSlot accessories = new SyncListItemSlot();
         public SyncListUShort wardrobe = new SyncListUShort();
+        public SyncListItemSlot equipment = new SyncListItemSlot();
+        public SyncListWardrop clothing = new SyncListWardrop();
+        [SyncVar(hook = "OnWardrobeVisibilityChanged")] public bool showWardrop;
     #endregion
     #region Attribute Points
         [Header("Attributes")]
@@ -111,6 +115,9 @@ namespace Game
         public override void OnStartClient()
         {
             inventory.Callback += OnInventoryChanged;
+            equipment.Callback += OnEquipmentChanged;
+            //wardrobe.Callback += OnWardrobeChanged;
+            //clothing.Callback += OnClothingChanged;
             mailBox.Callback += OnMailBoxChanged;
             achievements.Callback += OnAchievementsChanged;
             pets.Callback += OnPetsChanged;
@@ -119,6 +126,13 @@ namespace Game
             quests.Callback += OnQuestsChanged;
         }
     #region on lists changed
+        void OnEquipmentChanged(SyncListItemSlot.Operation op, int index, ItemSlot oldcloth, ItemSlot newCloth)
+        {
+            if(UIManager.data.currenOpenWindow != null && UIManager.data.currenOpenWindow is IWindowWithEquipments eqWin)
+            {
+                eqWin.RefreshEquipments();
+            }
+        }
         void OnQuestsChanged(SyncListQuest.Operation op, int index, Quest oldQuest, Quest newQuest)
         {
             if(UIManager.data.currenOpenWindow == null)
@@ -225,6 +239,18 @@ namespace Game
             {
                 UIManager.data.inScene.sideBox.Refresh();
             }
+        }
+        void OnWardrobeVisibilityChanged(bool oldValue = false, bool newValue = false)
+        { 
+            own.RefreshAllLocation();
+            if(UIManager.data.wardrobe.IsVisible())
+            {
+                UIManager.data.wardrobe.UpdateVisibility();
+            }
+        }
+        public async void OnCityChanged(byte oldCity, byte newCity)
+        {
+            own.UpdateCityMap();
         }
     #endregion
     #region Helpers

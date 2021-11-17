@@ -3,7 +3,8 @@ using UnityEngine;
 using TMPro;
 namespace Game.UI
 {
-    public class UIWardrobeSynthesize : MonoBehaviour {
+    public class UIWardrobeSynthesize : MonoBehaviour
+    {
         [SerializeField] float updateInterval = .5f;
         [SerializeField] UIWardrobeSynthesize_slots slots;
         [SerializeField] UIWardrobeSynthesize_UI ui;
@@ -16,11 +17,11 @@ namespace Game.UI
             byte lastIndex = 0;
             // equiped items
             if(!slots.main.IsAssigned()) {
-                for(byte i = 0; i < player.wardrobe.Count; i++) {
-                    if(player.wardrobe[i].isUsed) {
+                for(byte i = 0; i < player.own.clothing.Count; i++) {
+                    if(player.own.clothing[i].isUsed) {
                         //if(synthesizeSlots[0].Check(i, true) || synthesizeSlots[1].Check(i, true))
                         //    continue;
-                        inventory[lastIndex].Assign(player.wardrobe[i], i, true);
+                        inventory[lastIndex].Assign(player.own.clothing[i], i, true);
                         lastIndex++;
                     }
                 }
@@ -71,7 +72,7 @@ namespace Game.UI
         public void OnSynthesizeDone(bool success) {
             slots.bless.Unassign();
             slots.other.Unassign();
-            if(slots.main.isEquiped) slots.result.Assign(player.wardrobe[slots.main.ID], slots.main.ID, true);
+            if(slots.main.isEquiped) slots.result.Assign(player.own.clothing[slots.main.ID], slots.main.ID, true);
             else                     slots.result.Assign(player.own.inventory[slots.main.ID], slots.main.ID);
             slots.main.Unassign();
             if(success) {

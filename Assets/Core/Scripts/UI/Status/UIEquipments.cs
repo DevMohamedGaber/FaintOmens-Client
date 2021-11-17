@@ -6,15 +6,15 @@ namespace Game.UI
         [SerializeField] UIItemSlotWithType[] slots;
         public override void Refresh()
         {
-            for(int i = 0; i < player.equipment.Count; i++)
+            for(int i = 0; i < player.own.equipment.Count; i++)
             {
-                if(player.equipment[i].isEmpty)
+                if(player.own.equipment[i].isEmpty)
                 {
                     slots[i].Unassign();
                 }
                 else
                 {
-                    slots[i].Assign(player.equipment[i], i);
+                    slots[i].Assign(player.own.equipment[i], i);
                 }
             }
         }

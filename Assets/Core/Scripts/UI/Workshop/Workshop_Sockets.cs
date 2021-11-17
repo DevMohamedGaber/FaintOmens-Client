@@ -30,13 +30,13 @@ namespace Game.UI
             if(selectedSocket == -1)
             {
                 // equipments
-                for(i = 0; i < player.equipment.Count; i++)
+                for(i = 0; i < player.own.equipment.Count; i++)
                 {
-                    if(!player.equipment[i].isEmpty)
+                    if(!player.own.equipment[i].isEmpty)
                     {
                         if(selectedSlot.IsAssigned() && selectedSlot.from == WorkshopOperationFrom.Equipments && selectedSlot.ID == i)
                             continue;
-                        slots[nextSlot].Assign(player.equipment[i], i, WorkshopOperationFrom.Equipments);
+                        slots[nextSlot].Assign(player.own.equipment[i], i, WorkshopOperationFrom.Equipments);
                         slots[nextSlot].onDoubleClick.SetListener((itemSlot) => OnSelectSlot((UIWorkshopItemSlot)itemSlot));
                         nextSlot++;
                     }
@@ -97,7 +97,7 @@ namespace Game.UI
                 // selected equipment
                 if(selectedSlot.from == WorkshopOperationFrom.Equipments)
                 {
-                    selectedSlot.UpdateData(player.equipment[selectedSlot.ID]);
+                    selectedSlot.UpdateData(player.own.equipment[selectedSlot.ID]);
                 }
                 else if(selectedSlot.from == WorkshopOperationFrom.Accessories)
                 {

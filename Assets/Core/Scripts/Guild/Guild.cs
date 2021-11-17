@@ -16,7 +16,7 @@ namespace Game
         public byte membersCount;
         public string notice;
         public string masterName;
-        public PlayerModelData masterModel;
+        public PlayerModelDataWithClass masterModel;
         public GuildAssets assets;
         public GuildBuildings buildings;
         public uint expMax => Storage.data.guild.expMax[level - 1];

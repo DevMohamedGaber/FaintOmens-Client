@@ -22,12 +22,12 @@ namespace Game.UI
         public void RefreshEquipments()
         {
             equipments.Refresh();
-            UIPreviewManager.singleton.UpdateLocalPlayer();
+            PreviewManager.singleton.UpdateLocalPlayer();
         }
         protected override void OnEnable()
         {
             base.OnEnable();
-            UIPreviewManager.singleton.InstantiateLocalPlayer();
+            PreviewManager.singleton.InstantiateLocalPlayer();
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Game.UI
             if(characters != null && index >= 0 && index < characters.Length)
             {
                 selected = index;
-                UIPreviewManager.singleton.InstantiatePlayerFromSelectionMsg(characters[index]);
+                PreviewManager.singleton.InstantiatePlayer(characters[index].classInfo, characters[index].model);
                 //tribeFlag.gameObject.SetActive(true);
                 tribeFlag.sprite = ScriptableTribe.dict[characters[index].tribeId].flag;
             }
@@ -123,7 +123,7 @@ namespace Game.UI
         }
         void Reset()
         {
-            UIPreviewManager.singleton.Clear();
+            PreviewManager.singleton.Clear();
             selected = -1;
             characters = new CharactersAvailable.CharacterPreview[] {};
             if(content.childCount > 0)

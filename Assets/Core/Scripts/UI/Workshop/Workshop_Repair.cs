@@ -22,15 +22,15 @@ namespace Game.UI
         {
             int nextSlot = 0, i = 0;
             // equipments
-            for(i = 0; i < player.equipment.Count; i++)
+            for(i = 0; i < player.own.equipment.Count; i++)
             {
-                if(!player.equipment[i].isEmpty)
+                if(!player.own.equipment[i].isEmpty)
                     continue;
                 if(selectedSlot.IsAssigned() && selectedSlot.from == WorkshopOperationFrom.Equipments && selectedSlot.ID == i)
                     continue;
-                if(player.equipment[i].item.HasMaxDurability())
+                if(player.own.equipment[i].item.HasMaxDurability())
                     continue;
-                slots[nextSlot].Assign(player.equipment[i], i, WorkshopOperationFrom.Equipments);
+                slots[nextSlot].Assign(player.own.equipment[i], i, WorkshopOperationFrom.Equipments);
                 slots[nextSlot].onDoubleClick.SetListener((itemSlot) => OnSelectSlot((UIWorkshopItemSlot)itemSlot));
                 nextSlot++;
             }

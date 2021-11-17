@@ -17,9 +17,9 @@ namespace Game.UI
         }
         public void UpdateVisibility()
         {
-            visibility.interactable = player.showWardrop;
+            visibility.interactable = player.own.showWardrop;
             // update preview
-            UIPreviewManager.singleton.InstantiatePlayer(player);
+            PreviewManager.singleton.InstantiatePlayer(player);
         }
         public void OnChangeVisibility()
         {
@@ -35,13 +35,13 @@ namespace Game.UI
         }
         void OnEnable()
         {
-            UIPreviewManager.singleton.InstantiatePlayer(player);
+            PreviewManager.singleton.InstantiatePlayer(player);
             UpdateVisibility();
             GoToPage(0);
         }
         void OnDisable()
         {
-            UIPreviewManager.singleton.Clear();
+            PreviewManager.singleton.Clear();
         }
     }
 }

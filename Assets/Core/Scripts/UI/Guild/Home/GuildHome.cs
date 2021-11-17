@@ -34,10 +34,7 @@ namespace Game.UI
             {
                 info.brTxt.text = data.br.ToString();
             }
-        }
-        protected override void OnEnable()
-        {
-            base.OnEnable();
+            PreviewManager.singleton.InstantiatePlayer(data.masterModel.classData, data.masterModel.model);
         }
     }
 }

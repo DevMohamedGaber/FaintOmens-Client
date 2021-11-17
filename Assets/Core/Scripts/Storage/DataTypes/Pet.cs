@@ -15,5 +15,6 @@ namespace Game.StorageData
         public uint[] upgradeReqCount;
         public uint[] starUpReqCount;
         public FeedItem[] feeds;
+        public float savedBonus;
     }
 }

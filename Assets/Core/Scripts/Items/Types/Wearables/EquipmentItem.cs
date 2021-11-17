@@ -60,7 +60,7 @@ namespace Game
 
         int FindEquipableSlotFor(int inventoryIndex)
         {
-            for (int i = 0; i < player.equipment.Count; ++i)
+            for (int i = 0; i < player.own.equipment.Count; ++i)
             {
                 if (CanEquip(inventoryIndex, i))
                 {

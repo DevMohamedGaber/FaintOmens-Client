@@ -24,6 +24,9 @@ namespace Game.StorageData
         public GuildRank recallMinRank;
         public GuildRank notifyMinRank;
         public Color memberColor;
+        [Header("Skills")]
+        public float blockSkillPerLvl;
+        public float critRateSkillPerLvl;
         public void OnAwake()
         {
             expMax = new uint[maxLevel];

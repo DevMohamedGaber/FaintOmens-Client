@@ -52,7 +52,7 @@ namespace Game.UI
                 else equipSlots[i].Unassign();
 
             lang.Refresh();
-            UIPreviewManager.singleton.InstantiatePlayer(info.classInfo.type, info.gender, info.equipments);
+            PreviewManager.singleton.InstantiatePlayer(info.classInfo, info.model);
             gameObject.SetActive(true);
         }
         public void ShowEquipments(bool isEquip) {

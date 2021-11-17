@@ -23,7 +23,7 @@ namespace Game.UI
             selected = index;
             if(ScriptableMount.dict.TryGetValue(sId, out ScriptableMount data))
             {
-                UIPreviewManager.singleton.Instantiate(data.prefab);
+                PreviewManager.singleton.Instantiate(data.prefab);
                 Mount info = player.own.mounts.Get(sId);
 
                 summonBtn.SetActive(info.id != 0 && info.status == SummonableStatus.Saved);

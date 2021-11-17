@@ -15,5 +15,6 @@ namespace Game.StorageData
         public ushort[] trainingExpMax;
         public int pointPerTrainingLevel;
         public FeedItem[] feeds;
+        public float savedBonus;
     }
 }

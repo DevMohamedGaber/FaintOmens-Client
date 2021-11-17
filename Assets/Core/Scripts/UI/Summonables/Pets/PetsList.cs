@@ -24,7 +24,7 @@ namespace Game.UI
             selected = index;
             if(ScriptablePet.dict.TryGetValue(sId, out ScriptablePet pet))
             {
-                UIPreviewManager.singleton.Instantiate(pet.prefab);
+                PreviewManager.singleton.Instantiate(pet.prefab);
                 PetInfo info = player.own.pets.Get(sId);
 
                 summonBtn.SetActive(info.id != 0 && info.status == SummonableStatus.Saved);

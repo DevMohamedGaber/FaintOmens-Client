@@ -12,19 +12,22 @@ namespace Game.UI
         [SerializeField] float hideInSec;
         uint oldBR;
         Player player => Player.localPlayer;
-        void UpdateData() {
+        void UpdateData()
+        {
             if(player != null && player.battlepower != oldBR)
             {
+                uint currentBR = 0;
                 if(oldBR != 0)
                 {
                     brText.gameObject.SetActive(true);
                     StopCoroutine(Hide());
                     StartCoroutine(Hide());
-                    bool isIncrese = player.battlepower > oldBR;
-                    brText.text = isIncrese ? $"BR +{player.battlepower - oldBR}" : $"BR -{oldBR - player.battlepower}";
+                    currentBR = player.stats.GetBattleRate().Result;
+                    bool isIncrese = currentBR > oldBR;
+                    brText.text = isIncrese ? $"BR +{currentBR - oldBR}" : $"BR -{oldBR - currentBR}";
                     brText.color = isIncrese ? increseColor : decreseColor;
                 }
-                oldBR = player.battlepower;
+                oldBR = currentBR;
                 UILocalPlayerInfo.singleton.UpdateBR();
             }
         }
@@ -33,16 +36,18 @@ namespace Game.UI
         {
             if(player != null)
             {
-                oldBR = player.battlepower;
+                oldBR = player.stats.GetBattleRate().Result;
                 //StartCo
                 InvokeRepeating(nameof(UpdateData), updateInterval, updateInterval);
             }
         }
-        IEnumerator<WaitForSeconds> Hide() {
+        IEnumerator<WaitForSeconds> Hide()
+        {
             yield return new WaitForSeconds(hideInSec);
             brText.gameObject.SetActive(false);
         }
-        private void OnDisable() {
+        private void OnDisable()
+        {
             CancelInvoke(nameof(UpdateData));
         }
     }
