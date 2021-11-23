@@ -21,8 +21,8 @@ MonoBehaviour:
     UpgradeItems: []
     startQuest: {fileID: 0}
     hp:
-      multiplier: 0
-      baseValue: 1
+      multiplier: 1000
+      baseValue: 1.2
     mp:
       multiplier: 0
       baseValue: 1
@@ -53,3 +53,4 @@ MonoBehaviour:
     untiCrit:
       multiplier: 0
       baseValue: 1
+  quality: 0

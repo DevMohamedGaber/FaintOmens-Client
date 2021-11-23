@@ -20,12 +20,13 @@ namespace Game
         [SyncVar] public double nextRiskyActionTime;
         [SyncVar(hook = "OnOccupationChanged")] public PlayerOccupation occupation;
         [SyncVar(hook = "OnCityChanged")] public byte cityId;
+        [SyncVar(hook = "OnWardrobeVisibilityChanged")] public bool showClothing;
+        [SyncVar] public PrivacyLevel privacy;
         public SyncListItemSlot inventory = new SyncListItemSlot();
         public SyncListItemSlot accessories = new SyncListItemSlot();
         public SyncListUShort wardrobe = new SyncListUShort();
         public SyncListItemSlot equipment = new SyncListItemSlot();
-        public SyncListWardrop clothing = new SyncListWardrop();
-        [SyncVar(hook = "OnWardrobeVisibilityChanged")] public bool showWardrop;
+        public SyncListClothing clothing = new SyncListClothing();
     #endregion
     #region Attribute Points
         [Header("Attributes")]
@@ -57,7 +58,7 @@ namespace Game
     #endregion
     #region Tribe
         [Header("Tribe")]
-        [SyncVar] public Tribe tribe;
+        //[SyncVar] public Tribe tribe;
         [SyncVar] public TribeRank tribeRank;
         [SyncVar] public byte tribeQuests;
         [SyncVar] public uint tribeGoldContribution;

@@ -5,7 +5,7 @@ namespace Game.UI.ManagerLists
     {
         public UILobbyWindow current;
         public UILogin login;
-        public UICharacterCreation create;
+        public CharacterCreation create;
         public UICharacterSelection select;
     }
 }

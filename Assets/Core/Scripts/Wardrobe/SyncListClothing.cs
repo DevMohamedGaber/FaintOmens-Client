@@ -1,6 +1,6 @@
 namespace Game
 {
-    public class SyncListWardrop : Mirror.SyncList<WardrobeItem>
+    public class SyncListClothing : Mirror.SyncList<WardrobeItem>
     {
         public int GetIndex(ushort id)
         {

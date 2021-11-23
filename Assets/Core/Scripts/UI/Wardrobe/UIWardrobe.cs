@@ -17,7 +17,7 @@ namespace Game.UI
         }
         public void UpdateVisibility()
         {
-            visibility.interactable = player.own.showWardrop;
+            visibility.interactable = player.own.showClothing;
             // update preview
             PreviewManager.singleton.InstantiatePlayer(player);
         }

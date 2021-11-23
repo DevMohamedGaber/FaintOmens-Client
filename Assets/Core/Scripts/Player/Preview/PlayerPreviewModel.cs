@@ -58,7 +58,6 @@ namespace Game
         }
         void OnRefreshBodyLocation(GameObject go)
         {
-            ResetMeshAndAnimation(go);
             BodyPlaceholders bp = go.GetComponentInChildren<BodyPlaceholders>();
             if(bp != null)
             {
@@ -73,6 +72,7 @@ namespace Game
             {
                 RefreshWingsLocation();
             }
+            ResetMeshAndAnimation(go);
         }
         void RefreshMainWeaponLocation()
         {
@@ -139,6 +139,7 @@ namespace Game
             RefreshMainWeaponLocation();// RefreshWeaponsLocation(); // after adding artifacts/second weapon
             RefreshWingsLocation();
             RefreshSoulLocation();
+            //ResetMeshAndAnimation(bodyHolder.GetChild(0).gameObject);
         }
         // helpers
         void ResetMeshAndAnimation(GameObject go)

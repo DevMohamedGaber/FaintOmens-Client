@@ -42,14 +42,13 @@ namespace Game
     #endregion
     #region Sync
         [Header("Player Synced")]
-        [SyncVar] public uint id;
         [SyncVar(hook ="OnStateChanged")] public EntityState state = EntityState.Idle;
+        [SyncVar] public uint id;
+        [SyncVar] public byte tribeId;
         [SyncVar] public PlayerClassData classInfo;
         [SyncVar(hook = "OnModelChanged")] public PlayerModelData model;
-        [SyncVar] public PrivacyLevel privacy;
         [SyncVar(hook = "OnAvatarChanged")] public byte avatar;
         [SyncVar(hook = "OnFrameChanged")] public byte frame;
-        [SyncVar] public byte tribeId;
         [SyncVar(hook = "OnGuildInfoChanged")] public GuildPublicInfo guild;
         [SyncVar(hook = "OnTeamChanged")] public uint teamId;
         [SyncVar(hook = "OnTitleChanged")] public ushort activeTitle;
@@ -83,14 +82,12 @@ namespace Game
         Vector3 pendingVelocity;
         bool pendingVelocityValid;
         #endregion
-    #region Attributes
-    #endregion //Attributes
     #region Basic Functions and Helpers
         public override async void OnStartLocalPlayer()
         {
             localPlayer = this;// set singleton
             Storage.data.mainCam.gameObject.GetComponent<CameraMMO>().target = transform;
-            await LoadMapAsync();
+            LoadMap();
             //onPlayerInfoOverlay.enabled = true;
             // tribe flag
             tribeOverlay.sprite = ScriptableTribe.dict[tribeId].flag;
@@ -163,12 +160,10 @@ namespace Game
         {
             agent.ResetMovement();
         }
-        Task LoadMapAsync()
-        {
-            return Task.Run(() => LoadMap());
-        }
-        [Client]
-        void LoadMap()
+        /*async Task LoadMapAsync() {
+            await Task.Run(() => LoadMap());
+        }*/
+        [Client] void LoadMap()
         {
             if(Storage.data.currentLoadedMap != null)
             {
@@ -527,7 +522,7 @@ namespace Game
             }
             if(tribeOverlay != null)
             {
-                tribeOverlay.sprite = ScriptableTribe.dict[tribeId].flag;
+                tribeOverlay.sprite = ScriptableTribe.dict[(int)tribeId].flag;
             }
             if(activeTitle > 0)
             {
@@ -704,13 +699,6 @@ namespace Game
             RefreshWingsLocation();
             RefreshSoulLocation();
         }
-        // callbacks
-        void OnWardrobeChanged(SyncListWardrop.Operation op, int index, WardrobeItem oldcloth, WardrobeItem newCloth)
-        {
-            RefreshAllLocation();
-            //UIManager.data.wardrob.UpdatePreview();
-        }
-        
         void OnModelChanged(PlayerModelData oldValue, PlayerModelData newValue)
         {
             RefreshAllLocation();

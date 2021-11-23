@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using Game.Network;
 namespace Game.UI
 {
-    public partial class UICharacterCreation : UILobbyWindow
+    public class CharacterCreation : UILobbyWindow
     {
         [SerializeField] TMPro.TMP_InputField nameInput;
         [SerializeField] UICharacterCreate_TribeToggle[] tribeList;
@@ -79,27 +79,6 @@ namespace Game.UI
                 }
                 tribeList[0].toggle.ForceOnSelect();
             }
-            //ClassToggle.transform.GetChild(0).GetComponent<Toggle>().isOn = true;
-            /*if(TribeSystem.registerdTribes.Count > 0)
-            {
-                UIUtils.BalancePrefabs(TribeTogglePrefab, TribeSystem.registerdTribes.Count, TribeToggle.transform);
-                for(int i = 0; i < TribeSystem.registerdTribes.Count; i++)
-                {
-                    int tribeId = TribeSystem.registerdTribes[i].name;
-                    UITribeToggle toggle = TribeToggle.transform.GetChild(i).GetComponent<UITribeToggle>();
-                    toggle.Name.text = LanguageManger.GetWord(tribeId, LanguageDictionaryCategories.Tribe);
-                    toggle.icon.sprite = TribeSystem.registerdTribes[i].flag;
-                    Toggle tog = toggle.GetComponent<Toggle>();
-                    tog.group = TribeToggle;
-                    tog.onValueChanged.SetListener((changed) =>
-                    {
-                        if(changed) OnSelectTribe((byte)tribeId);
-                    });
-                    TribeToggle.RegisterToggle(tog);
-                }
-                TribeToggle.transform.GetChild(0).GetComponent<Toggle>().isOn = true;
-                selectedTribe = (byte)TribeSystem.registerdTribes[0].name;
-            }*/
         }
         public override void Show()
         {

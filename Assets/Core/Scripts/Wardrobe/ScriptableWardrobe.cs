@@ -36,14 +36,16 @@ namespace Game
             }
             return results;
         }
-        public static bool HasWardropItem(SyncListWardrop wardropList, short itemId)
+        public static bool HasWardropItem(SyncListClothing clothing, short itemId)
         {
-            if(wardropList.Count > 0)
+            if(clothing.Count > 0)
             {
-                for(int i = 0; i < wardropList.Count; i++)
+                for(int i = 0; i < clothing.Count; i++)
                 {
-                    if(wardropList[i].id == itemId)
+                    if(clothing[i].id == itemId)
+                    {
                         return true;
+                    }
                 }
             }
             return false;
